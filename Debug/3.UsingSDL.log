@@ -1,7 +1,7 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(452,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (SDLTemplate.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  Bitmap.cpp
   Game.cpp
+  Player.cpp
   main.cpp
   Generating Code...
-  3.UsingSDL.vcxproj -> D:\3.UsingSDL\Debug\3.UsingSDL.exe
+  3.UsingSDL.vcxproj -> C:\Users\jamie\Desktop\Stuff\Uni\Year2\ComputerGamesProgramming\SDL-Project\Debug\3.UsingSDL.exe
           1 file(s) copied.

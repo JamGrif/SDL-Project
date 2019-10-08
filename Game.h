@@ -3,7 +3,7 @@
 #include "Input.h"
 #include <stdio.h>
 #include <iostream>
-#include "Bitmap.h"
+#include "Player.h"
 class Bitmap; //04-01
 
 class Game
@@ -22,7 +22,7 @@ private:
 	SDL_Window* m_Window;
 	SDL_Renderer* m_Renderer;
 
-	Bitmap* m_Player; //04-01
+	Player* m_Player; //04-01
 	
 
 	Input* input = new Input();

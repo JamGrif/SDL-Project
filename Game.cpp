@@ -32,7 +32,7 @@ Game::Game()
 		return;
 	}
 
-	m_Player = new Bitmap(m_Renderer, "Assets/Player.bmp", 100, 100, true);
+	m_Player = new Player(m_Renderer, "Assets/Player.bmp", 100, 100, true);
 	
 
 }
@@ -62,11 +62,11 @@ void Game::GameLoop()
 	//!input->KeyIsPressed(KEY_ESCAPE)
 	while (!input->KeyIsPressed(KEY_ESCAPE)) //Game ends if escape is pressed
 	{
-
+		Render();
 		CheckKeyPressed();
 		m_Player->draw();
 
-		Render();
+		
 		SDL_Delay(16);
 
 	}
@@ -91,14 +91,17 @@ void Game::CheckKeyPressed()
 	input->Update();
 	if (input->KeyIsPressed(KEY_D))
 	{
+		m_Player->MoveRight();
 		std::cout << "D key pressed!" << std::endl;
 	}
 	if (input->KeyIsPressed(KEY_A))
 	{
+		m_Player->MoveLeft();
 		std::cout << "A key pressed!" << std::endl;
 	}
 	if (input->KeyIsPressed(KEY_SPACE))
 	{
+		m_Player->MoveJump();
 		std::cout << "Space key is pressed!" << std::endl;
 	}
 
