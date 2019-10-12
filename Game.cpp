@@ -89,6 +89,7 @@ void Game::Render()
 void Game::CheckKeyPressed()
 {
 	input->Update();
+	//Keyboard
 	if (input->KeyIsPressed(KEY_D))
 	{
 		m_Player->MoveRight();
@@ -104,6 +105,24 @@ void Game::CheckKeyPressed()
 		m_Player->MoveJump();
 		std::cout << "Space key is pressed!" << std::endl;
 	}
+	if (input->KeyIsPressed(KEY_R)) 
+	{
+		std::cout << "R key is pressed!" << std::endl;
+	}
+	//Mouse
+	if (input->MouseIsPressed(MOUSE_LEFT)) 
+	{
+		std::cout << "Mouse X position is " << input->GetMouseX() << ". Mouse Y position is " << input->GetMouseY() << "." << std::endl;
+	}
+	if (input->MouseIsPressed(MOUSE_RIGHT))
+	{
+		std::cout << "Right mouse is pressed!" << std::endl;
+	}
+	if (input->MouseIsPressed(MOUSE_MIDDLE))
+	{
+		std::cout << "Middle mouse is pressed!" << std::endl;
+	}
+
 
 }
 

@@ -14,16 +14,13 @@ Input::~Input()
 void Input::Update()
 {
 	//loop through all the events in the event list
-	//|| SDL_PollEvent(&m_MouseEvent) != NULL
-	while (SDL_PollEvent(&m_KeyEvent) != NULL)
+
+	while (SDL_PollEvent(&m_InputEvent) != NULL)
 	{
 
-		//first check for keydown
-		if (m_KeyEvent.type == SDL_KEYDOWN) {
-			//cache the code of key we pressed for easier debugging
-			SDL_Keycode keyPressed = m_KeyEvent.key.keysym.sym;
-
-			//update keys
+		//first check for key down
+		if (m_InputEvent.type == SDL_KEYDOWN) {
+			SDL_Keycode keyPressed = m_InputEvent.key.keysym.sym;
 			switch (keyPressed)
 			{
 			case SDLK_ESCAPE:
@@ -35,6 +32,9 @@ void Input::Update()
 			case SDLK_d:
 				m_keysPressed[KEY_D] = true;
 				break;
+			case SDLK_r:
+				m_keysPressed[KEY_R] = true;
+				break;
 			case SDLK_SPACE:
 				m_keysPressed[KEY_SPACE] = true;
 				break;
@@ -42,11 +42,9 @@ void Input::Update()
 		}
 
 		//second check for key up
-		else if (m_KeyEvent.type == SDL_KEYUP)
+		else if (m_InputEvent.type == SDL_KEYUP)
 		{
-			SDL_Keycode keyPressed = m_KeyEvent.key.keysym.sym;
-
-			//update keys
+			SDL_Keycode keyPressed = m_InputEvent.key.keysym.sym;
 			switch (keyPressed)
 			{
 			case SDLK_a:
@@ -55,47 +53,58 @@ void Input::Update()
 			case SDLK_d:
 				m_keysPressed[KEY_D] = false;
 				break;
+			case SDLK_r:
+				m_keysPressed[KEY_R] = false;
+				break;
 			case SDLK_SPACE:
 				m_keysPressed[KEY_SPACE] = false;
 				break;
 			}
 		}
-	}
-	//while (SDL_PollEvent(&m_MouseEvent) != NULL)
-	//{
-		//std::cout << "mouse test" << std::endl;
-		/*switch (m_MouseEvent.type)
-		{
-		case SDL_MOUSEBUTTONDOWN:
-			std::cout << "test" << std::endl;
-			break;
-		}*/
 
 		//third check for mouse down
-		/*if (m_MouseEvent.type == SDL_MOUSEBUTTONDOWN)
+		else if (m_InputEvent.type == SDL_MOUSEBUTTONDOWN)
 		{
-			switch (m_MouseEvent.button.button)
+			SDL_Keycode keyPressed = m_InputEvent.button.button;
+			switch (keyPressed)
 			{
 			case SDL_BUTTON_LEFT:
-				std::cout << "Left mouse clicked" << std::endl;
+				m_mousePressed[MOUSE_LEFT] = true;
 				break;
 			case SDL_BUTTON_RIGHT:
-				std::cout << "Left mouse clicked" << std::endl;
+				m_mousePressed[MOUSE_RIGHT] = true;
 				break;
-
-
+			case SDL_BUTTON_MIDDLE:
+				m_mousePressed[MOUSE_MIDDLE] = true;
+				break;
 			}
-
-
-
-
-
-		}*/
-
-
+		}
 
 		//fourth check for mouse up
-	//}
+		else if (m_InputEvent.type == SDL_MOUSEBUTTONUP)
+		{
+			SDL_Keycode keyPressed = m_InputEvent.button.button;
+
+			switch (keyPressed)
+			{
+			case SDL_BUTTON_LEFT:
+				m_mousePressed[MOUSE_LEFT] = false;
+				break;
+			case SDL_BUTTON_RIGHT:
+				m_mousePressed[MOUSE_RIGHT] = false;
+				break;
+			case SDL_BUTTON_MIDDLE:
+				m_mousePressed[MOUSE_MIDDLE] = false;
+				break;
+			}
+		}
+		//fifth check for mouse motion
+		else if (m_InputEvent.type == SDL_MOUSEMOTION) 
+		{
+			m_XMouse = m_InputEvent.motion.x;
+			m_YMouse = m_InputEvent.motion.y;
+		}
+	}
 }
 
 bool Input::KeyIsPressed(KEYS_PRESSED_LIST key)
@@ -110,12 +119,20 @@ void Input::KeyIsNotPressed(KEYS_PRESSED_LIST &key)
 
 bool Input::MouseIsPressed(MOUSE_PRESSED_LIST mouse)
 {
-	//to do
-	return false;
+	return m_mousePressed[mouse];
 }
 
-bool Input::MouseIsNotPressed(MOUSE_PRESSED_LIST& mouse)
+void Input::MouseIsNotPressed(MOUSE_PRESSED_LIST& mouse)
 {
-	//to do
-	return false;
+	m_mousePressed[mouse] = false;
+}
+
+int Input::GetMouseX()
+{
+	return m_XMouse;
+}
+
+int Input::GetMouseY()
+{
+	return m_YMouse;
 }

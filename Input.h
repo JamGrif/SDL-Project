@@ -3,7 +3,7 @@
 #include <iostream>
 enum KEYS_PRESSED_LIST 
 {
-	KEY_ESCAPE, KEY_A, KEY_D, KEY_SPACE, SIZE_OF_KEYS_PRESSED_ENUM
+	KEY_ESCAPE, KEY_A, KEY_D, KEY_R, KEY_SPACE, SIZE_OF_KEYS_PRESSED_ENUM
 };
 enum MOUSE_PRESSED_LIST 
 {
@@ -18,15 +18,20 @@ public:
 	void Update();
 	bool KeyIsPressed(KEYS_PRESSED_LIST key);
 	void KeyIsNotPressed(KEYS_PRESSED_LIST &key);
-	void CheckForKeyPress();
+	//void CheckForKeyPress();
 
 	bool MouseIsPressed(MOUSE_PRESSED_LIST mouse);
-	bool MouseIsNotPressed(MOUSE_PRESSED_LIST &mouse);
+	void MouseIsNotPressed(MOUSE_PRESSED_LIST &mouse);
 	
+	int GetMouseX();
+	int GetMouseY();
 	
 private:
-	SDL_Event m_KeyEvent;
-	SDL_Event m_MouseEvent;
+	int m_XMouse = 0;
+	int m_YMouse = 0;
+
+
+	SDL_Event m_InputEvent;
 	
 	bool m_keysPressed[SIZE_OF_KEYS_PRESSED_ENUM];
 	bool m_mousePressed[SIZE_OF_MOUSE_PRESSED_ENUM];
