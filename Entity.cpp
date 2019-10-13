@@ -1,17 +1,38 @@
 #include "Entity.h"
 
-Entity::Entity(SDL_Renderer* renderer, std::string fileName, int xpos, int ypos, bool useTransparency)
+Entity::Entity(SDL_Renderer* renderer, int xpos, int ypos, bool useTransparency)
 {
 	//Store the renderer for future configuring and drawing
 	m_pRenderer = renderer;
 
+	m_X = xpos;
+	m_Y = ypos;
+}
+
+Entity::~Entity()
+{
+	if (m_pbitmapTexture)
+	{
+		SDL_DestroyTexture(m_pbitmapTexture);
+	}
+	if (m_pbitmapSurface)
+	{
+		SDL_FreeSurface(m_pbitmapSurface);
+	}
+
+}
+
+void Entity::UpdateBitmap(std::string filename, bool useTransparency)
+{
 	//Create the bitmap surface
-	m_pbitmapSurface = SDL_LoadBMP(fileName.c_str()); //loads bitmap from file into a member variable
+	m_pbitmapSurface = SDL_LoadBMP(filename.c_str()); //loads bitmap from file into a member variable
+
+	CurrentAnimation = filename;
 
 	if (!m_pbitmapSurface)
 	{
 		//bitmap failed to load
-		printf("Surface for bitmap '%s' not loaded! \n", fileName.c_str());
+		printf("Surface for bitmap '%s' not loaded! \n", filename.c_str());
 		printf("%s\n", SDL_GetError());
 	}
 	else
@@ -29,25 +50,12 @@ Entity::Entity(SDL_Renderer* renderer, std::string fileName, int xpos, int ypos,
 		if (!m_pbitmapTexture)
 		{
 			//texture failed to load
-			printf("Texture for bitmap '%s' not loaded! a\n", fileName.c_str());
+			printf("Texture for bitmap '%s' not loaded! a\n", filename.c_str());
 			printf("%s\n", SDL_GetError());
 		}
 	}
 
-	m_X = xpos;
-	m_Y = ypos;
-}
 
-Entity::~Entity()
-{
-	if (m_pbitmapTexture)
-	{
-		SDL_DestroyTexture(m_pbitmapTexture);
-	}
-	if (m_pbitmapSurface)
-	{
-		SDL_FreeSurface(m_pbitmapSurface);
-	}
 
 }
 

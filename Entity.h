@@ -9,9 +9,10 @@ struct SDL_Renderer;
 class Entity
 {
 public:
-	Entity(SDL_Renderer* renderer, std::string fileName, int xpos, int ypos, bool useTransparency = false);
+	Entity(SDL_Renderer* renderer, int xpos, int ypos, bool useTransparency = true);
 	~Entity();
 
+	void UpdateBitmap(std::string filename, bool useTransparency);
 	void draw();
 
 
@@ -23,6 +24,9 @@ protected:
 	int m_X = 0;
 	int m_Y = 0;
 
+	std::string Filename = "";
+
+	std::string CurrentAnimation = "";
 
 };
 

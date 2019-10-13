@@ -38,6 +38,12 @@ void Input::Update()
 			case SDLK_SPACE:
 				m_keysPressed[KEY_SPACE] = true;
 				break;
+			case SDLK_w:
+				m_keysPressed[KEY_W] = true;
+				break;
+			case SDLK_s:
+				m_keysPressed[KEY_S] = true;
+				break;
 			}
 		}
 
@@ -58,6 +64,12 @@ void Input::Update()
 				break;
 			case SDLK_SPACE:
 				m_keysPressed[KEY_SPACE] = false;
+				break;
+			case SDLK_w:
+				m_keysPressed[KEY_W] = false;
+				break;
+			case SDLK_s:
+				m_keysPressed[KEY_S] = false;
 				break;
 			}
 		}

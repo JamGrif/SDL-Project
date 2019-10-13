@@ -1,9 +1,11 @@
 #include "Player.h"
 
-Player::Player(SDL_Renderer* renderer, std::string fileName, int xpos, int ypos, bool useTransparency)
-	:Entity(renderer, fileName, xpos, ypos, useTransparency)
+Player::Player(SDL_Renderer* renderer, int xpos, int ypos, bool useTransparency, std::string DefaultPicture)
+	:Creature(renderer, xpos, ypos, useTransparency, DefaultPicture)
 {
-	std::cout << "Player made" << std::endl;
+	IdleAnimation = DefaultPicture;
+	RunningAnimation = "Assets/Player - Running.bmp";
+
 }
 
 Player::~Player()
@@ -11,18 +13,4 @@ Player::~Player()
 
 }
 
-void Player::MoveLeft()
-{
-	m_X-=m_Speed;
-}
 
-void Player::MoveRight()
-{
-	m_X+=m_Speed;
-}
-
-void Player::MoveJump()
-{
-	//to do
-
-}
