@@ -15,9 +15,13 @@ public:
 
 
 protected:
-	int m_Speed = 4;
+	int m_Speed;
 	int Rcount = 0;
 	int Lcount = 0;
+	int Ucount = 0;
+	int Dcount = 0;
+
+	int AnimationCount = 0;
 
 	std::string IdleAnimation;
 	std::string RunningAnimation;

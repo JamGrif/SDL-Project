@@ -7,6 +7,8 @@
 #include "Monster.h"
 #include <string>
 #include "SDL_ttf.h"
+#include "UI.h"
+
 class Bitmap; //04-01
 
 class Game
@@ -19,9 +21,11 @@ public:
 	void Render();
 
 	void CheckKeyPressed();
-	void UpdateText(std::string msg, int x, int y, TTF_Font* font, SDL_Color colour);
 
 private:
+	int m_ScreenWidth = 1280;
+	int m_ScreenHeight = 720;
+
 
 	SDL_Window* m_Window;
 	SDL_Renderer* m_Renderer;
@@ -30,12 +34,9 @@ private:
 	Monster* m_Monster;
 
 
-	TTF_Font* m_pSmallFont;
-	TTF_Font* m_pBigFont;
 
 
-
-
+	UI* ui = new UI();
 	Input* input = new Input();
 };
 

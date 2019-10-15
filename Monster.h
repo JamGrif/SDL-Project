@@ -6,6 +6,8 @@ class Monster :
 public:
 	Monster(SDL_Renderer* renderer, int xpos, int ypos, bool useTransparency, std::string DefaultPicture = "");
 
+	void Chase(int P_X, int P_Y);
+
 private:
 
 

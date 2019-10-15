@@ -16,27 +16,47 @@ Creature::Creature(SDL_Renderer* renderer, int xpos, int ypos, bool useTranspare
 
 void Creature::MoveUp()
 {
-	UpdateBitmap(IdleAnimation, true);
+	AnimationCount++;
+	if (CurrentAnimation == IdleAnimation && AnimationCount == 8)
+	{
+		AnimationCount = 0;
+		UpdateBitmap(RunningAnimation, true);
+	}
+	else if (CurrentAnimation == RunningAnimation && AnimationCount == 8)
+	{
+		AnimationCount = 0;
+		UpdateBitmap(IdleAnimation, true);
+	}
 	m_Y -= m_Speed;
 }
 
 void Creature::MoveDown()
 {
-	UpdateBitmap(IdleAnimation, true);
+	AnimationCount++;
+	if (CurrentAnimation == IdleAnimation && AnimationCount == 8)
+	{
+		AnimationCount = 0;
+		UpdateBitmap(RunningAnimation, true);
+	}
+	else if (CurrentAnimation == RunningAnimation && AnimationCount == 8)
+	{
+		AnimationCount = 0;
+		UpdateBitmap(IdleAnimation, true);
+	}
 	m_Y += m_Speed;
 }
 
 void Creature::MoveLeft()
 {
-	Lcount++;
-	if (CurrentAnimation == IdleAnimation && Lcount == 8)
+	AnimationCount++;
+	if (CurrentAnimation == IdleAnimation && AnimationCount == 8)
 	{
-		Lcount = 0;
+		AnimationCount = 0;
 		UpdateBitmap(RunningAnimation, true);
 	}
-	else if (CurrentAnimation == RunningAnimation && Lcount == 8)
+	else if (CurrentAnimation == RunningAnimation && AnimationCount == 8)
 	{
-		Lcount = 0;
+		AnimationCount = 0;
 		UpdateBitmap(IdleAnimation, true);
 	}
 	m_X -= m_Speed;
@@ -45,15 +65,15 @@ void Creature::MoveLeft()
 
 void Creature::MoveRight()
 {
-	Rcount++;
-	if (CurrentAnimation == IdleAnimation && Rcount == 8)
+	AnimationCount++;
+	if (CurrentAnimation == IdleAnimation && AnimationCount == 8)
 	{
-		Rcount = 0;
+		AnimationCount = 0;
 		UpdateBitmap(RunningAnimation, true);
 	}
-	else if (CurrentAnimation == RunningAnimation && Rcount == 8)
+	else if (CurrentAnimation == RunningAnimation && AnimationCount == 8)
 	{
-		Rcount = 0;
+		AnimationCount = 0;
 		UpdateBitmap(IdleAnimation, true);
 	}
 

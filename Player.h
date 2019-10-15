@@ -7,7 +7,8 @@ public:
 	Player(SDL_Renderer* renderer, int xpos, int ypos, bool useTransparency, std::string DefaultPicture = "");
 	~Player();
 
-	
+	int GetX();
+	int GetY();
 
 
 private:

@@ -11,7 +11,7 @@ Game::Game()
 
 	//create the window
 	//Title, initial x position, initial y position, width in pixels, height in pixels, window behaviour flags
-	m_Window = SDL_CreateWindow("Game Window", 300, 300, 640, 480, 0);
+	m_Window = SDL_CreateWindow("Game Window", 200, 200, m_ScreenWidth, m_ScreenHeight, 0);
 
 	if (!m_Window) 
 	{
@@ -33,13 +33,10 @@ Game::Game()
 		return;
 	}
 
-	//read in the font
-	m_pSmallFont = TTF_OpenFont("Assets/DejaVuSans.ttf", 15);
-	m_pBigFont = TTF_OpenFont("Assets/DejaVuSans.ttf", 50);
 
+	m_Player = new Player(m_Renderer, m_ScreenWidth/2, m_ScreenHeight/2, true, "Assets/Player.bmp");
+	m_Monster = new Monster(m_Renderer, 400, 700, true, "Assets/Monster.bmp");
 
-	m_Player = new Player(m_Renderer, 100, 100, true, "Assets/Player.bmp");
-	m_Monster = new Monster(m_Renderer, 200, 200, true, "Assets/monstertrans.bmp");
 
 }
 
@@ -51,9 +48,11 @@ Game::~Game()
 		delete m_Player;
 	}
 
-	//Destroy font
-	TTF_CloseFont(m_pBigFont);
-	TTF_CloseFont(m_pSmallFont);
+	delete input;
+	delete ui;
+
+
+	
 
 	//Destroy in reverse order they were created
 	if (m_Renderer) 
@@ -75,11 +74,14 @@ void Game::GameLoop()
 	
 		CheckKeyPressed();
 
+		m_Monster->Chase(m_Player->GetX(), m_Player->GetY());
+
+
 		m_Player->draw();
 
 		m_Monster->draw();
 
-		UpdateText("Small Red", 50, 10, m_pSmallFont, { 255,0,0 });
+		/*UpdateText("Small Red", 50, 10, m_pSmallFont, { 255,0,0 });
 		UpdateText("Small Blue", 50, 40, m_pSmallFont, { 0,0,255 });
 
 		char char_array[] = "Big White";
@@ -88,11 +90,13 @@ void Game::GameLoop()
 		std::string myString = "Big Green";
 		UpdateText(myString, 50, 70, m_pBigFont, { 0,255,0 });
 
-		/*int testNumber = 1234;
+		int testNumber = 1234;
 		std::string testString = "Test Number: ";
 		testString += to_string(testNumber);
 		UpdateText(testString, 50, 210, m_pBigFont, { 255,255,255 });
 		*/
+
+		//ui->UpdateText("Run from the monster!", 40, 410, { 255,255,255 }, m_Renderer);
 
 		Render();
 		SDL_Delay(16);
@@ -161,57 +165,5 @@ void Game::CheckKeyPressed()
 
 }
 
-// Text we want to display, screen X and Y positions, font we want to use, colour of text
-void Game::UpdateText(std::string msg, int x, int y, TTF_Font* font, SDL_Color colour)
-{
-	SDL_Surface* surface = nullptr;
-	SDL_Texture* texture = nullptr;
 
-	int texW = 0;
-	int texH = 0;
-
-	//SDL_Color color = {0, 0, 0 };
-
-	//char msg[100]
-	//sprintf_s(msg, "Checks: %d", m_checkTally);
-
-	surface = TTF_RenderText_Solid(font, msg.c_str(), colour);
-	if (!surface) 
-	{
-		//surface not loaded
-		printf("SURFACE for font not loaded! \n");
-		printf("%s\n", SDL_GetError());
-	}
-	else 
-	{
-		texture = SDL_CreateTextureFromSurface(m_Renderer, surface);
-		if (!texture) 
-		{
-			//surface not loaded
-			printf("SURFACE for font not loaded! \n");
-			printf("%s\n", SDL_GetError());
-		}
-		else 
-		{
-			SDL_QueryTexture(texture, NULL, NULL, &texW, &texH);
-			SDL_Rect textRect = { x, y, texW, texH };
-
-			SDL_RenderCopy(m_Renderer, texture, NULL, &textRect);
-		}
-
-	}
-
-	if (texture) 
-	{
-		SDL_DestroyTexture(texture);
-	}
-
-	if (surface) 
-	{
-		SDL_FreeSurface(surface);
-	}
-
-
-
-}
 

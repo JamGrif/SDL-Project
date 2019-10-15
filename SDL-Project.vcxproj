@@ -157,6 +157,7 @@ copy "$(SolutionDir)..\SDL-Project\SDL\lib\x86\zlib1.dll" "$(TargetDir)"
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Creature.h" />
@@ -165,6 +166,7 @@ copy "$(SolutionDir)..\SDL-Project\SDL\lib\x86\zlib1.dll" "$(TargetDir)"
     <ClInclude Include="Input.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="UI.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
