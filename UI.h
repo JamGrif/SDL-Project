@@ -16,7 +16,7 @@ public:
 private:
 
 	TTF_Font* m_pSmallFont;
-	TTF_Font* m_pBigFont;
+	TTF_Font* m_pBigFont = TTF_OpenFont("Assets/DejaVuSans.ttf", 50);
 
 
 };

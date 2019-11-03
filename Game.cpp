@@ -37,7 +37,9 @@ Game::Game()
 	m_Player = new Player(m_Renderer, m_ScreenWidth/2, m_ScreenHeight/2, true, "Assets/Player.bmp");
 	m_Monster = new Monster(m_Renderer, 400, 700, true, "Assets/Monster.bmp");
 
+	m_Sky = new Sky(m_Renderer, 0, 0, true, "Assets/Sky.bmp");
 
+	m_Level1 = new Level(m_Renderer, m_ScreenHeight, m_ScreenWidth);
 }
 
 Game::~Game()
@@ -48,6 +50,7 @@ Game::~Game()
 		delete m_Player;
 	}
 
+	delete m_Level1;
 	delete input;
 	delete ui;
 
@@ -68,43 +71,43 @@ Game::~Game()
 
 void Game::GameLoop()
 {
-	//!input->KeyIsPressed(KEY_ESCAPE)
-	while (!input->KeyIsPressed(KEY_ESCAPE)) //Game ends if escape is pressed
+	while (!input->KeyIsPressed(KEY_ESCAPE)) //Game ends if escape is pressed or player is eaten
 	{
+		
 	
 		CheckKeyPressed();
 
-		m_Monster->Chase(m_Player->GetX(), m_Player->GetY());
+		//m_Monster->Chase(m_Player->GetX(), m_Player->GetY());
 
+		m_Sky->draw();
 
 		m_Player->draw();
 
-		m_Monster->draw();
+		//m_Monster->draw();
 
-		/*UpdateText("Small Red", 50, 10, m_pSmallFont, { 255,0,0 });
-		UpdateText("Small Blue", 50, 40, m_pSmallFont, { 0,0,255 });
+		//ui->UpdateText("Run from the monster!", 250, 600, { 0,0,0 }, m_Renderer);
+		
 
-		char char_array[] = "Big White";
-		UpdateText(char_array, 50, 140, m_pBigFont, { 255,255,255 });
+		/*if (m_Monster->GetX() == m_Player->GetX() && m_Monster->GetY() == m_Player->GetY()) 
+		{
+			m_Player->PlayerEaten();
+			std::cout << "Player eaten, game should end" << std::endl;
+		}*/
+	
+		m_Level1->RenderLevel();
 
-		std::string myString = "Big Green";
-		UpdateText(myString, 50, 70, m_pBigFont, { 0,255,0 });
-
-		int testNumber = 1234;
-		std::string testString = "Test Number: ";
-		testString += to_string(testNumber);
-		UpdateText(testString, 50, 210, m_pBigFont, { 255,255,255 });
-		*/
-
-		//ui->UpdateText("Run from the monster!", 40, 410, { 255,255,255 }, m_Renderer);
 
 		Render();
 		SDL_Delay(16);
 
+
 	}
-	std::cout << "Game ended via escape" << std::endl;
+	//_getch();
+	std::cout << "Game ended " << std::endl;
 	delete input;
+	delete ui;
 	input = nullptr;
+	ui = nullptr;
 }
 
 

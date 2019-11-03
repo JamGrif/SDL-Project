@@ -66,4 +66,16 @@ void Entity::draw()
 		SDL_Rect destRect = { m_X, m_Y, m_pbitmapSurface->w, m_pbitmapSurface->h }; //Where on screen bitmap is drawn to and how big it will appear
 		SDL_RenderCopy(m_pRenderer, m_pbitmapTexture, NULL, &destRect);
 	}
+	
+}
+
+
+int Entity::GetX()
+{
+	return m_X;
+}
+
+int Entity::GetY()
+{
+	return m_Y;
 }

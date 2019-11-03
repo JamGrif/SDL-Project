@@ -5,8 +5,7 @@ Creature::Creature(SDL_Renderer* renderer, int xpos, int ypos, bool useTranspare
 
 {
 	IdleAnimation = DefaultPicture;
-	//IdleAnimation = "Assets/Player.bmp";
-	//RunningAnimation = "Assets/Player - Running.bmp";
+
 	if (IdleAnimation == "") 
 	{
 		IdleAnimation = "Assets/MissingTexture.bmp";
@@ -20,14 +19,15 @@ void Creature::MoveUp()
 	if (CurrentAnimation == IdleAnimation && AnimationCount == 8)
 	{
 		AnimationCount = 0;
-		UpdateBitmap(RunningAnimation, true);
+		//UpdateBitmap(RunningAnimation, true);
 	}
 	else if (CurrentAnimation == RunningAnimation && AnimationCount == 8)
 	{
 		AnimationCount = 0;
-		UpdateBitmap(IdleAnimation, true);
+		//UpdateBitmap(IdleAnimation, true);
 	}
 	m_Y -= m_Speed;
+
 }
 
 void Creature::MoveDown()
@@ -36,14 +36,15 @@ void Creature::MoveDown()
 	if (CurrentAnimation == IdleAnimation && AnimationCount == 8)
 	{
 		AnimationCount = 0;
-		UpdateBitmap(RunningAnimation, true);
+		//UpdateBitmap(RunningAnimation, true);
 	}
 	else if (CurrentAnimation == RunningAnimation && AnimationCount == 8)
 	{
 		AnimationCount = 0;
-		UpdateBitmap(IdleAnimation, true);
+		//UpdateBitmap(IdleAnimation, true);
 	}
 	m_Y += m_Speed;
+
 }
 
 void Creature::MoveLeft()
@@ -52,12 +53,12 @@ void Creature::MoveLeft()
 	if (CurrentAnimation == IdleAnimation && AnimationCount == 8)
 	{
 		AnimationCount = 0;
-		UpdateBitmap(RunningAnimation, true);
+		//UpdateBitmap(RunningAnimation, true);
 	}
 	else if (CurrentAnimation == RunningAnimation && AnimationCount == 8)
 	{
 		AnimationCount = 0;
-		UpdateBitmap(IdleAnimation, true);
+		//UpdateBitmap(IdleAnimation, true);
 	}
 	m_X -= m_Speed;
 
@@ -69,14 +70,13 @@ void Creature::MoveRight()
 	if (CurrentAnimation == IdleAnimation && AnimationCount == 8)
 	{
 		AnimationCount = 0;
-		UpdateBitmap(RunningAnimation, true);
+		//UpdateBitmap(RunningAnimation, true);
 	}
 	else if (CurrentAnimation == RunningAnimation && AnimationCount == 8)
 	{
 		AnimationCount = 0;
-		UpdateBitmap(IdleAnimation, true);
+		//UpdateBitmap(IdleAnimation, true);
 	}
-
 	m_X += m_Speed;
 
 }

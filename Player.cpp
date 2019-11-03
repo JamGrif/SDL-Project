@@ -6,8 +6,8 @@ Player::Player(SDL_Renderer* renderer, int xpos, int ypos, bool useTransparency,
 	IdleAnimation = DefaultPicture;
 	RunningAnimation = "Assets/Player - Running.bmp";
 
-	m_Speed = 5;
-
+	m_Speed = 3;
+	Eaten = false;
 }
 
 
@@ -16,14 +16,16 @@ Player::~Player()
 
 }
 
-int Player::GetX()
+void Player::PlayerEaten()
 {
-	return m_X;
+	Eaten = true;
 }
 
-int Player::GetY()
+bool Player::GetEaten()
 {
-	return m_Y;
+	return Eaten;
 }
+
+
 
 

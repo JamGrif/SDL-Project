@@ -30,6 +30,8 @@ private:
 	int m_XMouse = 0;
 	int m_YMouse = 0;
 
+	KEYS_PRESSED_LIST KeyList;
+	MOUSE_PRESSED_LIST MouseList;
 
 	SDL_Event m_InputEvent;
 	

@@ -3,6 +3,7 @@
 #include "SDL.h"
 #include "SDL_render.h"
 #include <iostream>
+#include <vector>
 struct SDL_Surface; //container for the raw pixels we want to display
 struct SDL_Texture;
 struct SDL_Renderer;
@@ -14,6 +15,9 @@ public:
 
 	void UpdateBitmap(std::string filename, bool useTransparency);
 	void draw();
+
+	int GetX();
+	int GetY();
 
 
 protected:
