@@ -7,7 +7,24 @@ Level::Level(SDL_Renderer* renderer, int ScreenWidth, int ScreenHeight)
 	m_ScreenWidth = ScreenWidth;
 	m_ScreenHeight = ScreenHeight;
 
-	m_DrawingPosition = 0;
+	//By default, the program loads level 1 first
+	LoadLevel(1);
+}
+
+Level::~Level()
+{
+
+}
+
+
+void Level::LoadLevel(int LevelToLoad)
+{
+	if (m_GridLayout.empty() == false) //If level is already in vector then clear the vector for next level
+	{
+		m_GridLayout.clear();
+	}
+
+	std::string Level = "Assets/Level" + std::to_string(LevelToLoad) + ".txt";
 
 	std::string ThingToAdd;
 	std::string temp;
@@ -15,27 +32,27 @@ Level::Level(SDL_Renderer* renderer, int ScreenWidth, int ScreenHeight)
 
 	//Open selected levels text file
 	std::ifstream SaveLevelFromText;
-	SaveLevelFromText.open("Assets/Level1.txt");
+	SaveLevelFromText.open(Level);
 
-	if (SaveLevelFromText.fail()) 
+	if (SaveLevelFromText.fail())
 	{
 		std::cout << "Failed to open text file, reset program." << std::endl;
 		exit(0);
-	}	
+	}
 
 	//Get level width. Get first line of level and count characters
 	SaveLevelFromText.seekg(0) >> temp;
 	m_LevelWidth = temp.length();
 
 	//Get level height. Get how many lines in textfile
-	/*while (getline(SaveLevelFromText, temp)) 
+	/*while (getline(SaveLevelFromText, temp))
 	{
 		m_LevelHeight++;
 	}*/
 	m_LevelHeight = 12;
 
 	//Goes through the level text file and adds that character into a vector which is used for drawing
-	for (int j = 0; j < m_LevelHeight; j++) 
+	for (int j = 0; j < m_LevelHeight; j++)
 	{
 		for (int i = 0; i < m_LevelWidth; i++)
 		{
@@ -44,9 +61,13 @@ Level::Level(SDL_Renderer* renderer, int ScreenWidth, int ScreenHeight)
 			{
 				m_GridLayout.push_back("G");
 			}
-			else if(ThingToAdd.at(0) == 'D')
+			else if (ThingToAdd.at(0) == 'D')
 			{
 				m_GridLayout.push_back("D");
+			}
+			else if (ThingToAdd.at(0) == 'S')
+			{
+				m_GridLayout.push_back("S");
 			}
 			else //If program isnt sure whats in text position then adds empty space
 			{
@@ -57,15 +78,10 @@ Level::Level(SDL_Renderer* renderer, int ScreenWidth, int ScreenHeight)
 		ReadingPosition = ReadingPosition + 2;
 	}
 	SaveLevelFromText.close();
+	
 }
 
-Level::~Level()
-{
-
-}
-
-
-void Level::RenderLevel() 
+void Level::RenderLevel()
 {
 	m_DrawingPosition = 0;
 	m_XDrawTo = 0;
@@ -82,6 +98,10 @@ void Level::RenderLevel()
 			else if (m_GridLayout.at(m_DrawingPosition) == "D") //Dirt block
 			{
 				DrawBlockOnPosition(m_XDrawTo, m_YDrawTo, DirtBlock);
+			}
+			else if (m_GridLayout.at(m_DrawingPosition) == "S") //Dirt block
+			{
+				DrawBlockOnPosition(m_XDrawTo, m_YDrawTo, StoneBlock);
 			}
 			else //Empty space
 			{

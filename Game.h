@@ -35,12 +35,14 @@ private:
 
 	Player* m_Player; //04-01
 	Monster* m_Monster;
-	Level* m_Level1;
+	Level* level;
 
 	Sky* m_Sky;
 
 	int x = 50;
 
+	std::string Icon = "Assets/Icon.bmp";
+	SDL_Surface* m_IconSurface;
 
 	UI* ui = new UI();
 	Input* input = new Input();

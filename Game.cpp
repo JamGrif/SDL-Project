@@ -33,13 +33,15 @@ Game::Game()
 		return;
 	}
 
+	m_IconSurface = SDL_LoadBMP(Icon.c_str());
+	SDL_SetWindowIcon(m_Window, m_IconSurface);
 
-	m_Player = new Player(m_Renderer, m_ScreenWidth/2, m_ScreenHeight/2, true, "Assets/Player.bmp");
-	m_Monster = new Monster(m_Renderer, 400, 700, true, "Assets/Monster.bmp");
+	m_Player = new Player(m_Renderer, m_ScreenWidth/6, m_ScreenHeight/2, true, "Assets/Player.bmp");
+	//m_Monster = new Monster(m_Renderer, 400, 700, true, "Assets/Monster.bmp");
 
 	m_Sky = new Sky(m_Renderer, 0, 0, true, "Assets/Sky.bmp");
 
-	m_Level1 = new Level(m_Renderer, m_ScreenHeight, m_ScreenWidth);
+	level = new Level(m_Renderer, m_ScreenHeight, m_ScreenWidth);
 }
 
 Game::~Game()
@@ -50,7 +52,7 @@ Game::~Game()
 		delete m_Player;
 	}
 
-	delete m_Level1;
+	delete level;
 	delete input;
 	delete ui;
 
@@ -71,38 +73,26 @@ Game::~Game()
 
 void Game::GameLoop()
 {
-	while (!input->KeyIsPressed(KEY_ESCAPE)) //Game ends if escape is pressed or player is eaten
+
+	while (!input->KeyIsPressed(KEY_ESCAPE)) //Game ends if escape is pressed 
 	{
 		
-	
 		CheckKeyPressed();
-
-		//m_Monster->Chase(m_Player->GetX(), m_Player->GetY());
 
 		m_Sky->draw();
 
 		m_Player->draw();
-
-		//m_Monster->draw();
-
-		//ui->UpdateText("Run from the monster!", 250, 600, { 0,0,0 }, m_Renderer);
 		
+		level->RenderLevel();
 
-		/*if (m_Monster->GetX() == m_Player->GetX() && m_Monster->GetY() == m_Player->GetY()) 
-		{
-			m_Player->PlayerEaten();
-			std::cout << "Player eaten, game should end" << std::endl;
-		}*/
-	
-		m_Level1->RenderLevel();
-
+		ui->UpdateText("This is some text!", 250, 600, { 0,0,0 }, m_Renderer);
 
 		Render();
+
 		SDL_Delay(16);
 
-
 	}
-	//_getch();
+
 	std::cout << "Game ended " << std::endl;
 	delete input;
 	delete ui;
@@ -113,11 +103,10 @@ void Game::GameLoop()
 
 void Game::Render()
 {
-
-	//show what we've drawn
+	//show what was drawn
 	SDL_RenderPresent(m_Renderer);
 
-	//wipe the display to the colour we just set
+	//wipe the display 
 	SDL_RenderClear(m_Renderer);
 
 }
@@ -150,6 +139,14 @@ void Game::CheckKeyPressed()
 	if (input->KeyIsPressed(KEY_R)) 
 	{
 		std::cout << "R key is pressed!" << std::endl;
+	}
+	if (input->KeyIsPressed(KEY_1))
+	{
+		level->LoadLevel(1);
+	}
+	if (input->KeyIsPressed(KEY_2))
+	{
+		level->LoadLevel(2);
 	}
 	//Mouse
 	if (input->MouseIsPressed(MOUSE_LEFT)) 

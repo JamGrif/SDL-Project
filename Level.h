@@ -13,6 +13,7 @@ public:
 	Level(SDL_Renderer* renderer, int ScreenWidth, int ScreenHeight);
 	~Level();
 
+	void LoadLevel(int LevelToLoad);
 	void RenderLevel();
 	void DrawBlockOnPosition(int X, int Y, std::string Asset);
 
@@ -37,7 +38,7 @@ private:
 
 	std::string GrassBlock = "Assets/GrassBlock.bmp";
 	std::string DirtBlock = "Assets/DirtBlock.bmp";
-
+	std::string StoneBlock = "Assets/StoneBlock.bmp";
 
 	std::vector<std::string> m_GridLayout;
 	

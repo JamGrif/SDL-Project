@@ -15,70 +15,22 @@ Creature::Creature(SDL_Renderer* renderer, int xpos, int ypos, bool useTranspare
 
 void Creature::MoveUp()
 {
-	AnimationCount++;
-	if (CurrentAnimation == IdleAnimation && AnimationCount == 8)
-	{
-		AnimationCount = 0;
-		//UpdateBitmap(RunningAnimation, true);
-	}
-	else if (CurrentAnimation == RunningAnimation && AnimationCount == 8)
-	{
-		AnimationCount = 0;
-		//UpdateBitmap(IdleAnimation, true);
-	}
 	m_Y -= m_Speed;
-
 }
 
 void Creature::MoveDown()
 {
-	AnimationCount++;
-	if (CurrentAnimation == IdleAnimation && AnimationCount == 8)
-	{
-		AnimationCount = 0;
-		//UpdateBitmap(RunningAnimation, true);
-	}
-	else if (CurrentAnimation == RunningAnimation && AnimationCount == 8)
-	{
-		AnimationCount = 0;
-		//UpdateBitmap(IdleAnimation, true);
-	}
 	m_Y += m_Speed;
-
 }
 
 void Creature::MoveLeft()
 {
-	AnimationCount++;
-	if (CurrentAnimation == IdleAnimation && AnimationCount == 8)
-	{
-		AnimationCount = 0;
-		//UpdateBitmap(RunningAnimation, true);
-	}
-	else if (CurrentAnimation == RunningAnimation && AnimationCount == 8)
-	{
-		AnimationCount = 0;
-		//UpdateBitmap(IdleAnimation, true);
-	}
 	m_X -= m_Speed;
-
 }
 
 void Creature::MoveRight()
 {
-	AnimationCount++;
-	if (CurrentAnimation == IdleAnimation && AnimationCount == 8)
-	{
-		AnimationCount = 0;
-		//UpdateBitmap(RunningAnimation, true);
-	}
-	else if (CurrentAnimation == RunningAnimation && AnimationCount == 8)
-	{
-		AnimationCount = 0;
-		//UpdateBitmap(IdleAnimation, true);
-	}
 	m_X += m_Speed;
-
 }
 
 void Creature::MoveJump()

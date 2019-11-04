@@ -3,6 +3,7 @@
 UI::UI()
 {
 	std::cout << "UI created!" << std::endl;
+
 	//read in the font
 	m_pSmallFont = TTF_OpenFont("Assets/DejaVuSans.ttf", 15);
 	//m_pBigFont = TTF_OpenFont("Assets/DejaVuSans.ttf", 50);
@@ -14,8 +15,6 @@ UI::~UI()
 	//Destroy font
 	TTF_CloseFont(m_pBigFont);
 	TTF_CloseFont(m_pSmallFont);
-
-
 }
 
 // Text we want to display, screen X and Y positions, font we want to use, colour of text
@@ -28,13 +27,13 @@ void UI::UpdateText(std::string msg, int x, int y, SDL_Color colour, SDL_Rendere
 	int texW = 0;
 	int texH = 0;
 
-	//SDL_Color color = {0, 0, 0 };
+	SDL_Color color = {R, G, B };
 
 	//char msg[100]
 	//sprintf_s(msg, "Checks: %d", m_checkTally);
 
 	m_pBigFont = TTF_OpenFont("Assets/DejaVuSans.ttf", 75);
-	surface = TTF_RenderText_Solid(m_pBigFont, msg.c_str(), colour);
+	surface = TTF_RenderText_Solid(m_pBigFont, msg.c_str(), color);
 
 	if (!surface)
 	{
@@ -71,5 +70,5 @@ void UI::UpdateText(std::string msg, int x, int y, SDL_Color colour, SDL_Rendere
 		SDL_FreeSurface(surface);
 	}
 
-
+	TTF_CloseFont(m_pBigFont);
 }

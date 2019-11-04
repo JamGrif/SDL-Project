@@ -44,6 +44,12 @@ void Input::Update()
 			case SDLK_s:
 				m_keysPressed[KEY_S] = true;
 				break;
+			case SDLK_1:
+				m_keysPressed[KEY_1] = true;
+				break;
+			case SDLK_2:
+				m_keysPressed[KEY_2] = true;
+				break;
 			}
 		}
 
@@ -70,6 +76,12 @@ void Input::Update()
 				break;
 			case SDLK_s:
 				m_keysPressed[KEY_S] = false;
+				break;
+			case SDLK_1:
+				m_keysPressed[KEY_1] = false;
+				break;
+			case SDLK_2:
+				m_keysPressed[KEY_2] = false;
 				break;
 			}
 		}
