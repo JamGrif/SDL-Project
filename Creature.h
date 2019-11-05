@@ -39,6 +39,8 @@ protected:
 	int m_Height;
 
 	bool CanMove = false;
+	
+	bool IsGrounded;
 
 	Level* levelinfo;
 

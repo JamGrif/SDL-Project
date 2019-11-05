@@ -147,10 +147,62 @@ void Level::DrawBlockOnPosition(int X, int Y, std::string Asset)
 
 bool Level::IsWall(int TopX, int TopY, int BotX, int BotY) 
 {
-	std::cout << "IsWall is called." << std::endl;
+	XVectorPos = 0;
+	YVectorPos = 0;
+	VectorPos = 0;
+	VectorPositionObject = "";
 
+	//first check if top x / y are going into a block
 
+	//find out how many times TopX goes into 64 (64 equals the size of a block)
+	while (TopX > 64) 
+	{
+		TopX -= 64;
+		XVectorPos++;
+	}
 
+	//same for TopY
+	while (TopY > 64) 
+	{
+		TopY-= 64;
+		YVectorPos += 20; //20 blocks are visable in each row so adding 20 goes to the next line on screen
+	}
+
+	//add both results together and use that number to look in the level vector
+	VectorPos = XVectorPos + YVectorPos;
+	std::cout << "looking in vector position " << VectorPos << "." << std::endl;
+
+	//if position doesnt equal "." then there is something there so return true (meaning theres a wall there)
+	if (m_GridLayout.at(VectorPos) != ".")
+	{
+		return true;
+	}
+
+	//else do the same for BotX and BotY
+	XVectorPos = 0;
+	YVectorPos = 0;
+	VectorPos = 0;
+	VectorPositionObject = "";
+	
+	while (BotX > 64)
+	{
+		BotX -= 64;
+		XVectorPos++;
+	}
+
+	while (BotY > 64)
+	{
+		BotY -= 64;
+		YVectorPos+= 20;
+	}
+
+	VectorPos = XVectorPos + YVectorPos;
+	std::cout << "looking in vector position " << VectorPos << "." << std::endl;
+
+	if (m_GridLayout.at(VectorPos) != ".")
+	{
+		return true;
+	}
 
 	return false;
 }

@@ -32,6 +32,12 @@ private:
 
 	int m_LoadedLevel = 0;
 
+	//Collision
+	int XVectorPos = 0;
+	int YVectorPos = 0;
+	int VectorPos = 0;
+	std::string VectorPositionObject = "";
+
 	int m_ScreenWidth, m_ScreenHeight;
 
 	Uint32 BlockColour = NULL;
