@@ -23,6 +23,8 @@ public:
 
 	void Render();
 
+	void ChangeIcon();
+
 	void CheckKeyPressed();
 
 private:
@@ -38,8 +40,6 @@ private:
 	Level* level;
 
 	Sky* m_Sky;
-
-	int x = 50;
 
 	std::string Icon = "Assets/Icon.bmp";
 	SDL_Surface* m_IconSurface;

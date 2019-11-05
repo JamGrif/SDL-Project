@@ -19,65 +19,76 @@ Level::~Level()
 
 void Level::LoadLevel(int LevelToLoad)
 {
-	if (m_GridLayout.empty() == false) //If level is already in vector then clear the vector for next level
+	
+	if (LevelToLoad != m_LoadedLevel) 
 	{
-		m_GridLayout.clear();
-	}
+		std::cout << "loading level " << LevelToLoad << std::endl;
+		m_LoadedLevel = LevelToLoad;
 
-	std::string Level = "Assets/Level" + std::to_string(LevelToLoad) + ".txt";
-
-	std::string ThingToAdd;
-	std::string temp;
-	int ReadingPosition = 0;
-
-	//Open selected levels text file
-	std::ifstream SaveLevelFromText;
-	SaveLevelFromText.open(Level);
-
-	if (SaveLevelFromText.fail())
-	{
-		std::cout << "Failed to open text file, reset program." << std::endl;
-		exit(0);
-	}
-
-	//Get level width. Get first line of level and count characters
-	SaveLevelFromText.seekg(0) >> temp;
-	m_LevelWidth = temp.length();
-
-	//Get level height. Get how many lines in textfile
-	/*while (getline(SaveLevelFromText, temp))
-	{
-		m_LevelHeight++;
-	}*/
-	m_LevelHeight = 12;
-
-	//Goes through the level text file and adds that character into a vector which is used for drawing
-	for (int j = 0; j < m_LevelHeight; j++)
-	{
-		for (int i = 0; i < m_LevelWidth; i++)
+		if (m_GridLayout.empty() == false) //If level is already in vector then clear the vector for next level
 		{
-			SaveLevelFromText.seekg(ReadingPosition) >> ThingToAdd;
-			if (ThingToAdd.at(0) == 'G')
-			{
-				m_GridLayout.push_back("G");
-			}
-			else if (ThingToAdd.at(0) == 'D')
-			{
-				m_GridLayout.push_back("D");
-			}
-			else if (ThingToAdd.at(0) == 'S')
-			{
-				m_GridLayout.push_back("S");
-			}
-			else //If program isnt sure whats in text position then adds empty space
-			{
-				m_GridLayout.push_back(".");
-			}
-			ReadingPosition++;
+			m_GridLayout.clear();
 		}
-		ReadingPosition = ReadingPosition + 2;
+
+		std::string Level = "Assets/Level" + std::to_string(LevelToLoad) + ".txt";
+
+		std::string ThingToAdd;
+		std::string temp;
+		int ReadingPosition = 0;
+
+		//Open selected levels text file
+		std::ifstream SaveLevelFromText;
+		SaveLevelFromText.open(Level);
+
+		if (SaveLevelFromText.fail())
+		{
+			std::cout << "Failed to open text file, reset program." << std::endl;
+			exit(0);
+		}
+
+		//Get level width. Get first line of level and count characters
+		SaveLevelFromText.seekg(0) >> temp;
+		m_LevelWidth = temp.length();
+
+		//Get level height. Get how many lines in textfile
+		/*while (getline(SaveLevelFromText, temp))
+		{
+			m_LevelHeight++;
+		}*/
+		m_LevelHeight = 12;
+
+		//Goes through the level text file and adds that character into a vector which is used for drawing
+		for (int j = 0; j < m_LevelHeight; j++)
+		{
+			for (int i = 0; i < m_LevelWidth; i++)
+			{
+				SaveLevelFromText.seekg(ReadingPosition) >> ThingToAdd;
+				if (ThingToAdd.at(0) == 'G')
+				{
+					m_GridLayout.push_back("G");
+				}
+				else if (ThingToAdd.at(0) == 'D')
+				{
+					m_GridLayout.push_back("D");
+				}
+				else if (ThingToAdd.at(0) == 'S')
+				{
+					m_GridLayout.push_back("S");
+				}
+				else //If program isnt sure whats in text position then adds empty space
+				{
+					m_GridLayout.push_back(".");
+				}
+				ReadingPosition++;
+			}
+			ReadingPosition = ReadingPosition + 2;
+		}
+		SaveLevelFromText.close();
+
 	}
-	SaveLevelFromText.close();
+	
+	
+	
 	
 }
 

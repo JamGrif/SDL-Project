@@ -56,9 +56,6 @@ Game::~Game()
 	delete input;
 	delete ui;
 
-
-	
-
 	//Destroy in reverse order they were created
 	if (m_Renderer) 
 	{
@@ -73,7 +70,6 @@ Game::~Game()
 
 void Game::GameLoop()
 {
-
 	while (!input->KeyIsPressed(KEY_ESCAPE)) //Game ends if escape is pressed 
 	{
 		
@@ -93,7 +89,7 @@ void Game::GameLoop()
 
 	}
 
-	std::cout << "Game ended " << std::endl;
+	std::cout << "Game ended." << std::endl;
 	delete input;
 	delete ui;
 	input = nullptr;

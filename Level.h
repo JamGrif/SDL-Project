@@ -28,6 +28,8 @@ private:
 	int m_YDrawTo = 0;
 	int m_DrawingPosition;
 
+	int m_LoadedLevel = 0;
+
 	int m_ScreenWidth, m_ScreenHeight;
 
 	Uint32 BlockColour = NULL;
