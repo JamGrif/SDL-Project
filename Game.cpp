@@ -36,12 +36,13 @@ Game::Game()
 	m_IconSurface = SDL_LoadBMP(Icon.c_str());
 	SDL_SetWindowIcon(m_Window, m_IconSurface);
 
-	m_Player = new Player(m_Renderer, m_ScreenWidth/6, m_ScreenHeight/2, true, "Assets/Player.bmp");
-	//m_Monster = new Monster(m_Renderer, 400, 700, true, "Assets/Monster.bmp");
+	level = new Level(m_Renderer, m_ScreenHeight, m_ScreenWidth);
+
+	m_Player = new Player(m_Renderer, m_ScreenWidth/6, m_ScreenHeight/2, true, level, "Assets/Player.bmp");
 
 	m_Sky = new Sky(m_Renderer, 0, 0, true, "Assets/Sky.bmp");
 
-	level = new Level(m_Renderer, m_ScreenHeight, m_ScreenWidth);
+	
 }
 
 Game::~Game()
@@ -113,28 +114,29 @@ void Game::CheckKeyPressed()
 	//Keyboard
 	if (input->KeyIsPressed(KEY_D))
 	{
-		m_Player->MoveRight();
+		m_Player->Move('r');
 	}
 	if (input->KeyIsPressed(KEY_A))
 	{
-		m_Player->MoveLeft();
+		m_Player->Move('l');
 	}
 	if (input->KeyIsPressed(KEY_W)) 
 	{
-		m_Player->MoveUp();
+		m_Player->Move('u');
 	}
 	if (input->KeyIsPressed(KEY_S))
 	{
-		m_Player->MoveDown();
+		m_Player->Move('d');
 	}
 	if (input->KeyIsPressed(KEY_SPACE))
 	{
-		m_Player->MoveJump();
+		//m_Player->MoveJump();
 		std::cout << "Space key is pressed!" << std::endl;
 	}
 	if (input->KeyIsPressed(KEY_R)) 
 	{
-		std::cout << "R key is pressed!" << std::endl;
+		//std::cout << "R key is pressed!" << std::endl;
+		m_Player->DisplayPosition();
 	}
 	if (input->KeyIsPressed(KEY_1))
 	{

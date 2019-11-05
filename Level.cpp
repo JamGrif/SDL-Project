@@ -145,3 +145,13 @@ void Level::DrawBlockOnPosition(int X, int Y, std::string Asset)
 	
 }
 
+bool Level::IsWall(int TopX, int TopY, int BotX, int BotY) 
+{
+	std::cout << "IsWall is called." << std::endl;
+
+
+
+
+	return false;
+}
+

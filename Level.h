@@ -17,6 +17,8 @@ public:
 	void RenderLevel();
 	void DrawBlockOnPosition(int X, int Y, std::string Asset);
 
+	bool IsWall(int TopX, int TopY, int BotX, int BotY);
+
 private:
 	int m_BlockWidth = 64;
 	int m_BlockHeight = 64;

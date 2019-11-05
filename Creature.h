@@ -1,17 +1,17 @@
 #pragma once
 #include "Entity.h"
+#include "Level.h"
 class Creature :
 	public Entity
 {
 public:
-	Creature(SDL_Renderer* renderer, int xpos, int ypos, bool useTransparency, std::string animation = "");
+	Creature(SDL_Renderer* renderer, int xpos, int ypos, bool useTransparency, Level* level, std::string animation = "");
 
-
-	void MoveUp();
-	void MoveDown();
-	void MoveLeft();
-	void MoveRight();
 	void MoveJump();
+
+	void Move(char Direction);
+
+	void DisplayPosition();
 
 
 protected:
@@ -21,10 +21,26 @@ protected:
 	int Ucount = 0;
 	int Dcount = 0;
 
+	int TopLeftPosX;
+	int TopLeftPosY;
+	int TopRightPosX;
+	int TopRightPosY;
+	int BotLeftPosX;
+	int BotLeftPosY;
+	int BotRightPosX;
+	int BotRightPosY;
+
 	int AnimationCount = 0;
 
 	std::string IdleAnimation;
 	std::string RunningAnimation;
+
+	int m_Width;
+	int m_Height;
+
+	bool CanMove = false;
+
+	Level* levelinfo;
 
 };
 

@@ -4,6 +4,7 @@
 #include "SDL_render.h"
 #include <iostream>
 #include <vector>
+
 struct SDL_Surface; //container for the raw pixels we want to display
 struct SDL_Texture;
 struct SDL_Renderer;
@@ -27,6 +28,8 @@ protected:
 
 	int m_X = 0;
 	int m_Y = 0;
+	int m_PrevX = 0;
+	int m_PrevY = 0;
 
 	std::string Filename = "";
 

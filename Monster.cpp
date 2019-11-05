@@ -1,7 +1,7 @@
 #include "Monster.h"
 
-Monster::Monster(SDL_Renderer* renderer, int xpos, int ypos, bool useTransparency, std::string DefaultPicture)
-	:Creature(renderer, xpos, ypos, useTransparency, DefaultPicture)
+Monster::Monster(SDL_Renderer* renderer, int xpos, int ypos, bool useTransparency, Level* pLevel, std::string DefaultPicture)
+	:Creature(renderer, xpos, ypos, useTransparency, pLevel, DefaultPicture)
 {
 	
 	RunningAnimation = "Assets/Monster - Running.bmp";
@@ -14,25 +14,25 @@ void Monster::Chase(int P_X, int P_Y)
 	if (m_X < P_X)
 	{
 		
-		MoveRight();
+		//MoveRight();
 		
 	}
 
 	else if (m_X > P_X)
 	{
 		
-		MoveLeft();
+		//MoveLeft();
 	}
 
 	if (m_Y < P_Y)
 	{
 		
-		MoveDown();
+		//MoveDown();
 	}
 
 	else if (m_Y > P_Y)
 	{
 		
-		MoveUp();
+		//MoveUp();
 	}
 }
