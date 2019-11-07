@@ -125,11 +125,11 @@ void Game::CheckKeyPressed()
 	}
 	if (input->KeyIsPressed(KEY_W)) 
 	{
-		//m_Player->Move('u');
+		m_Player->Move('u');
 	}
 	if (input->KeyIsPressed(KEY_S))
 	{
-		//m_Player->Move('d');
+		m_Player->Move('d');
 	}
 	if (input->KeyIsPressed(KEY_SPACE))
 	{

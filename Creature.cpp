@@ -31,7 +31,7 @@ void Creature::Move(char Direction)
 
 	if (Direction == 'u') 
 	{
-		//m_Y -= m_Speed;
+		m_Y -= m_Speed;
 	}
 	else if (Direction == 'd') 
 	{
