@@ -76,16 +76,19 @@ void Game::GameLoop()
 		
 		CheckKeyPressed();
 
+		//Calculations stuff
+		//m_Player->Physics();
+
+
+
+		//Drawing stuff
 		m_Sky->draw();
-
 		m_Player->draw();
-		
 		level->RenderLevel();
-
 		ui->UpdateText("This is some text!", 250, 600, { 0,0,0 }, m_Renderer);
 
+		//Render stuff
 		Render();
-
 		SDL_Delay(16);
 
 	}
@@ -130,7 +133,7 @@ void Game::CheckKeyPressed()
 	}
 	if (input->KeyIsPressed(KEY_SPACE))
 	{
-		//m_Player->MoveJump();
+		m_Player->Move('u');
 		std::cout << "Space key is pressed!" << std::endl;
 	}
 	if (input->KeyIsPressed(KEY_R)) 

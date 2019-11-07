@@ -25,12 +25,13 @@ void Creature::MoveJump()
 
 void Creature::Move(char Direction)
 {
+	std::cout << "Move function called" << std::endl;
 	m_PrevX = m_X;
 	m_PrevY = m_Y;
 
 	if (Direction == 'u') 
 	{
-		m_Y -= m_Speed;
+		//m_Y -= m_Speed;
 	}
 	else if (Direction == 'd') 
 	{
@@ -38,24 +39,17 @@ void Creature::Move(char Direction)
 	}
 	else if (Direction == 'l')
 	{
+		std::cout << "Should be moving left" << std::endl;
 		m_X -= m_Speed;
 	}
 	else if (Direction == 'r')
 	{
+		std::cout << "Should be moving right" << std::endl;
 		m_X += m_Speed;
 	}
 
-	TopLeftPosX = m_X;
-	TopLeftPosY = m_Y;
-
-	TopRightPosX = m_X + m_Width - 1;
-	TopRightPosY = m_Y;
-
-	BotLeftPosX = m_X;
-	BotLeftPosY = m_Y + m_Height - 1;
-
-	BotRightPosX = m_X + m_Width - 1;
-	BotRightPosY = m_Y + m_Height - 1;
+	//Collision stuff
+	GetCollisionPosition();
 
 	if (Direction == 'u')
 	{
@@ -79,19 +73,53 @@ void Creature::Move(char Direction)
 		m_X = m_PrevX;
 		m_Y = m_PrevY;
 	}
-
-	
 }
 
-void Creature::DisplayPosition() 
+void Creature::Physics()
 {
-	
+	GetCollisionPosition();
+	if (IsGrounded == false) 
+	{
+		std::cout << "Falling" << std::endl;
+		//first check if wall is below character. If so then isgrounded == true else move down
+		if (levelinfo->IsWall(BotLeftPosX, BotLeftPosY, BotRightPosX, BotRightPosY) == true) 
+		{
+			IsGrounded = true;
+		}
+		else 
+		{
+			m_Y += m_Gravity;
+		}
+	}
+
+
+
+
+
+
+
+}
+
+void Creature::GetCollisionPosition()
+{
+	TopLeftPosX = m_X;
+	TopLeftPosY = m_Y;
+
+	TopRightPosX = m_X + (m_Width - 1);
+	TopRightPosY = m_Y;
+
+	BotLeftPosX = m_X;
+	BotLeftPosY = m_Y + (m_Height - 1);
+
+	BotRightPosX = m_X + (m_Width - 1);
+	BotRightPosY = m_Y + (m_Height - 1);
+}
+
+void Creature::DisplayPosition()
+{
 	std::cout << "Creatures position is:" << std::endl;
 	std::cout << "Top left pos is " << TopLeftPosX << "," << TopLeftPosY << std::endl;
 	std::cout << "Top right pos is " << TopRightPosX << "," << TopRightPosY << std::endl;
 	std::cout << "Bottom left pos is " << BotLeftPosX << "," << BotLeftPosY << std::endl;
 	std::cout << "Bottom right pos is " << BotRightPosX << "," << BotRightPosY << std::endl;
-
-
-
 }

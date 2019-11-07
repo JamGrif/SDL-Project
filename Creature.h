@@ -11,6 +11,11 @@ public:
 
 	void Move(char Direction);
 
+
+
+	void Physics();
+
+	void GetCollisionPosition();
 	void DisplayPosition();
 
 
@@ -38,9 +43,12 @@ protected:
 	int m_Width;
 	int m_Height;
 
+	const int m_Gravity = 3;
+
 	bool CanMove = false;
 	
-	bool IsGrounded;
+	bool IsGrounded = false;
+	bool IsJumping = false;
 
 	Level* levelinfo;
 

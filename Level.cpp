@@ -170,9 +170,9 @@ bool Level::IsWall(int TopX, int TopY, int BotX, int BotY)
 
 	//add both results together and use that number to look in the level vector
 	VectorPos = XVectorPos + YVectorPos;
-	std::cout << "looking in vector position " << VectorPos << "." << std::endl;
+	//std::cout << "looking in vector position " << VectorPos << "." << std::endl;
 
-	//if position doesnt equal "." then there is something there so return true (meaning theres a wall there)
+	//if position doesnt equal "." then there is something there so return true (meaning there's a wall there)
 	if (m_GridLayout.at(VectorPos) != ".")
 	{
 		return true;
@@ -197,7 +197,7 @@ bool Level::IsWall(int TopX, int TopY, int BotX, int BotY)
 	}
 
 	VectorPos = XVectorPos + YVectorPos;
-	std::cout << "looking in vector position " << VectorPos << "." << std::endl;
+	//std::cout << "looking in vector position " << VectorPos << "." << std::endl;
 
 	if (m_GridLayout.at(VectorPos) != ".")
 	{
