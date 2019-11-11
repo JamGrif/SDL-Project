@@ -25,7 +25,7 @@ void Creature::MoveJump()
 
 void Creature::Move(char Direction)
 {
-	std::cout << "Move function called" << std::endl;
+	//std::cout << "Move function called" << std::endl;
 	m_PrevX = m_X;
 	m_PrevY = m_Y;
 
@@ -39,21 +39,23 @@ void Creature::Move(char Direction)
 	}
 	else if (Direction == 'l')
 	{
-		std::cout << "Should be moving left" << std::endl;
+		//std::cout << "Should be moving left" << std::endl;
 		m_X -= m_Speed;
 	}
 	else if (Direction == 'r')
 	{
-		std::cout << "Should be moving right" << std::endl;
+		//std::cout << "Should be moving right" << std::endl;
 		m_X += m_Speed;
 	}
 
 	//Collision stuff
-	GetCollisionPosition();
+	GetCollisionPosition(0);
+	TempSpeed = m_Speed;
 
 	if (Direction == 'u')
 	{
 		CanMove = levelinfo->IsWall(TopLeftPosX, TopLeftPosY, TopRightPosX, TopRightPosY) == true ? false : true;
+		
 	}
 	else if (Direction == 'd')
 	{
@@ -62,10 +64,30 @@ void Creature::Move(char Direction)
 	else if (Direction == 'l')
 	{
 		CanMove = levelinfo->IsWall(TopLeftPosX, TopLeftPosY, BotLeftPosX, BotLeftPosY) == true ? false : true;
+		while ((CanMove == false && TempSpeed != 0) || CanMove != true)
+		{
+			TempSpeed--;
+			GetCollisionPosition(-TempSpeed);
+			if (levelinfo->IsWall(TopLeftPosX, TopLeftPosY, BotLeftPosX, BotLeftPosY) == false)
+			{
+				m_X -= TempSpeed;
+				CanMove = true;
+			}
+		}
 	}
 	else if (Direction == 'r')
 	{
 		CanMove = levelinfo->IsWall(TopRightPosX, TopRightPosY, BotRightPosX, BotRightPosY) == true ? false : true;
+		while ((CanMove == false && TempSpeed != 0) || CanMove != true)
+		{
+			TempSpeed--;
+			GetCollisionPosition(TempSpeed);
+			if (levelinfo->IsWall(TopRightPosX, TopRightPosY, BotRightPosX, BotRightPosY) == false)
+			{
+				m_X += TempSpeed;
+				CanMove = true;
+			}
+		}
 	}
 
 	if (CanMove == false) 
@@ -77,7 +99,7 @@ void Creature::Move(char Direction)
 
 void Creature::Physics()
 {
-	GetCollisionPosition();
+	GetCollisionPosition(0);
 	if (IsGrounded == false) 
 	{
 		std::cout << "Falling" << std::endl;
@@ -100,18 +122,19 @@ void Creature::Physics()
 
 }
 
-void Creature::GetCollisionPosition()
+void Creature::GetCollisionPosition(int SpeedModifyer)
 {
-	TopLeftPosX = m_X;
+	//SpeedModifyer is used for creatures that have a speed above 1. It allows them to get as close to an object as they can
+	TopLeftPosX = m_X + SpeedModifyer;
 	TopLeftPosY = m_Y;
 
-	TopRightPosX = m_X + (m_Width - 1);
+	TopRightPosX = (m_X + (m_Width - 1)) + SpeedModifyer;
 	TopRightPosY = m_Y;
 
-	BotLeftPosX = m_X;
+	BotLeftPosX = m_X + SpeedModifyer;
 	BotLeftPosY = m_Y + (m_Height - 1);
 
-	BotRightPosX = m_X + (m_Width - 1);
+	BotRightPosX = (m_X + (m_Width - 1)) + SpeedModifyer;
 	BotRightPosY = m_Y + (m_Height - 1);
 }
 

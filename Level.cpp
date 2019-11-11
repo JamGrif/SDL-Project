@@ -110,7 +110,7 @@ void Level::RenderLevel()
 			{
 				DrawBlockOnPosition(m_XDrawTo, m_YDrawTo, DirtBlock);
 			}
-			else if (m_GridLayout.at(m_DrawingPosition) == "S") //Dirt block
+			else if (m_GridLayout.at(m_DrawingPosition) == "S") //Stone block
 			{
 				DrawBlockOnPosition(m_XDrawTo, m_YDrawTo, StoneBlock);
 			}
@@ -118,12 +118,12 @@ void Level::RenderLevel()
 			{
 
 			}
-			m_XDrawTo = m_XDrawTo + 64;
+			m_XDrawTo = m_XDrawTo + m_BlockWidth;
 			m_DrawingPosition++;
 		}
 
 		m_XDrawTo = 0;
-		m_YDrawTo = m_YDrawTo + 64;
+		m_YDrawTo = m_YDrawTo + m_BlockHeight;
 	}
 }
 

@@ -15,16 +15,19 @@ public:
 
 	void Physics();
 
-	void GetCollisionPosition();
+	void GetCollisionPosition(int speed);
 	void DisplayPosition();
 
 
 protected:
-	int m_Speed;
+	int m_Speed = 0;
+	int TempSpeed = 0;
 	int Rcount = 0;
 	int Lcount = 0;
 	int Ucount = 0;
 	int Dcount = 0;
+
+	
 
 	int TopLeftPosX;
 	int TopLeftPosY;
@@ -43,7 +46,7 @@ protected:
 	int m_Width;
 	int m_Height;
 
-	const int m_Gravity = 3;
+	const int m_Gravity = 1;
 
 	bool CanMove = false;
 	

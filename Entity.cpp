@@ -63,7 +63,7 @@ void Entity::draw()
 {
 	if (m_pbitmapTexture)
 	{
-		SDL_Rect destRect = { m_X, m_Y, m_pbitmapSurface->w, m_pbitmapSurface->h }; //Where on screen bitmap is drawn to and how big it will appear
+		SDL_Rect destRect = { m_X-1, m_Y-1, m_pbitmapSurface->w, m_pbitmapSurface->h }; //Where on screen bitmap is drawn to and how big it will appear
 		SDL_RenderCopy(m_pRenderer, m_pbitmapTexture, NULL, &destRect);
 	}
 	
