@@ -55,11 +55,31 @@ void Creature::Move(char Direction)
 	if (Direction == 'u')
 	{
 		CanMove = levelinfo->IsWall(TopLeftPosX, TopLeftPosY, TopRightPosX, TopRightPosY) == true ? false : true;
+		/*while ((CanMove == false && TempSpeed != 0) || CanMove != true)
+		{
+			TempSpeed--;
+			GetCollisionPosition(-TempSpeed);
+			if (levelinfo->IsWall(TopLeftPosX, TopLeftPosY, TopRightPosX, TopRightPosY) == false)
+			{
+				m_Y -= TempSpeed;
+				CanMove = true;
+			}
+		}*/
 		
 	}
 	else if (Direction == 'd')
 	{
-		CanMove = levelinfo->IsWall(BotLeftPosX, BotRightPosY, BotRightPosX, BotRightPosY) == true ? false : true;
+		CanMove = levelinfo->IsWall(BotLeftPosX, BotLeftPosY, BotRightPosX, BotRightPosY) == true ? false : true;
+		/*while ((CanMove == false && TempSpeed != 0) || CanMove != true)
+		{
+			TempSpeed--;
+			GetCollisionPosition(TempSpeed);
+			if (levelinfo->IsWall(BotLeftPosX, BotLeftPosY, BotRightPosX, BotRightPosY) == false)
+			{
+				m_Y += TempSpeed;
+				CanMove = true;
+			}
+		}*/
 	}
 	else if (Direction == 'l')
 	{

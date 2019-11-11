@@ -92,7 +92,7 @@ void Level::LoadLevel(int LevelToLoad)
 	
 }
 
-void Level::RenderLevel()
+void Level::RenderLevel(int PlayerX, int PlayerY)
 {
 	m_DrawingPosition = 0;
 	m_XDrawTo = 0;
@@ -165,7 +165,7 @@ bool Level::IsWall(int TopX, int TopY, int BotX, int BotY)
 	while (TopY > 64) 
 	{
 		TopY-= 64;
-		YVectorPos += 20; //20 blocks are visable in each row so adding 20 goes to the next line on screen
+		YVectorPos += m_LevelWidth; 
 	}
 
 	//add both results together and use that number to look in the level vector
@@ -193,7 +193,7 @@ bool Level::IsWall(int TopX, int TopY, int BotX, int BotY)
 	while (BotY > 64)
 	{
 		BotY -= 64;
-		YVectorPos+= 20;
+		YVectorPos+= m_LevelWidth;
 	}
 
 	VectorPos = XVectorPos + YVectorPos;

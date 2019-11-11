@@ -14,7 +14,7 @@ public:
 	~Level();
 
 	void LoadLevel(int LevelToLoad);
-	void RenderLevel();
+	void RenderLevel(int PlayerX, int PlayerY);
 	void DrawBlockOnPosition(int X, int Y, std::string Asset);
 
 	bool IsWall(int TopX, int TopY, int BotX, int BotY);
@@ -25,6 +25,10 @@ private:
 
 	int m_LevelWidth;
 	int m_LevelHeight;
+
+	//This is how many blocks can be shown on the screen at once
+	const int MaxBlockWidth = 20;
+	const int MaxBlockHeight = 12;
 
 	int m_XDrawTo = 0;
 	int m_YDrawTo = 0;

@@ -38,7 +38,7 @@ Game::Game()
 
 	level = new Level(m_Renderer, m_ScreenHeight, m_ScreenWidth);
 
-	m_Player = new Player(m_Renderer, m_ScreenWidth/6, m_ScreenHeight/2, true, level, "Assets/Player.bmp");
+	m_Player = new Player(m_Renderer, m_ScreenWidth/2, m_ScreenHeight/3, true, level, "Assets/Player.bmp");
 
 	m_Sky = new Sky(m_Renderer, 0, 0, true, "Assets/Sky.bmp");
 
@@ -84,7 +84,7 @@ void Game::GameLoop()
 		//Drawing stuff
 		m_Sky->draw();
 		m_Player->draw();
-		level->RenderLevel();
+		level->RenderLevel(m_Player->GetX(),m_Player->GetY());
 		ui->UpdateText("This is some text!", 250, 600, { 0,0,0 }, m_Renderer);
 
 		//Render stuff
@@ -125,11 +125,11 @@ void Game::CheckKeyPressed()
 	}
 	if (input->KeyIsPressed(KEY_W)) 
 	{
-		//m_Player->Move('u');
+		m_Player->Move('u');
 	}
 	if (input->KeyIsPressed(KEY_S))
 	{
-		//m_Player->Move('d');
+		m_Player->Move('d');
 	}
 	if (input->KeyIsPressed(KEY_SPACE))
 	{
