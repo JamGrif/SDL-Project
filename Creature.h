@@ -11,16 +11,20 @@ public:
 
 	void Move(char Direction);
 
+	void CloserToWall(int &position, int &FirstX, int &FirstY, int &SecondX, int &SecondY, bool PositivePositionChange, bool XPosChange);
+
 
 
 	void Physics();
 
-	void GetCollisionPosition(int speed);
+	void GetCollisionPosition(int speed, bool XPosChange);
 	void DisplayPosition();
 
 
 protected:
 	int m_Speed = 0;
+	int m_MaxJumpHeight = 0;
+	int m_CurrentJumpHeight = 0;
 	int TempSpeed = 0;
 	int Rcount = 0;
 	int Lcount = 0;

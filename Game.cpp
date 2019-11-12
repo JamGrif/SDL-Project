@@ -38,7 +38,7 @@ Game::Game()
 
 	level = new Level(m_Renderer, m_ScreenHeight, m_ScreenWidth);
 
-	m_Player = new Player(m_Renderer, m_ScreenWidth/2, m_ScreenHeight/3, true, level, "Assets/Player.bmp");
+	m_Player = new Player(m_Renderer, m_ScreenWidth/6, m_ScreenHeight/3, true, level, "Assets/Player.bmp");
 
 	m_Sky = new Sky(m_Renderer, 0, 0, true, "Assets/Sky.bmp");
 
@@ -77,7 +77,7 @@ void Game::GameLoop()
 		CheckKeyPressed();
 
 		//Calculations stuff
-		//m_Player->Physics();
+		m_Player->Physics();
 
 
 
@@ -125,16 +125,16 @@ void Game::CheckKeyPressed()
 	}
 	if (input->KeyIsPressed(KEY_W)) 
 	{
-		m_Player->Move('u');
+		//m_Player->Move('u');
 	}
 	if (input->KeyIsPressed(KEY_S))
 	{
-		m_Player->Move('d');
+		//m_Player->Move('d');
 	}
 	if (input->KeyIsPressed(KEY_SPACE))
 	{
-		m_Player->Move('u');
-		std::cout << "Space key is pressed!" << std::endl;
+		m_Player->MoveJump();
+		//std::cout << "Space key is pressed!" << std::endl;
 	}
 	if (input->KeyIsPressed(KEY_R)) 
 	{
