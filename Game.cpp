@@ -11,7 +11,7 @@ Game::Game()
 
 	//create the window
 	//Title, initial x position, initial y position, width in pixels, height in pixels, window behaviour flags
-	m_Window = SDL_CreateWindow("Game Window", 200, 200, m_ScreenWidth, m_ScreenHeight, 0);
+	m_Window = SDL_CreateWindow("Super Minecraft Bros", 200, 200, m_ScreenWidth, m_ScreenHeight, 0);
 
 	if (!m_Window) 
 	{
@@ -79,8 +79,6 @@ void Game::GameLoop()
 		//Calculations stuff
 		m_Player->Physics();
 
-
-
 		//Drawing stuff
 		m_Sky->draw();
 		m_Player->draw();
@@ -89,7 +87,7 @@ void Game::GameLoop()
 
 		//Render stuff
 		Render();
-		SDL_Delay(16);
+		//SDL_Delay(16);
 
 	}
 

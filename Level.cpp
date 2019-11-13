@@ -75,6 +75,14 @@ void Level::LoadLevel(int LevelToLoad)
 				{
 					m_GridLayout.push_back("S");
 				}
+				else if (ThingToAdd.at(0) == 'P') 
+				{
+					m_GridLayout.push_back("P");
+				}
+				else if (ThingToAdd.at(0) == 'C')
+				{
+					m_GridLayout.push_back("C");
+				}
 				else //If program isnt sure whats in text position then adds empty space
 				{
 					m_GridLayout.push_back(".");
@@ -114,6 +122,14 @@ void Level::RenderLevel(int PlayerX, int PlayerY)
 			{
 				DrawBlockOnPosition(m_XDrawTo, m_YDrawTo, StoneBlock);
 			}
+			else if (m_GridLayout.at(m_DrawingPosition) == "P") //Player spawn 
+			{
+				DrawBlockOnPosition(m_XDrawTo, m_YDrawTo, PlayerSpawn, true);
+			}
+			else if (m_GridLayout.at(m_DrawingPosition) == "C") //Coal Block
+			{
+				DrawBlockOnPosition(m_XDrawTo, m_YDrawTo, CoalBlock);
+			}
 			else //Empty space
 			{
 
@@ -127,10 +143,17 @@ void Level::RenderLevel(int PlayerX, int PlayerY)
 	}
 }
 
-void Level::DrawBlockOnPosition(int X, int Y, std::string Asset)
+void Level::DrawBlockOnPosition(int X, int Y, std::string Asset, bool UseTransparency)
 {
+	
 	//Create the surface
 	m_psurface = SDL_LoadBMP(Asset.c_str());
+
+	if (UseTransparency)
+	{
+		Uint32 colourKey = SDL_MapRGB(m_psurface->format, 255, 0, 255);
+		SDL_SetColorKey(m_psurface, SDL_TRUE, colourKey);
+	}
 
 	//Create the bitmap texture
 	m_pbitmap = SDL_CreateTextureFromSurface(m_pRenderer, m_psurface);
@@ -173,7 +196,7 @@ bool Level::IsWall(int TopX, int TopY, int BotX, int BotY)
 	//std::cout << "looking in vector position " << VectorPos << "." << std::endl;
 
 	//if position doesnt equal "." then there is something there so return true (meaning there's a wall there)
-	if (m_GridLayout.at(VectorPos) != ".")
+	if (m_GridLayout.at(VectorPos) != "." && m_GridLayout.at(VectorPos) != "P")
 	{
 		return true;
 	}
@@ -199,7 +222,7 @@ bool Level::IsWall(int TopX, int TopY, int BotX, int BotY)
 	VectorPos = XVectorPos + YVectorPos;
 	//std::cout << "looking in vector position " << VectorPos << "." << std::endl;
 
-	if (m_GridLayout.at(VectorPos) != ".")
+	if (m_GridLayout.at(VectorPos) != "." && m_GridLayout.at(VectorPos) != "P")
 	{
 		return true;
 	}

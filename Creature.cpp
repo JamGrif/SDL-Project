@@ -19,10 +19,11 @@ Creature::Creature(SDL_Renderer* renderer, int xpos, int ypos, bool useTranspare
 
 void Creature::MoveJump()
 {
-	if (!IsJumping) 
+	if (!IsJumping && IsGrounded) 
 	{
 		std::cout << "Player should start jumping!" << std::endl;
 		IsJumping = true;
+		m_CurrentJumpHeight = 0;
 	}
 	else 
 	{
@@ -31,6 +32,7 @@ void Creature::MoveJump()
 
 }
 
+//Moves the creature and checks for collision in the level vector
 void Creature::Move(char Direction)
 {
 	m_PrevX = m_X;
@@ -42,7 +44,7 @@ void Creature::Move(char Direction)
 	}
 	else if (Direction == 'd') 
 	{
-		m_Y += m_Speed;
+		m_Y += m_Gravity;
 	}
 	else if (Direction == 'l')
 	{
@@ -67,6 +69,7 @@ void Creature::Move(char Direction)
 	}
 	else if (Direction == 'd')
 	{
+		TempSpeed = m_Gravity;
 		CanMove = levelinfo->IsWall(BotLeftPosX, BotLeftPosY, BotRightPosX, BotRightPosY) == true ? false : true;
 		if (!CanMove)
 		{
@@ -97,7 +100,7 @@ void Creature::Move(char Direction)
 	}
 }
 
-//Function allows a creature with a speed above 1 to get as close to the wall as they can
+//Function allows a creature with a speed above 1 to get as close to the wall as they can. This avoids a gap between a creature and a wall if they meet the wall
 void Creature::CloserToWall(int &position, int &FirstX, int &FirstY, int &SecondX, int &SecondY, bool PositivePositionChange, bool XPosChange)
 {
 	while ((CanMove == false && TempSpeed != 0) || CanMove != true)
@@ -122,47 +125,62 @@ void Creature::CloserToWall(int &position, int &FirstX, int &FirstY, int &Second
 
 }
 
+//Funciton is ran every game loop to update players position based on stuff like jumping and gravity
 void Creature::Physics()
 {
 	GetCollisionPosition(0, false);
+	//JustJumped = false;
+
+	if (IsJumping) //Makes the player jump
+	{
+		std::cout << "IsJumping If statement ran" << std::endl;
+		//JustJumped = true;
+		if (m_CurrentJumpHeight < m_MaxJumpHeight)
+		{
+			std::cout << "moving up" << std::endl;
+			Move('u');
+			m_CurrentJumpHeight++;
+		}
+		else 
+		{
+			IsJumping = false;
+			m_CurrentJumpHeight = 0;
+		}
+
+	}
+
+	if (IsGrounded == false)
+	{
+		std::cout << "IsGrounded is false" << std::endl;
+		//first check if wall is below character. If so then isgrounded == true else move down
+
+
+		if (levelinfo->IsWall(BotLeftPosX, BotLeftPosY + 1, BotRightPosX, BotRightPosY + 1) == true)
+		{
+			IsGrounded = true;
+			std::cout << "Player is grounded" << std::endl;
+		}
+		else //Moving down
+		{
+			Move('d');
+			std::cout << "Player is falling" << std::endl;
+		}
+	}
+
 	if (IsGrounded == true) //Check that the player is still grounded by looking below him
 	{
 		IsJumping = false;
-		if (levelinfo->IsWall(BotLeftPosX, BotLeftPosY + 1, BotRightPosX, BotRightPosY + 1) == false) 
+		
+		if (levelinfo->IsWall(BotLeftPosX, BotLeftPosY + 1, BotRightPosX, BotRightPosY + 1) == false)
 		{
+			std::cout << "is grounded set to false" << std::endl;
 			IsGrounded = false;
 		}
 	}
 
-	if (IsGrounded == false) 
-	{
-		std::cout << "Player is falling" << std::endl;
-		//first check if wall is below character. If so then isgrounded == true else move down
-		if (levelinfo->IsWall(BotLeftPosX, BotLeftPosY+1, BotRightPosX, BotRightPosY+1) == true) 
-		{
-			IsGrounded = true;
-		}
-		else 
-		{
-			m_Y += m_Gravity;
-		}
-	}
+	
 
-	if (IsJumping) 
-	{
-		std::cout << "IsJumping If statement ran" << std::endl;
-
-		if (m_CurrentJumpHeight <= m_MaxJumpHeight) 
-		{
-			Move('u');
-			m_CurrentJumpHeight++;
-		}
-		
-
-
-
-
-	}
+	
 
 
 

@@ -13,8 +13,6 @@ public:
 
 	void CloserToWall(int &position, int &FirstX, int &FirstY, int &SecondX, int &SecondY, bool PositivePositionChange, bool XPosChange);
 
-
-
 	void Physics();
 
 	void GetCollisionPosition(int speed, bool XPosChange);
@@ -31,7 +29,7 @@ protected:
 	int Ucount = 0;
 	int Dcount = 0;
 
-	
+	bool JustJumped = false;
 
 	int TopLeftPosX;
 	int TopLeftPosY;
@@ -50,7 +48,7 @@ protected:
 	int m_Width;
 	int m_Height;
 
-	const int m_Gravity = 1;
+	const int m_Gravity = 3;
 
 	bool CanMove = false;
 	

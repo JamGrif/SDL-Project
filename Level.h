@@ -15,7 +15,7 @@ public:
 
 	void LoadLevel(int LevelToLoad);
 	void RenderLevel(int PlayerX, int PlayerY);
-	void DrawBlockOnPosition(int X, int Y, std::string Asset);
+	void DrawBlockOnPosition(int X, int Y, std::string Asset, bool UseTransparency = false);
 
 	bool IsWall(int TopX, int TopY, int BotX, int BotY);
 
@@ -53,6 +53,8 @@ private:
 	std::string GrassBlock = "Assets/GrassBlock.bmp";
 	std::string DirtBlock = "Assets/DirtBlock.bmp";
 	std::string StoneBlock = "Assets/StoneBlock.bmp";
+	std::string PlayerSpawn = "Assets/PlayerSpawn.bmp";
+	std::string CoalBlock = "Assets/CoalBlock.bmp";
 
 	std::vector<std::string> m_GridLayout;
 	

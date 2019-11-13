@@ -17,7 +17,7 @@ public:
 
 	void Update();
 	bool KeyIsPressed(KEYS_PRESSED_LIST key);
-	void KeyIsNotPressed(KEYS_PRESSED_LIST &key);
+	//void KeyIsNotPressed(KEYS_PRESSED_LIST &key);
 	//void CheckForKeyPress();
 
 	bool MouseIsPressed(MOUSE_PRESSED_LIST mouse);

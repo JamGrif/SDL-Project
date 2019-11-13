@@ -136,17 +136,17 @@ bool Input::KeyIsPressed(KEYS_PRESSED_LIST key)
 	return m_keysPressed[key];
 }
 
-void Input::KeyIsNotPressed(KEYS_PRESSED_LIST &key)
+/*void Input::KeyIsNotPressed(KEYS_PRESSED_LIST &key)
 {
 	m_keysPressed[key] = false;
-}
+}*/
 
 bool Input::MouseIsPressed(MOUSE_PRESSED_LIST mouse)
 {
 	return m_mousePressed[mouse];
 }
 
-void Input::MouseIsNotPressed(MOUSE_PRESSED_LIST& mouse)
+void Input::MouseIsNotPressed(MOUSE_PRESSED_LIST &mouse)
 {
 	m_mousePressed[mouse] = false;
 }
