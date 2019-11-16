@@ -19,12 +19,19 @@ public:
 
 	bool IsWall(int TopX, int TopY, int BotX, int BotY);
 
+
+	int GetPlayerSpawnX();
+	int GetPlayerSpawnY();
+
 private:
 	int m_BlockWidth = 64;
 	int m_BlockHeight = 64;
 
 	int m_LevelWidth;
 	int m_LevelHeight;
+
+	int m_ShowableWidth = 20;
+	int m_ShowableHeight = 12;
 
 	//This is how many blocks can be shown on the screen at once
 	const int MaxBlockWidth = 20;
@@ -35,6 +42,15 @@ private:
 	int m_DrawingPosition;
 
 	int m_LoadedLevel = 0;
+
+	int PlayerSpawnX = 0;
+	int PlayerSpawnY = 0;
+
+	int ViewPortX = 0;
+	int ViewPortY = 0;
+
+	int MaxViewPortX = 0;
+	int MaxViewPortY = 0;
 
 	//Collision
 	int XVectorPos = 0;

@@ -9,6 +9,8 @@ public:
 	~Player();
 
 
+	void FindSpawnPoint();
+
 private:
 	
 

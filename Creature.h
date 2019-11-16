@@ -18,12 +18,19 @@ public:
 	void GetCollisionPosition(int speed, bool XPosChange);
 	void DisplayPosition();
 
+	int GetX();
+	int GetY();
+
 
 protected:
 	int m_Speed = 0;
 	int m_MaxJumpHeight = 0;
 	int m_CurrentJumpHeight = 0;
+	int m_JumpSpeed = 0;
 	int TempSpeed = 0;
+
+	int VectorPosition = 0;
+
 	int Rcount = 0;
 	int Lcount = 0;
 	int Ucount = 0;
@@ -48,7 +55,7 @@ protected:
 	int m_Width;
 	int m_Height;
 
-	const int m_Gravity = 3;
+	const int m_Gravity = 5;
 
 	bool CanMove = false;
 	

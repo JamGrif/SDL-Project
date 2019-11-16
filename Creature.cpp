@@ -19,17 +19,11 @@ Creature::Creature(SDL_Renderer* renderer, int xpos, int ypos, bool useTranspare
 
 void Creature::MoveJump()
 {
-	if (!IsJumping && IsGrounded) 
+	if (!IsJumping && IsGrounded) //If player is currently not jumping and is grounded then set it so they are currently jumping
 	{
-		std::cout << "Player should start jumping!" << std::endl;
 		IsJumping = true;
 		m_CurrentJumpHeight = 0;
 	}
-	else 
-	{
-		std::cout << "Player is already jumping!" << std::endl;
-	}
-
 }
 
 //Moves the creature and checks for collision in the level vector
@@ -40,7 +34,7 @@ void Creature::Move(char Direction)
 
 	if (Direction == 'u') 
 	{
-		m_Y -= m_Speed;
+		m_Y -= m_JumpSpeed;
 	}
 	else if (Direction == 'd') 
 	{
@@ -129,15 +123,28 @@ void Creature::CloserToWall(int &position, int &FirstX, int &FirstY, int &Second
 void Creature::Physics()
 {
 	GetCollisionPosition(0, false);
-	//JustJumped = false;
 
-	if (IsJumping) //Makes the player jump
+	if (IsGrounded == false) //If the player is not grounded then check below them to see if they are
 	{
-		std::cout << "IsJumping If statement ran" << std::endl;
-		//JustJumped = true;
+		//If a wall is directly below then they are grounded
+		if (levelinfo->IsWall(BotLeftPosX, BotLeftPosY + 1, BotRightPosX, BotRightPosY + 1) == true)
+		{
+			IsGrounded = true;
+			//std::cout << "Player is grounded" << std::endl;
+		}
+		//Else apply gravity
+		else
+		{
+			Move('d');
+			//std::cout << "Player is falling" << std::endl;
+		}
+	}
+
+	if (IsJumping) //If the character is jumping then apply jumping stuff
+	{
 		if (m_CurrentJumpHeight < m_MaxJumpHeight)
 		{
-			std::cout << "moving up" << std::endl;
+			//std::cout << "Player just jumped" << std::endl;
 			Move('u');
 			m_CurrentJumpHeight++;
 		}
@@ -147,33 +154,18 @@ void Creature::Physics()
 			m_CurrentJumpHeight = 0;
 		}
 
-	}
-
-	if (IsGrounded == false)
-	{
-		std::cout << "IsGrounded is false" << std::endl;
-		//first check if wall is below character. If so then isgrounded == true else move down
-
-
-		if (levelinfo->IsWall(BotLeftPosX, BotLeftPosY + 1, BotRightPosX, BotRightPosY + 1) == true)
+		//Check above the player and if they hit something then stop jumping
+		if (levelinfo->IsWall(TopLeftPosX, TopLeftPosY-1, TopRightPosX, TopRightPosY-1) == true)
 		{
-			IsGrounded = true;
-			std::cout << "Player is grounded" << std::endl;
-		}
-		else //Moving down
-		{
-			Move('d');
-			std::cout << "Player is falling" << std::endl;
+			//std::cout << "Player hit something above them" << std::endl;
+			IsJumping = false;
 		}
 	}
 
 	if (IsGrounded == true) //Check that the player is still grounded by looking below him
 	{
-		IsJumping = false;
-		
 		if (levelinfo->IsWall(BotLeftPosX, BotLeftPosY + 1, BotRightPosX, BotRightPosY + 1) == false)
 		{
-			std::cout << "is grounded set to false" << std::endl;
 			IsGrounded = false;
 		}
 	}
@@ -232,4 +224,14 @@ void Creature::DisplayPosition()
 	std::cout << "Top right pos is " << TopRightPosX << "," << TopRightPosY << std::endl;
 	std::cout << "Bottom left pos is " << BotLeftPosX << "," << BotLeftPosY << std::endl;
 	std::cout << "Bottom right pos is " << BotRightPosX << "," << BotRightPosY << std::endl;
+}
+
+int Creature::GetX()
+{
+	return m_X;
+}
+
+int Creature::GetY()
+{
+	return m_Y;
 }

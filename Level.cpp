@@ -102,10 +102,32 @@ void Level::LoadLevel(int LevelToLoad)
 
 void Level::RenderLevel(int PlayerX, int PlayerY)
 {
+	//Find what vector position the player is in and load the blocks around that vector position
 	m_DrawingPosition = 0;
 	m_XDrawTo = 0;
 	m_YDrawTo = 0;
+
+	//Find the top left position of the screen with regards to the players world position.
+	//This makes the player in the centre of the view port
+	ViewPortX = PlayerX - (m_ScreenWidth/2);
+	ViewPortY = PlayerY - (m_ScreenHeight/2);
+
+	MaxViewPortX = ViewPortX + m_ScreenWidth;
+	MaxViewPortY = ViewPortY + m_ScreenWidth;
+
+
+	//std::cout << "Players x is " << PlayerX << std::endl;
+	//std::cout << "Players y is " << PlayerY << std::endl;
+
+	std::cout << "Viewport x is " << ViewPortX << std::endl;
+	std::cout << "Viewport y is " << ViewPortY << std::endl;
+
+	std::cout << "MaxViewport x is " << MaxViewPortX << std::endl;
+	std::cout << "MaxViewport y is " << MaxViewPortY << std::endl;
+
+	//could loop through with i = viewport and while i < then maxviewport adding 64 each loop through (as 64 is the size of a block)
 	
+	//i wouldnt increment by one as it needs to go to the next line after 20 rows have been made. if you increment by one then it will move to the next block on the same row but outside of view
 	for (int i = 0; i < m_LevelHeight; i++) 
 	{
 		for (int j = 0; j < m_LevelWidth; j++)
@@ -228,5 +250,16 @@ bool Level::IsWall(int TopX, int TopY, int BotX, int BotY)
 	}
 
 	return false;
+}
+
+
+int Level::GetPlayerSpawnX()
+{
+	return PlayerSpawnX;
+}
+
+int Level::GetPlayerSpawnY()
+{
+	return PlayerSpawnY;
 }
 
