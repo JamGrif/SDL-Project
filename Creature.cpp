@@ -87,6 +87,7 @@ void Creature::Move(char Direction)
 		}
 	}
 
+	//If they cant move into the next position then set their position back to where it was
 	if (CanMove == false) 
 	{
 		m_X = m_PrevX;

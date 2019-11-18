@@ -119,11 +119,11 @@ void Level::RenderLevel(int PlayerX, int PlayerY)
 	//std::cout << "Players x is " << PlayerX << std::endl;
 	//std::cout << "Players y is " << PlayerY << std::endl;
 
-	std::cout << "Viewport x is " << ViewPortX << std::endl;
-	std::cout << "Viewport y is " << ViewPortY << std::endl;
+	//std::cout << "Viewport x is " << ViewPortX << std::endl;
+	//std::cout << "Viewport y is " << ViewPortY << std::endl;
 
-	std::cout << "MaxViewport x is " << MaxViewPortX << std::endl;
-	std::cout << "MaxViewport y is " << MaxViewPortY << std::endl;
+	//std::cout << "MaxViewport x is " << MaxViewPortX << std::endl;
+	//std::cout << "MaxViewport y is " << MaxViewPortY << std::endl;
 
 	//could loop through with i = viewport and while i < then maxviewport adding 64 each loop through (as 64 is the size of a block)
 	
