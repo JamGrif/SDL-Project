@@ -97,23 +97,22 @@ void Level::LoadLevel(int LevelToLoad)
 	
 	
 	
-	
 }
 
-void Level::RenderLevel(int PlayerX, int PlayerY)
+void Level::RenderLevel(float PlayerX, float PlayerY)
 {
 	//Find what vector position the player is in and load the blocks around that vector position
-	m_DrawingPosition = 0;
+	
 	m_XDrawTo = 0;
 	m_YDrawTo = 0;
 
 	//Find the top left position of the screen with regards to the players world position.
 	//This makes the player in the centre of the view port
 	ViewPortX = PlayerX - (m_ScreenWidth/2);
-	ViewPortY = PlayerY - (m_ScreenHeight/2);
+	//ViewPortY = PlayerY - (m_ScreenHeight/2);
 
-	MaxViewPortX = ViewPortX + m_ScreenWidth;
-	MaxViewPortY = ViewPortY + m_ScreenWidth;
+	//MaxViewPortX = ViewPortX + m_ScreenWidth;
+	//MaxViewPortY = ViewPortY + m_ScreenWidth;
 
 
 	//std::cout << "Players x is " << PlayerX << std::endl;
@@ -125,13 +124,35 @@ void Level::RenderLevel(int PlayerX, int PlayerY)
 	//std::cout << "MaxViewport x is " << MaxViewPortX << std::endl;
 	//std::cout << "MaxViewport y is " << MaxViewPortY << std::endl;
 
+	//Need to find the top left most block from the camera x viewport
+
+	//X and Y vectorpos needs to be world position
+	XVectorPos = ViewPortX / m_BlockWidth;
+	YVectorPos = 0;
+	VectorPos = 0;
+	
+
+	//add both results together and use that number to look in the level vector
+	VectorPos = XVectorPos + YVectorPos;
+
+	
+
 	//could loop through with i = viewport and while i < then maxviewport adding 64 each loop through (as 64 is the size of a block)
 	
 	//i wouldnt increment by one as it needs to go to the next line after 20 rows have been made. if you increment by one then it will move to the next block on the same row but outside of view
-	for (int i = 0; i < m_LevelHeight; i++) 
+
+
+
+	//VectorPos is the top left object
+
+	//need to move down a column (m_DrawingPosition) in the vector
+
+	m_DrawingPosition = VectorPos;
+	for (int i = VectorPos; i < VectorPos + MaxBlockHeight; i++)
 	{
-		for (int j = 0; j < m_LevelWidth; j++)
+		for (int j = VectorPos; j < VectorPos + MaxBlockWidth; j++)
 		{
+			//if (m_DrawingPosition < 0) { m_DrawingPosition = 0; }
 			if (m_GridLayout.at(m_DrawingPosition) == "G") //Grass block
 			{
 				DrawBlockOnPosition(m_XDrawTo, m_YDrawTo, GrassBlock);
@@ -156,16 +177,22 @@ void Level::RenderLevel(int PlayerX, int PlayerY)
 			{
 
 			}
+			
 			m_XDrawTo = m_XDrawTo + m_BlockWidth;
 			m_DrawingPosition++;
 		}
 
+		
+		m_DrawingPosition += 43;
+		
 		m_XDrawTo = 0;
 		m_YDrawTo = m_YDrawTo + m_BlockHeight;
 	}
+	
+	
 }
 
-void Level::DrawBlockOnPosition(int X, int Y, std::string Asset, bool UseTransparency)
+void Level::DrawBlockOnPosition(float X, float Y, std::string Asset, bool UseTransparency)
 {
 	
 	//Create the surface

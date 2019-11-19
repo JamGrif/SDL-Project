@@ -11,7 +11,7 @@ public:
 
 	void Move(char Direction);
 
-	void CloserToWall(int &position, int &FirstX, int &FirstY, int &SecondX, int &SecondY, bool PositivePositionChange, bool XPosChange);
+	void CloserToWall(float& position, float& FirstX, float& FirstY, float& SecondX, float& SecondY, bool PositivePositionChange, bool XPosChange);
 
 	void Physics();
 
@@ -23,11 +23,11 @@ public:
 
 
 protected:
-	int m_Speed = 0;
+	float m_Speed = 0;
 	int m_MaxJumpHeight = 0;
 	int m_CurrentJumpHeight = 0;
 	int m_JumpSpeed = 0;
-	int TempSpeed = 0;
+	float TempSpeed = 0;
 
 	int VectorPosition = 0;
 
@@ -38,14 +38,14 @@ protected:
 
 	bool JustJumped = false;
 
-	int TopLeftPosX;
-	int TopLeftPosY;
-	int TopRightPosX;
-	int TopRightPosY;
-	int BotLeftPosX;
-	int BotLeftPosY;
-	int BotRightPosX;
-	int BotRightPosY;
+	float TopLeftPosX;
+	float TopLeftPosY;
+	float TopRightPosX;
+	float TopRightPosY;
+	float BotLeftPosX;
+	float BotLeftPosY;
+	float BotRightPosX;
+	float BotRightPosY;
 
 	int AnimationCount = 0;
 

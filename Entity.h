@@ -26,10 +26,10 @@ protected:
 	SDL_Texture* m_pbitmapTexture;
 	SDL_Renderer* m_pRenderer;
 
-	int m_X = 0;
-	int m_Y = 0;
-	int m_PrevX = 0;
-	int m_PrevY = 0;
+	float m_X = 0;
+	float m_Y = 0;
+	float m_PrevX = 0;
+	float m_PrevY = 0;
 
 	std::string Filename = "";
 

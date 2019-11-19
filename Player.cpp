@@ -7,7 +7,7 @@ Player::Player(SDL_Renderer* renderer, int xpos, int ypos, bool useTransparency,
 	IdleAnimation = DefaultPicture;
 	RunningAnimation = "Assets/Player - Running.bmp";
 
-	m_Speed = 10;
+	m_Speed = 5.5;
 	m_JumpSpeed = 15;
 	m_MaxJumpHeight = 10;
 

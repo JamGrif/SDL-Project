@@ -34,11 +34,13 @@ void Creature::Move(char Direction)
 
 	if (Direction == 'u') 
 	{
-		m_Y -= m_JumpSpeed;
+		//m_Y -= m_JumpSpeed;
+		m_Y -= m_Speed;
 	}
 	else if (Direction == 'd') 
 	{
-		m_Y += m_Gravity;
+		//m_Y += m_Gravity;
+		m_Y += m_Speed;
 	}
 	else if (Direction == 'l')
 	{
@@ -50,7 +52,7 @@ void Creature::Move(char Direction)
 	}
 
 	//Collision stuff
-	GetCollisionPosition(0, true);
+	/*GetCollisionPosition(0, true);
 	TempSpeed = m_Speed;
 
 	if (Direction == 'u')
@@ -93,10 +95,11 @@ void Creature::Move(char Direction)
 		m_X = m_PrevX;
 		m_Y = m_PrevY;
 	}
+	*/
 }
 
 //Function allows a creature with a speed above 1 to get as close to the wall as they can. This avoids a gap between a creature and a wall if they meet the wall
-void Creature::CloserToWall(int &position, int &FirstX, int &FirstY, int &SecondX, int &SecondY, bool PositivePositionChange, bool XPosChange)
+void Creature::CloserToWall(float& position, float& FirstX, float& FirstY, float& SecondX, float& SecondY, bool PositivePositionChange, bool XPosChange)
 {
 	while ((CanMove == false && TempSpeed != 0) || CanMove != true)
 		{

@@ -14,8 +14,8 @@ public:
 	~Level();
 
 	void LoadLevel(int LevelToLoad);
-	void RenderLevel(int PlayerX, int PlayerY);
-	void DrawBlockOnPosition(int X, int Y, std::string Asset, bool UseTransparency = false);
+	void RenderLevel(float PlayerX, float PlayerY);
+	void DrawBlockOnPosition(float X, float Y, std::string Asset, bool UseTransparency = false);
 
 	bool IsWall(int TopX, int TopY, int BotX, int BotY);
 
@@ -24,8 +24,10 @@ public:
 	int GetPlayerSpawnY();
 
 private:
-	int m_BlockWidth = 64;
-	int m_BlockHeight = 64;
+	std::string TLBlock = "";
+
+	const int m_BlockWidth = 64;
+	const int m_BlockHeight = 64;
 
 	int m_LevelWidth;
 	int m_LevelHeight;
@@ -37,8 +39,8 @@ private:
 	const int MaxBlockWidth = 20;
 	const int MaxBlockHeight = 12;
 
-	int m_XDrawTo = 0;
-	int m_YDrawTo = 0;
+	float m_XDrawTo = 0;
+	float m_YDrawTo = 0;
 	int m_DrawingPosition;
 
 	int m_LoadedLevel = 0;
@@ -46,16 +48,17 @@ private:
 	int PlayerSpawnX = 0;
 	int PlayerSpawnY = 0;
 
-	int ViewPortX = 0;
-	int ViewPortY = 0;
+	float ViewPortX = 0;
+	float ViewPortY = 0;
 
-	int MaxViewPortX = 0;
-	int MaxViewPortY = 0;
+	//int MaxViewPortX = 0;
+	//int MaxViewPortY = 0;
 
-	//Collision
+	//Collision - looking inside the level vector
 	int XVectorPos = 0;
 	int YVectorPos = 0;
 	int VectorPos = 0;
+
 	std::string VectorPositionObject = "";
 
 	int m_ScreenWidth, m_ScreenHeight;
@@ -75,6 +78,8 @@ private:
 	std::vector<std::string> m_GridLayout;
 	
 	//char m_GridLayout[m_LevelWidth][m_LevelHeight];
+
+	
 
 };
 
