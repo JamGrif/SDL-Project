@@ -38,9 +38,9 @@ Game::Game()
 
 	level = new Level(m_Renderer, m_ScreenHeight, m_ScreenWidth);
 
-	m_Player = new Player(m_Renderer, m_ScreenWidth/2+64, m_ScreenHeight/2, true, level, "Assets/Player.bmp");
+	m_Player = new Player(m_Renderer, m_ScreenWidth/2, m_ScreenHeight/2, level, true,  "Assets/Player.bmp");
 
-	m_Sky = new Sky(m_Renderer, 0, 0, true, "Assets/Sky.bmp");
+	m_Sky = new Sky(m_Renderer, 0, 0, level, true, "Assets/Sky.bmp");
 
 	
 }
@@ -82,8 +82,9 @@ void Game::GameLoop()
 		//Drawing stuff
 		m_Sky->draw();
 		m_Player->draw();
-		level->RenderLevel(m_Player->GetX(),m_Player->GetY());
+		level->RenderLevel(m_Player->GetX(),m_Player->GetY(), m_Player->GetSpeed());
 		ui->UpdateText("This is some text!", 250, 600, { 0,0,0 }, m_Renderer);
+
 
 		//Render stuff
 		Render();

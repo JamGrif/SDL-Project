@@ -1,7 +1,7 @@
 #include "Monster.h"
 
-Monster::Monster(SDL_Renderer* renderer, int xpos, int ypos, bool useTransparency, Level* pLevel, std::string DefaultPicture)
-	:Creature(renderer, xpos, ypos, useTransparency, pLevel, DefaultPicture)
+Monster::Monster(SDL_Renderer* renderer, int xpos, int ypos, Level* pLevel, bool useTransparency, std::string DefaultPicture)
+	:Creature(renderer, xpos, ypos, pLevel, useTransparency, DefaultPicture)
 {
 	
 	RunningAnimation = "Assets/Monster - Running.bmp";

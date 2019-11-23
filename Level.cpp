@@ -99,53 +99,84 @@ void Level::LoadLevel(int LevelToLoad)
 	
 }
 
-void Level::RenderLevel(float PlayerX, float PlayerY)
+void Level::RenderLevel(float PlayerX, float PlayerY, float PlayerSpeed)
 {
 	//Find what vector position the player is in and load the blocks around that vector position
 	
-	m_XDrawTo = 0;
+	//m_XDrawTo = 0;
 	m_YDrawTo = 0;
 
 	//Find the top left position of the screen with regards to the players world position.
 	//This makes the player in the centre of the view port
 	ViewPortX = PlayerX - (m_ScreenWidth/2);
 	//ViewPortY = PlayerY - (m_ScreenHeight/2);
+	
 
+	if (m_ViewPortPrevX == NULL)
+	{
+		m_ViewPortPrevX = ViewPortX;
+	}
 	//MaxViewPortX = ViewPortX + m_ScreenWidth;
 	//MaxViewPortY = ViewPortY + m_ScreenWidth;
 
 
-	//std::cout << "Players x is " << PlayerX << std::endl;
-	//std::cout << "Players y is " << PlayerY << std::endl;
-
-	//std::cout << "Viewport x is " << ViewPortX << std::endl;
-	//std::cout << "Viewport y is " << ViewPortY << std::endl;
-
-	//std::cout << "MaxViewport x is " << MaxViewPortX << std::endl;
-	//std::cout << "MaxViewport y is " << MaxViewPortY << std::endl;
-
 	//Need to find the top left most block from the camera x viewport
 
 	//X and Y vectorpos needs to be world position
+	//VectorPos is the top left object
 	XVectorPos = ViewPortX / m_BlockWidth;
 	YVectorPos = 0;
 	VectorPos = 0;
 	
-
 	//add both results together and use that number to look in the level vector
 	VectorPos = XVectorPos + YVectorPos;
 
 	
 
-	//could loop through with i = viewport and while i < then maxviewport adding 64 each loop through (as 64 is the size of a block)
+	//ViewPortX is Screen position 0 <-------------
+
+	//Find if player moved right or left by comparing m_PlayerPrevX with PlayerX
+	//Once direction is found out m_XDrawTo needs to be changed so it 
+	if (ViewPortX < m_ViewPortPrevX) //Player moved left
+	{
+		//std::cout << "player moved left" << std::endl;
+		//std::cout << "difference is " << m_ViewPortPrevX - ViewPortX << std::endl;
+		m_Offset += (m_ViewPortPrevX - ViewPortX);
+		
+	}
+	else if (ViewPortX > m_ViewPortPrevX) //Player moved right
+	{
+		//std::cout << "player moved right" << std::endl;
+		//std::cout << "difference is " << ViewPortX - m_ViewPortPrevX << std::endl;
+		m_Offset -= (ViewPortX - m_ViewPortPrevX);
+	}
 	
-	//i wouldnt increment by one as it needs to go to the next line after 20 rows have been made. if you increment by one then it will move to the next block on the same row but outside of view
+	if (m_Offset > 64) 
+	{
+		m_temp = m_Offset - 64;
+		m_Offset = 0;
+		m_Offset += m_temp;
+	}
+	else if (m_Offset < -64)
+	{
+		m_temp = m_Offset + 64;
+		m_Offset = 0;
+		m_Offset += m_temp;
+	}
+	 
+	
+	m_XDrawTo += m_Offset;
+	
+
+	//std::cout << "Offset is " << m_Offset << std::endl;
 
 
 
-	//VectorPos is the top left object
+	//ISSUE some reason one block gets skipped (64) when moving
 
-	//need to move down a column (m_DrawingPosition) in the vector
+	//--------------------------------------
+	
+	SavedXDrawTo = m_XDrawTo;
 
 	m_DrawingPosition = VectorPos;
 	for (int i = VectorPos; i < VectorPos + MaxBlockHeight; i++)
@@ -178,21 +209,24 @@ void Level::RenderLevel(float PlayerX, float PlayerY)
 
 			}
 			
-			m_XDrawTo = m_XDrawTo + m_BlockWidth;
+			m_XDrawTo += m_BlockWidth;
 			m_DrawingPosition++;
 		}
 
+		//43 goes to the next block that needs to be renderered on the next line. will break if the rows are made bigger in level text file
+		m_DrawingPosition += 41;
 		
-		m_DrawingPosition += 43;
-		
-		m_XDrawTo = 0;
+		m_XDrawTo = SavedXDrawTo;
 		m_YDrawTo = m_YDrawTo + m_BlockHeight;
 	}
-	
+	m_ViewPortPrevX = ViewPortX;
+	std::cout << "m_XDrawTo is " << m_XDrawTo << std::endl;
+	m_XDrawTo = -64;
+	std::cout << "Offset is " << m_Offset << std::endl;
 	
 }
 
-void Level::DrawBlockOnPosition(float X, float Y, std::string Asset, bool UseTransparency)
+void Level::DrawBlockOnPosition(int X, int Y, std::string Asset, bool UseTransparency)
 {
 	
 	//Create the surface
@@ -288,5 +322,10 @@ int Level::GetPlayerSpawnX()
 int Level::GetPlayerSpawnY()
 {
 	return PlayerSpawnY;
+}
+
+int Level::GetViewPortX()
+{
+	return ViewPortX;
 }
 

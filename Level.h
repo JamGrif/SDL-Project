@@ -14,14 +14,16 @@ public:
 	~Level();
 
 	void LoadLevel(int LevelToLoad);
-	void RenderLevel(float PlayerX, float PlayerY);
-	void DrawBlockOnPosition(float X, float Y, std::string Asset, bool UseTransparency = false);
+	void RenderLevel(float PlayerX, float PlayerY, float PlayerSpeed);
+	void DrawBlockOnPosition(int X, int Y, std::string Asset, bool UseTransparency = false);
 
 	bool IsWall(int TopX, int TopY, int BotX, int BotY);
 
 
 	int GetPlayerSpawnX();
 	int GetPlayerSpawnY();
+
+	int GetViewPortX();
 
 private:
 	std::string TLBlock = "";
@@ -32,14 +34,14 @@ private:
 	int m_LevelWidth;
 	int m_LevelHeight;
 
-	int m_ShowableWidth = 20;
+	int m_ShowableWidth = 22;
 	int m_ShowableHeight = 12;
 
 	//This is how many blocks can be shown on the screen at once
-	const int MaxBlockWidth = 20;
+	const int MaxBlockWidth = 22;
 	const int MaxBlockHeight = 12;
 
-	float m_XDrawTo = 0;
+	float m_XDrawTo = -64;
 	float m_YDrawTo = 0;
 	int m_DrawingPosition;
 
@@ -48,8 +50,12 @@ private:
 	int PlayerSpawnX = 0;
 	int PlayerSpawnY = 0;
 
-	float ViewPortX = 0;
-	float ViewPortY = 0;
+	int ViewPortX = 0;
+	int ViewPortY = 0;
+
+	int m_Offset = 0;
+	int m_temp = 0;
+	int SavedXDrawTo = 0;
 
 	//int MaxViewPortX = 0;
 	//int MaxViewPortY = 0;
@@ -58,6 +64,8 @@ private:
 	int XVectorPos = 0;
 	int YVectorPos = 0;
 	int VectorPos = 0;
+
+	int m_ViewPortPrevX;
 
 	std::string VectorPositionObject = "";
 

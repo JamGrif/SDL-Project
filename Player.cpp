@@ -1,7 +1,7 @@
 #include "Player.h"
 
-Player::Player(SDL_Renderer* renderer, int xpos, int ypos, bool useTransparency,Level* pLevel , std::string DefaultPicture)
-	:Creature(renderer, xpos, ypos, useTransparency, pLevel ,DefaultPicture)
+Player::Player(SDL_Renderer* renderer, int xpos, int ypos, Level* pLevel, bool useTransparency, std::string DefaultPicture)
+	:Creature(renderer, xpos, ypos, pLevel, useTransparency, DefaultPicture)
 {
 	//player is 64 pixels wide and 128 pixels tall
 	IdleAnimation = DefaultPicture;
@@ -24,6 +24,8 @@ Player::~Player()
 {
 
 }
+
+
 
 void Player::FindSpawnPoint()
 {

@@ -4,14 +4,14 @@
 #include "SDL_render.h"
 #include <iostream>
 #include <vector>
-
+#include "Level.h"
 struct SDL_Surface; //container for the raw pixels we want to display
 struct SDL_Texture;
 struct SDL_Renderer;
 class Entity
 {
 public:
-	Entity(SDL_Renderer* renderer, int xpos, int ypos, bool useTransparency = true);
+	Entity(SDL_Renderer* renderer, int xpos, int ypos, Level* pLevel, bool useTransparency);
 	~Entity();
 
 	void UpdateBitmap(std::string filename, bool useTransparency);
@@ -34,6 +34,8 @@ protected:
 	std::string Filename = "";
 
 	std::string CurrentAnimation = "";
+
+	Level* levelinfo;
 
 };
 

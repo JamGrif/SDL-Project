@@ -1,11 +1,11 @@
 #pragma once
 #include "Entity.h"
-#include "Level.h"
+
 class Creature :
 	public Entity
 {
 public:
-	Creature(SDL_Renderer* renderer, int xpos, int ypos, bool useTransparency, Level* level, std::string animation = "");
+	Creature(SDL_Renderer* renderer, int xpos, int ypos, Level* plevel, bool useTransparency,  std::string animation = "");
 
 	void MoveJump();
 
@@ -20,6 +20,7 @@ public:
 
 	int GetX();
 	int GetY();
+	float GetSpeed();
 
 
 protected:
@@ -62,7 +63,7 @@ protected:
 	bool IsGrounded = false;
 	bool IsJumping = false;
 
-	Level* levelinfo;
+	
 
 };
 

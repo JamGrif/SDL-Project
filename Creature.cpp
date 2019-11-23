@@ -1,7 +1,7 @@
 #include "Creature.h"
 
-Creature::Creature(SDL_Renderer* renderer, int xpos, int ypos, bool useTransparency, Level* pLevel, std::string DefaultPicture)
-	:Entity(renderer, xpos, ypos, useTransparency)
+Creature::Creature(SDL_Renderer* renderer, int xpos, int ypos, Level* pLevel, bool useTransparency, std::string DefaultPicture)
+	:Entity(renderer, xpos, ypos, pLevel, useTransparency)
 
 {
 	IdleAnimation = DefaultPicture;
@@ -238,4 +238,9 @@ int Creature::GetX()
 int Creature::GetY()
 {
 	return m_Y;
+}
+
+float Creature::GetSpeed()
+{
+	return m_Speed;
 }
