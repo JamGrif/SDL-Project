@@ -17,6 +17,7 @@ public:
 	void RenderLevel(float PlayerX, float PlayerY, float PlayerSpeed);
 	void DrawBlockOnPosition(int X, int Y, std::string Asset, bool UseTransparency = false);
 
+
 	bool IsWall(int TopX, int TopY, int BotX, int BotY);
 
 
@@ -24,6 +25,9 @@ public:
 	int GetPlayerSpawnY();
 
 	int GetViewPortX();
+
+	int GetMaxPlayerPositionLeft();
+	int GetMaxPlayerPositionRight();
 
 private:
 	std::string TLBlock = "";
@@ -41,6 +45,11 @@ private:
 	const int MaxBlockWidth = 22;
 	const int MaxBlockHeight = 12;
 
+	bool FirstTimeRender;
+	bool CanLevelMove;
+	bool PlayerHitLeftLimit = false;
+	bool PlayerHitRightLimit = false;
+
 	float m_XDrawTo = -64;
 	float m_YDrawTo = 0;
 	int m_DrawingPosition;
@@ -49,6 +58,9 @@ private:
 
 	int PlayerSpawnX = 0;
 	int PlayerSpawnY = 0;
+
+	int MaxPlayerPositionLeft = 0;
+	int MaxPlayerPositionRight = 0;
 
 	int ViewPortX = 0;
 	int ViewPortY = 0;
@@ -64,6 +76,10 @@ private:
 	int XVectorPos = 0;
 	int YVectorPos = 0;
 	int VectorPos = 0;
+
+	int ColXVectorPos = 0;
+	int ColYVectorPos = 0;
+	int ColVectorPos = 0;
 
 	int m_ViewPortPrevX;
 

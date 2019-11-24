@@ -15,7 +15,7 @@ public:
 	~Entity();
 
 	void UpdateBitmap(std::string filename, bool useTransparency);
-	void draw();
+	virtual void draw();
 
 	int GetX();
 	int GetY();
@@ -30,6 +30,8 @@ protected:
 	float m_Y = 0;
 	float m_PrevX = 0;
 	float m_PrevY = 0;
+
+	float m_DrawX = 0;
 
 	std::string Filename = "";
 

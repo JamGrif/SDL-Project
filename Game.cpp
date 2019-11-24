@@ -81,8 +81,10 @@ void Game::GameLoop()
 
 		//Drawing stuff
 		m_Sky->draw();
-		m_Player->draw();
+		
+		
 		level->RenderLevel(m_Player->GetX(),m_Player->GetY(), m_Player->GetSpeed());
+		m_Player->draw();
 		ui->UpdateText("This is some text!", 250, 600, { 0,0,0 }, m_Renderer);
 
 

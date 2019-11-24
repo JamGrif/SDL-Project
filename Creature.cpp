@@ -58,16 +58,16 @@ void Creature::Move(char Direction)
 	if (Direction == 'u')
 	{
 		CanMove = levelinfo->IsWall(TopLeftPosX, TopLeftPosY, TopRightPosX, TopRightPosY) == true ? false : true;
-		if (!CanMove)
+		/*if (!CanMove)
 		{
 			CloserToWall(m_Y, TopLeftPosX, TopLeftPosY, TopRightPosX, TopRightPosY, false, false);
 		}
 	}
 	else if (Direction == 'd')
 	{
-		TempSpeed = m_Gravity;
+		//TempSpeed = m_Gravity;
 		CanMove = levelinfo->IsWall(BotLeftPosX, BotLeftPosY, BotRightPosX, BotRightPosY) == true ? false : true;
-		if (!CanMove)
+		/*if (!CanMove)
 		{
 			CloserToWall(m_Y, BotLeftPosX, BotLeftPosY, BotRightPosX, BotRightPosY, true, false);
 		}
@@ -75,7 +75,7 @@ void Creature::Move(char Direction)
 	else if (Direction == 'l')
 	{
 		CanMove = levelinfo->IsWall(TopLeftPosX, TopLeftPosY, BotLeftPosX, BotLeftPosY) == true ? false : true;
-		if (!CanMove)
+		/*if (!CanMove)
 		{
 			CloserToWall(m_X, TopLeftPosX, TopLeftPosY, BotLeftPosX, BotLeftPosY, false, true);
 		}
@@ -83,7 +83,7 @@ void Creature::Move(char Direction)
 	else if (Direction == 'r')
 	{
 		CanMove = levelinfo->IsWall(TopRightPosX, TopRightPosY, BotRightPosX, BotRightPosY) == true ? false : true;
-		if (!CanMove) 
+		/*if (!CanMove) 
 		{
 			CloserToWall(m_X, TopRightPosX, TopRightPosY, BotRightPosX, BotRightPosY, true, true);
 		}
@@ -92,6 +92,7 @@ void Creature::Move(char Direction)
 	//If they cant move into the next position then set their position back to where it was
 	if (CanMove == false) 
 	{
+		std::cout << ("cant move") << std::endl;
 		m_X = m_PrevX;
 		m_Y = m_PrevY;
 	}

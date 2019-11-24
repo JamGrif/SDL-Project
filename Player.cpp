@@ -7,7 +7,7 @@ Player::Player(SDL_Renderer* renderer, int xpos, int ypos, Level* pLevel, bool u
 	IdleAnimation = DefaultPicture;
 	RunningAnimation = "Assets/Player - Running.bmp";
 
-	m_Speed = 5.5;
+	m_Speed = 7;
 	m_JumpSpeed = 15;
 	m_MaxJumpHeight = 10;
 
