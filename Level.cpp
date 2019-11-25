@@ -7,6 +7,9 @@ Level::Level(SDL_Renderer* renderer, int ScreenWidth, int ScreenHeight)
 	m_ScreenWidth = ScreenWidth;
 	m_ScreenHeight = ScreenHeight;
 
+	MaxViewPortX = ScreenWidth;
+	MaxViewPortY = ScreenHeight;
+
 	//By default, the program loads level 1 first
 	LoadLevel(1);
 
@@ -16,7 +19,7 @@ Level::Level(SDL_Renderer* renderer, int ScreenWidth, int ScreenHeight)
 
 Level::~Level()
 {
-
+	m_GridLayout.clear();
 }
 
 
@@ -97,56 +100,31 @@ void Level::LoadLevel(int LevelToLoad)
 		SaveLevelFromText.close();
 
 	}
-	
-	FirstTimeRender = true;
 
-	
 	
 }
 
-void Level::RenderLevel(float PlayerX, float PlayerY, float PlayerSpeed)
+void Level::RenderLevel(float PlayerX, float PlayerY)
 {
 	
 	//Find the top left position of the screen with regards to the players world position. The level isn't changed on the Y-axis so only the X is needed
 
 	ViewPortX = PlayerX - (m_ScreenWidth/2);
 	
-	//If first time rendering the current level then find the top left block
-	
-	if (FirstTimeRender) 
-	{
-		//std::cout << "firsttimerender ran" << std::endl;
-		if (m_Offset == 0)
-		{
-			
-			XVectorPos = ViewPortX / m_BlockWidth;
-			YVectorPos = 0;
-			VectorPos = 0;
-
-			//VectorPos is used to look inside the level vector to find what the top left block will be
-			VectorPos = XVectorPos + YVectorPos;
-		}
-		m_ViewPortPrevX = ViewPortX;
-		FirstTimeRender = false;
-	}
-	
 	//Find if player moved right or left by comparing m_PlayerPrevX with PlayerX
 	if (ViewPortX < m_ViewPortPrevX) //Player moved left 
 	{
-		//std::cout << "Player moved left" << std::endl;
 		m_Offset += (m_ViewPortPrevX - ViewPortX);
 
 	}
 	else if (ViewPortX > m_ViewPortPrevX) //Player moved right 
 	{
-		//std::cout << "Player moved right" << std::endl;
 		m_Offset -= (ViewPortX - m_ViewPortPrevX);
 	}
 
 	//Makes it so m_Offset is between -64 and 64. 
 	if (m_Offset > 64)
 	{
-		std::cout << "Offset is bigger then 64" << std::endl;
 		m_temp = m_Offset - 64;
 		m_Offset = 0;
 		m_Offset += m_temp;
@@ -154,7 +132,6 @@ void Level::RenderLevel(float PlayerX, float PlayerY, float PlayerSpeed)
 	}
 	else if (m_Offset < -64)
 	{
-		std::cout << "Offset is smaller then -64" << std::endl;
 		m_temp = m_Offset + 64;
 		m_Offset = 0;
 		m_Offset += m_temp;
@@ -203,6 +180,8 @@ void Level::RenderLevel(float PlayerX, float PlayerY, float PlayerSpeed)
 		//NEED TO FIX BELOW SO NUMBER IS WORKED OUT AUTOMATICALLY <------------------------------------------------------------
 		//41 goes to the next block that needs to be renderered on the next line. will break if the rows are made bigger in level text file 
 		m_DrawingPosition += 41;
+		//m_DrawingPosition = 0;
+		//m_DrawingPosition += ((i*m_ShowableWidth)+XVectorPos);
 		
 		m_XDrawTo = SavedXDrawTo;
 		m_YDrawTo = m_YDrawTo + m_BlockHeight;
@@ -212,6 +191,8 @@ void Level::RenderLevel(float PlayerX, float PlayerY, float PlayerSpeed)
 	m_XDrawTo = -64;
 	std::cout << "Offset is " << m_Offset << std::endl;
 	m_YDrawTo = 0;
+
+	//DrawBlockOnPosition(ViewPortX, ViewPortY, DirtBlock);
 	
 }
 
@@ -244,11 +225,17 @@ void Level::DrawBlockOnPosition(int X, int Y, std::string Asset, bool UseTranspa
 
 bool Level::IsWall(int TopX, int TopY, int BotX, int BotY) 
 {
-	//First need to find top left position
+	//Use VectorPos to find what part of the level is rendered on screen
 
-	ColXVectorPos = 0 + XVectorPos;
-	ColYVectorPos = 0 + YVectorPos;
-	ColVectorPos = 0;
+	//Find where the player is within the level by using the cords in the functions parameter
+
+
+	TopX += m_Offset;
+	BotX += m_Offset;
+	//First need to find top left position
+	ColXVectorPos = XVectorPos;
+	ColYVectorPos = YVectorPos;
+	ColVectorPos = ColVectorPos;
 	VectorPositionObject = "";
 
 	//first check if top x / y are going into a block
@@ -270,7 +257,7 @@ bool Level::IsWall(int TopX, int TopY, int BotX, int BotY)
 	//add both results together and use that number to look in the level vector
 	ColVectorPos = ColXVectorPos + ColYVectorPos;
 	//std::cout << "looking in vector position " << VectorPos << "." << std::endl;
-
+	std::cout << "top left block is" << m_GridLayout.at(ColVectorPos) << std::endl;
 	//if position doesnt equal "." then there is something there so return true (meaning there's a wall there)
 	if (m_GridLayout.at(ColVectorPos) != "." && m_GridLayout.at(ColVectorPos) != "P")
 	{
@@ -278,7 +265,7 @@ bool Level::IsWall(int TopX, int TopY, int BotX, int BotY)
 	}
 
 	//else do the same for BotX and BotY
-	ColXVectorPos = 0 + XVectorPos;
+	/*ColXVectorPos = 0 + XVectorPos;
 	ColYVectorPos = 0 + YVectorPos;
 	ColVectorPos = 0;
 	VectorPositionObject = "";
@@ -302,20 +289,11 @@ bool Level::IsWall(int TopX, int TopY, int BotX, int BotY)
 	{
 		return true;
 	}
-
+	*/
 	return false;
 }
 
 
-int Level::GetPlayerSpawnX()
-{
-	return PlayerSpawnX;
-}
-
-int Level::GetPlayerSpawnY()
-{
-	return PlayerSpawnY;
-}
 
 int Level::GetViewPortX()
 {

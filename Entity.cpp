@@ -64,10 +64,6 @@ void Entity::draw()
 	m_DrawX = m_X - levelinfo->GetViewPortX();
 	if (m_pbitmapTexture)
 	{
-		/*if (levelinfo->GetViewPortX() > levelinfo->GetMaxPlayerPositionRight()) 
-		{
-			m_DrawX -= (levelinfo->GetViewPortX() + levelinfo->GetMaxPlayerPositionRight());
-		}*/
 		SDL_Rect destRect = {m_DrawX-1, m_Y-1, m_pbitmapSurface->w, m_pbitmapSurface->h }; //Where on screen bitmap is drawn to and how big it will appear
 		SDL_RenderCopy(m_pRenderer, m_pbitmapTexture, NULL, &destRect);
 	}

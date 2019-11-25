@@ -14,15 +14,12 @@ public:
 	~Level();
 
 	void LoadLevel(int LevelToLoad);
-	void RenderLevel(float PlayerX, float PlayerY, float PlayerSpeed);
+	void RenderLevel(float PlayerX, float PlayerY);
 	void DrawBlockOnPosition(int X, int Y, std::string Asset, bool UseTransparency = false);
 
 
 	bool IsWall(int TopX, int TopY, int BotX, int BotY);
 
-
-	int GetPlayerSpawnX();
-	int GetPlayerSpawnY();
 
 	int GetViewPortX();
 
@@ -30,7 +27,6 @@ public:
 	int GetMaxPlayerPositionRight();
 
 private:
-	std::string TLBlock = "";
 
 	const int m_BlockWidth = 64;
 	const int m_BlockHeight = 64;
@@ -38,17 +34,11 @@ private:
 	int m_LevelWidth;
 	int m_LevelHeight;
 
-	int m_ShowableWidth = 22;
-	int m_ShowableHeight = 12;
-
 	//This is how many blocks can be shown on the screen at once
 	const int MaxBlockWidth = 22;
 	const int MaxBlockHeight = 12;
 
-	bool FirstTimeRender;
 	bool CanLevelMove;
-	bool PlayerHitLeftLimit = false;
-	bool PlayerHitRightLimit = false;
 
 	float m_XDrawTo = -64;
 	float m_YDrawTo = 0;
@@ -56,8 +46,6 @@ private:
 
 	int m_LoadedLevel = 0;
 
-	int PlayerSpawnX = 0;
-	int PlayerSpawnY = 0;
 
 	int MaxPlayerPositionLeft = 0;
 	int MaxPlayerPositionRight = 0;
@@ -65,12 +53,13 @@ private:
 	int ViewPortX = 0;
 	int ViewPortY = 0;
 
+	int MaxViewPortX = 0;
+	int MaxViewPortY = 0;
+
 	int m_Offset = 0;
 	int m_temp = 0;
 	int SavedXDrawTo = 0;
 
-	//int MaxViewPortX = 0;
-	//int MaxViewPortY = 0;
 
 	//Collision - looking inside the level vector
 	int XVectorPos = 0;
@@ -87,7 +76,6 @@ private:
 
 	int m_ScreenWidth, m_ScreenHeight;
 
-	Uint32 BlockColour = NULL;
 
 	SDL_Renderer* m_pRenderer;
 	SDL_Texture* m_pbitmap;
@@ -100,9 +88,6 @@ private:
 	std::string CoalBlock = "Assets/CoalBlock.bmp";
 
 	std::vector<std::string> m_GridLayout;
-	
-	//char m_GridLayout[m_LevelWidth][m_LevelHeight];
-
 	
 
 };
