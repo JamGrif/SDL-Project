@@ -1,18 +1,4 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(452,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (3.UsingSDL.vcxproj, SDLTemplate.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  Level.cpp
-C:\Users\jamie\Desktop\Stuff\Uni\Year2\ComputerGamesProgramming\SDL-Project\Level.cpp(112,22): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\jamie\Desktop\Stuff\Uni\Year2\ComputerGamesProgramming\SDL-Project\Level.cpp(144,17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\jamie\Desktop\Stuff\Uni\Year2\ComputerGamesProgramming\SDL-Project\Level.cpp(153,36): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\jamie\Desktop\Stuff\Uni\Year2\ComputerGamesProgramming\SDL-Project\Level.cpp(153,25): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\jamie\Desktop\Stuff\Uni\Year2\ComputerGamesProgramming\SDL-Project\Level.cpp(157,36): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\jamie\Desktop\Stuff\Uni\Year2\ComputerGamesProgramming\SDL-Project\Level.cpp(157,25): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\jamie\Desktop\Stuff\Uni\Year2\ComputerGamesProgramming\SDL-Project\Level.cpp(161,36): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\jamie\Desktop\Stuff\Uni\Year2\ComputerGamesProgramming\SDL-Project\Level.cpp(161,25): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\jamie\Desktop\Stuff\Uni\Year2\ComputerGamesProgramming\SDL-Project\Level.cpp(165,36): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\jamie\Desktop\Stuff\Uni\Year2\ComputerGamesProgramming\SDL-Project\Level.cpp(165,25): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\jamie\Desktop\Stuff\Uni\Year2\ComputerGamesProgramming\SDL-Project\Level.cpp(169,36): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\jamie\Desktop\Stuff\Uni\Year2\ComputerGamesProgramming\SDL-Project\Level.cpp(169,25): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\jamie\Desktop\Stuff\Uni\Year2\ComputerGamesProgramming\SDL-Project\Level.cpp(186,15): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   SDL-Project.vcxproj -> C:\Users\jamie\Desktop\Stuff\Uni\Year2\ComputerGamesProgramming\SDL-Project\Debug\SDL-Project.exe
           1 file(s) copied.
           1 file(s) copied.

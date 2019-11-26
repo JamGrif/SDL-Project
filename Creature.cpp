@@ -52,20 +52,20 @@ void Creature::Move(char Direction)
 	}
 
 	//Collision stuff
-	/*GetCollisionPosition(0, true);
+	GetCollisionPosition(0, true);
 	TempSpeed = m_Speed;
 
 	if (Direction == 'u')
 	{
 		CanMove = levelinfo->IsWall(TopLeftPosX, TopLeftPosY, TopRightPosX, TopRightPosY) == true ? false : true;
-		/*if (!CanMove)
+		if (!CanMove)
 		{
 			CloserToWall(m_Y, TopLeftPosX, TopLeftPosY, TopRightPosX, TopRightPosY, false, false);
 		}
 	}
 	else if (Direction == 'd')
 	{
-		//TempSpeed = m_Gravity;
+		TempSpeed = m_Gravity;
 		CanMove = levelinfo->IsWall(BotLeftPosX, BotLeftPosY, BotRightPosX, BotRightPosY) == true ? false : true;
 		if (!CanMove)
 		{
@@ -96,14 +96,14 @@ void Creature::Move(char Direction)
 		m_X = m_PrevX;
 		m_Y = m_PrevY;
 	}
-	*/
+	
 }
 
 //Function allows a creature with a speed above 1 to get as close to the wall as they can. This avoids a gap between a creature and a wall if they meet the wall
 void Creature::CloserToWall(float& position, float& FirstX, float& FirstY, float& SecondX, float& SecondY, bool PositivePositionChange, bool XPosChange)
 {
 	while ((CanMove == false && TempSpeed != 0) || CanMove != true)
-		{
+	{
 			TempSpeed--;
 			if (XPosChange) 
 			{
@@ -119,7 +119,7 @@ void Creature::CloserToWall(float& position, float& FirstX, float& FirstY, float
 				PositivePositionChange == true ? position += TempSpeed : position -= TempSpeed;
 				CanMove = true;
 			}
-		}
+	}
 
 
 }
@@ -215,11 +215,7 @@ void Creature::GetCollisionPosition(int SpeedModifyer, bool XPosChange)
 
 		BotRightPosX = (m_X + (m_Width - 1));
 		BotRightPosY = m_Y + (m_Height - 1) + SpeedModifyer;
-
-
-
 	}
-	
 }
 
 void Creature::DisplayPosition()

@@ -56,7 +56,7 @@ protected:
 	int m_Width;
 	int m_Height;
 
-	const int m_Gravity = 5;
+	const int m_Gravity = 1;
 
 	bool CanMove = false;
 	
