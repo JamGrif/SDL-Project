@@ -77,7 +77,7 @@ void Game::GameLoop()
 		CheckKeyPressed();
 
 		//Calculations stuff
-		//m_Player->Physics();
+		m_Player->Physics();
 
 		//Drawing stuff
 		m_Sky->draw();

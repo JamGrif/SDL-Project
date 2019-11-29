@@ -5,8 +5,8 @@ Entity::Entity(SDL_Renderer* renderer, int xpos, int ypos, Level* pLevel, bool u
 	//Store the renderer for future configuring and drawing
 	m_pRenderer = renderer;
 
-	m_X = xpos;
-	m_Y = ypos;
+	Position.x = xpos;
+	Position.y = ypos;
 }
 
 Entity::~Entity()
@@ -61,10 +61,10 @@ void Entity::UpdateBitmap(std::string filename, bool useTransparency)
 
 void Entity::draw()
 {
-	m_DrawX = m_X - levelinfo->GetViewPortX();
+	m_DrawX = Position.x - levelinfo->GetViewPortX();
 	if (m_pbitmapTexture)
 	{
-		SDL_Rect destRect = {m_DrawX-1, m_Y-1, m_pbitmapSurface->w, m_pbitmapSurface->h }; //Where on screen bitmap is drawn to and how big it will appear
+		SDL_Rect destRect = {m_DrawX-1, Position.y-1, m_pbitmapSurface->w, m_pbitmapSurface->h }; //Where on screen bitmap is drawn to and how big it will appear
 		SDL_RenderCopy(m_pRenderer, m_pbitmapTexture, NULL, &destRect);
 	}
 	
@@ -73,10 +73,10 @@ void Entity::draw()
 
 int Entity::GetX()
 {
-	return m_X;
+	return Position.x;
 }
 
 int Entity::GetY()
 {
-	return m_Y;
+	return Position.y;
 }

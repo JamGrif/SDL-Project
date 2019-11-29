@@ -5,14 +5,13 @@ Player::Player(SDL_Renderer* renderer, int xpos, int ypos, Level* pLevel, bool u
 {
 	//player is 64 pixels wide and 128 pixels tall
 	IdleAnimation = DefaultPicture;
-	RunningAnimation = "Assets/Player - Running.bmp";
 
-	m_Speed = 7;
+	m_Acceleration = 7;
 	m_JumpSpeed = 15;
 	m_MaxJumpHeight = 10;
 
-	m_Width = 64;
-	m_Height = 64;
+	m_Width = 53;
+	m_Height = 51;
 
 	//Players X and Y position is based on the P within the level text file. 
 	//First find what vector position P is in

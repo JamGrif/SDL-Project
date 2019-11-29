@@ -50,15 +50,9 @@ private:
 	int m_tempOffset = 0;
 
 	//Used to find what part of the vector needs to be drawn
-	//int XVectorPos = 0;
-	//int YVectorPos = 0;
 	int VectorPos = 0;
 
 	bool CanLevelMove;
-
-	
-	//int MaxPlayerPositionLeft = 0;
-	//int MaxPlayerPositionRight = 0;
 
 	//Used to convert from world space to screen space
 	int ViewPortX = 0;

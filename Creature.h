@@ -11,33 +11,41 @@ public:
 
 	void Move(char Direction);
 
-	void CloserToWall(float& position, float& FirstX, float& FirstY, float& SecondX, float& SecondY, bool PositivePositionChange, bool XPosChange);
+	void CloserToWall(float& position, float& FirstX, float& FirstY, float& SecondX, float& SecondY, bool PositivePositionChange, bool XPosChange, float &VelocityDirection);
 
 	void Physics();
 
 	void GetCollisionPosition(int speed, bool XPosChange);
 	void DisplayPosition();
 
-	int GetX();
-	int GetY();
-	float GetSpeed();
+	
+	
 
 
 protected:
-	float m_Speed = 0;
-	int m_MaxJumpHeight = 0;
-	int m_CurrentJumpHeight = 0;
-	int m_JumpSpeed = 0;
+	//Movement
+	float m_Acceleration = 0;
+
+	const float m_MaxVelocity = 10;
+	//const float m_Friction = 1;
+	const float m_AirResistance = 1;
+	const float m_Gravity = 3;
+
+	float m_MaxJumpHeight = 0;
+	float m_CurrentJumpHeight = 0;
+	float m_JumpSpeed = 0;
+
+	bool CanMove = true;
+	bool IsGrounded = false;
+	bool IsJumping = false;
+	bool JustJumped = false;
+
+	Vector Velocity{ 0, 0 };
+	
 	float TempSpeed = 0;
 
+	//Collision
 	int VectorPosition = 0;
-
-	int Rcount = 0;
-	int Lcount = 0;
-	int Ucount = 0;
-	int Dcount = 0;
-
-	bool JustJumped = false;
 
 	float TopLeftPosX;
 	float TopLeftPosY;
@@ -48,20 +56,15 @@ protected:
 	float BotRightPosX;
 	float BotRightPosY;
 
-	int AnimationCount = 0;
-
+	//Drawing sprites
 	std::string IdleAnimation;
-	std::string RunningAnimation;
 
+	//Size of creature
 	int m_Width;
 	int m_Height;
 
-	const int m_Gravity = 1;
 
-	bool CanMove = false;
 	
-	bool IsGrounded = false;
-	bool IsJumping = false;
 
 	
 

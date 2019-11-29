@@ -13,8 +13,6 @@ Level::Level(SDL_Renderer* renderer, int ScreenWidth, int ScreenHeight)
 	//By default, the program loads level 1 first
 	LoadLevel(1);
 
-	//MaxPlayerPositionLeft = (m_ScreenWidth / 4)-128;
-	//MaxPlayerPositionRight = (m_ScreenWidth - (m_ScreenWidth / 4));
 }
 
 Level::~Level()
@@ -239,8 +237,6 @@ bool Level::IsWall(int TopX, int TopY, int BotX, int BotY)
 	//BotX += m_Offset + m_XDrawTo;
 	TopX -= ViewPortX;
 	BotX -= ViewPortX;
-	//TopX -= coltemp;
-	//BotX -= coltemp;
 	TopX -= m_Offset;
 	BotX -= m_Offset;
 
@@ -251,7 +247,6 @@ bool Level::IsWall(int TopX, int TopY, int BotX, int BotY)
 	ColXVectorPos = 0;
 	ColYVectorPos = 0;
 	ColVectorPos = VectorPos;
-	//VectorPositionObject = "";
 
 	//As the top left block is known we can find out where the player is within the vector
 	//Find out how many times TopX goes into 64 (64 equals the size of a block)
@@ -277,33 +272,27 @@ bool Level::IsWall(int TopX, int TopY, int BotX, int BotY)
 		return true;
 	}
 
-	//else do the same for BotX and BotY
-	//First need to find top left position
+	//If TopX&Y didn't hit anything then BotX&Y will be checked
+
 	ColXVectorPos = 0;
 	ColYVectorPos = 0;
 	ColVectorPos = VectorPos;
-	//VectorPositionObject = "";
 
-	//first check if top x / y are going into a block
 
-	//find out how many times BotX goes into 64 (64 equals the size of a block)
 	while (BotX > m_BlockWidth)
 	{
 		BotX -= m_BlockWidth;
 		ColXVectorPos++;
 	}
 
-	//same for BotY
 	while (BotY > m_BlockWidth)
 	{
 		BotY -= m_BlockWidth;
 		ColYVectorPos += m_LevelWidth;
 	}
 
-	//add both results together and use that number to look in the level vector
 	ColVectorPos += ColXVectorPos + ColYVectorPos;
-	
-	//if position doesnt equal "." then there is something there so return true (meaning there's a wall there)
+
 	if (m_GridLayout.at(ColVectorPos) != "." && m_GridLayout.at(ColVectorPos) != "P")
 	{
 		return true;

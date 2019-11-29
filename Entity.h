@@ -26,8 +26,11 @@ protected:
 	SDL_Texture* m_pbitmapTexture;
 	SDL_Renderer* m_pRenderer;
 
-	float m_X = 0;
-	float m_Y = 0;
+	struct Vector { float x; float y; };
+	Vector Position = { 0,0 };
+
+	//float m_X = 0;
+	//float m_Y = 0;
 	float m_PrevX = 0;
 	float m_PrevY = 0;
 
