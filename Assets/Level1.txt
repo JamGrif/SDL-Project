@@ -3,9 +3,9 @@
 ........GGGGGGGG...D.........D............................GGGGG
 ........D..........D.DDDDDDD.D............................GDDDD
 ........D..........D.D.....D.D............................DDDDD
-........D..........D.D.D.D.S.D...CCCCCCCD................GDDDDD
+........D.GGG......D.D.D.D.S.D...CCCCCCCD................GDDDDD
 ......GGD........DDD.D.....D.DDDDD...C........CCCCGGGGGGGDDDDDD
-.....GDDD............D.DDD.D.......C...C......SSSSDDDDDDDDDDDDD
+.....GDDD.....GGG....D.DDD.D.......C...C......SSSSDDDDDDDDDDDDD
 GGGGGDDDD..P......DDDD.....DDDDDDDCCCCC...........DDDDDDDDDDDDD
 DDDDDDDDDGGGGGGGGDDDDDGGDDDDDGGGGGGGGGGGGGGGGGGGGDDDDDDDDDDDDDD
 DDDDDDDDDDDDDSDSSSDSSSDSCSSSDSDDDDDDSDDDSDDDDDDDDDDDDDDDDDDDDDD

@@ -7,8 +7,6 @@ class Creature :
 public:
 	Creature(SDL_Renderer* renderer, int xpos, int ypos, Level* plevel, bool useTransparency,  std::string animation = "");
 
-	void MoveJump();
-
 	void Move(char Direction);
 
 	void CloserToWall(float& position, float& FirstX, float& FirstY, float& SecondX, float& SecondY, bool PositivePositionChange, bool XPosChange, float &VelocityDirection);
@@ -31,14 +29,21 @@ protected:
 	const float m_AirResistance = 1;
 	const float m_Gravity = 3;
 
-	float m_MaxJumpHeight = 0;
-	float m_CurrentJumpHeight = 0;
+	float m_MaxJumpTick = 0;
+	float m_CurrentJumpTick = 0;
+	float m_CurrentJumpSpeed = 0;
 	float m_JumpSpeed = 0;
 
 	bool CanMove = true;
 	bool IsGrounded = false;
 	bool IsJumping = false;
 	bool JustJumped = false;
+	bool AppliedGravity = false;
+
+	bool TouchingRight = false;
+	bool TouchingLeft = false;
+	bool TouchingUp = false;
+	bool TouchingDown = false;
 
 	Vector Velocity{ 0, 0 };
 	

@@ -16,38 +16,33 @@ Creature::Creature(SDL_Renderer* renderer, int xpos, int ypos, Level* pLevel, bo
 
 }
 
-
-void Creature::MoveJump()
-{
-	if (!IsJumping && IsGrounded) //If player is currently not jumping and is grounded then set it so they are currently jumping
-	{
-		IsJumping = true;
-		m_CurrentJumpHeight = 0;
-	}
-}
-
 //Moves the creature and checks for collision in the level vector
 void Creature::Move(char Direction)
 {
-	
-
 	if (Direction == 'u') 
 	{
-		//m_Y -= m_JumpSpeed;
-		Velocity.y -= m_Acceleration;
+		//if (!TouchingUp) { Velocity.y -= m_Acceleration; }
 	}
 	else if (Direction == 'd') 
 	{
-		//m_Y += m_Gravity;
-		Velocity.y += m_Acceleration;
+		//if (!TouchingDown) { Velocity.y += m_Acceleration; }
 	}
 	else if (Direction == 'l')
 	{
-		Velocity.x -= m_Acceleration;
+		if (!TouchingLeft) { Velocity.x -= m_Acceleration; }
 	}
 	else if (Direction == 'r')
 	{
-		Velocity.x += m_Acceleration;
+		if (!TouchingRight) { Velocity.x += m_Acceleration; }
+	}
+	else if (Direction == 'j') 
+	{
+		//If player is currently not jumping and is grounded then set it so they are currently jumping
+		if (!IsJumping && IsGrounded) 
+		{
+			IsJumping = true;
+			m_CurrentJumpTick = 0;
+		}
 	}
 	
 }
@@ -100,134 +95,47 @@ void Creature::Physics()
 	if (Velocity.y < -m_MaxVelocity) { Velocity.y = -m_MaxVelocity; }
 
 	//Get the collision position of creature
-	GetCollisionPosition(0, true);
+	GetCollisionPosition(0, false);
 
-	//Check if player is grounded
-	if (IsGrounded == false) //If the player is not grounded then check below them to see if they are
+	//Check if the player is grounded or not
+	IsGrounded = levelinfo->IsWall(BotLeftPosX, BotLeftPosY+1, BotRightPosX, BotRightPosY+1) == true ? true : false;
+
+	//std::cout << "IsGrounded equals " << IsGrounded << std::endl;
+	//std::cout << "IsJumping equals " << IsJumping << std::endl;
+	//std::cout << "AppliedGravity equals " << AppliedGravity << std::endl;
+	//std::cout << "Velocity.y equals " << Velocity.y << std::endl;
+
+	if (IsGrounded == false) //If the player is not grounded then apply gravity
 	{
-		//If a wall is directly below then they are grounded
-		if (levelinfo->IsWall(BotLeftPosX, BotLeftPosY + 1, BotRightPosX, BotRightPosY + 1) == true)
+		if (!AppliedGravity) 
 		{
-			IsGrounded = true;
-			
+			Velocity.y += m_Gravity;
+			AppliedGravity = true;
 		}
-		//Else apply gravity
+	}
+	else 
+	{
+		AppliedGravity = false;
+		Velocity.y = 0;
+	}
+
+	
+	//If the character is jumping then apply jumping stuff
+	if (IsJumping)
+	{
+		if (m_CurrentJumpTick < m_MaxJumpTick)
+		{
+			m_CurrentJumpSpeed--;
+			Velocity.y -= m_CurrentJumpSpeed;
+			m_CurrentJumpTick++;
+		}
 		else
 		{
-			//std::cout << "gravity" << std::endl;
-			/*if (Velocity.y -= m_Gravity == Velocity.y < 0) 
-			{
-				Velocity.y = 0;
-			}
-			else 
-			{
-				Velocity.y += m_Gravity;
-			}*/
-			//Velocity.y += m_Gravity;
-			
-		}
-	}
-
-	//Move the creature depending on velocity
-	Position.x += Velocity.x;
-	Position.y += Velocity.y;
-
-	
-	if (Velocity.x > 0) //Creature moving right 
-	{
-		std::cout << "moving right" << std::endl;
-		CanMove = levelinfo->IsWall(TopRightPosX, TopRightPosY, BotRightPosX, BotRightPosY) == true ? false : true;
-		if (!CanMove)
-		{
-			CloserToWall(Position.x, TopRightPosX, TopRightPosY, BotRightPosX, BotRightPosY, true, true, Velocity.x);
-			Velocity.x = 0;
-		}
-	}
-	else if (Velocity.x < 0) //Creature moving left
-	{
-		std::cout << "moving left" << std::endl;
-		CanMove = levelinfo->IsWall(TopLeftPosX, TopLeftPosY, BotLeftPosX, BotLeftPosY) == true ? false : true;
-		if (!CanMove)
-		{
-			CloserToWall(Position.x, TopLeftPosX, TopLeftPosY, BotLeftPosX, BotLeftPosY, false, true, Velocity.x);
-			Velocity.x = 0;
-		}
-	}
-	else 
-	{
-		std::cout << "not changing x direction" << std::endl;
-	}
-
-	GetCollisionPosition(0, false);
-	if (Velocity.y > 0) //Creature moving up
-	{
-		std::cout << "Moving up" << std::endl;
-		CanMove = levelinfo->IsWall(TopLeftPosX, TopLeftPosY-1, TopRightPosX, TopRightPosY-1) == true ? false : true;
-		if (!CanMove)
-		{
-			CloserToWall(Position.y, TopLeftPosX, TopLeftPosY, TopRightPosX, TopRightPosY, false, false, Velocity.y);
-			Velocity.y = 0;
-		}
-	}
-	else if (Velocity.y < 0) //Creature moving down;
-	{
-		std::cout << "Moving down" << std::endl;
-		CanMove = levelinfo->IsWall(BotLeftPosX, BotLeftPosY+1, BotRightPosX, BotRightPosY+1) == true ? false : true;
-		if (!CanMove)
-		{
-			CloserToWall(Position.y, BotLeftPosX, BotLeftPosY, BotRightPosX, BotRightPosY, true, false, Velocity.y);
-			Velocity.y = 0;
-		}
-	}
-	else 
-	{
-		std::cout << "not changing y direction" << std::endl;
-	}
-
-	//Apply air resistance to velocity
-	if (Velocity.x > 0) 
-	{
-		Velocity.x -= m_AirResistance;
-	}
-	else if (Velocity.x < 0)
-	{
-		Velocity.x += m_AirResistance;
-	}
-
-	if (Velocity.y > 0)
-	{
-		Velocity.y -= m_AirResistance;
-	}
-	else if (Velocity.y < 0)
-	{
-		Velocity.y += m_AirResistance;
-	}
-
-
-
-
-	if (CanMove == false)
-	{
-		std::cout << ("cant move") << std::endl;
-		Position.x = m_PrevX;
-		Position.y = m_PrevY;
-	}
-	
-
-	
-	/* 
-	if (IsJumping) //If the character is jumping then apply jumping stuff
-	{
-		if (m_CurrentJumpHeight < m_MaxJumpHeight)
-		{
-			//std::cout << "Player just jumped" << std::endl;
-			Move('u');
-			m_CurrentJumpHeight++;
-		}
-		else 
-		{
+			AppliedGravity = false;
 			IsJumping = false;
-			m_CurrentJumpHeight = 0;
+			m_CurrentJumpTick = 0;
+			Velocity.y = 0;
+			m_CurrentJumpSpeed = m_JumpSpeed;
 		}
 
 		//Check above the player and if they hit something then stop jumping
@@ -238,21 +146,72 @@ void Creature::Physics()
 		}
 	}
 
-	if (IsGrounded == true) //Check that the player is still grounded by looking below him
+
+	//Move the creature depending on velocity and if something is in the way
+	TouchingRight = levelinfo->IsWall(TopRightPosX, TopRightPosY, BotRightPosX, BotRightPosY-2) == true ? true : false;
+	if (Velocity.x > 0 && !TouchingRight) //Creature moving right 
 	{
-		if (levelinfo->IsWall(BotLeftPosX, BotLeftPosY + 1, BotRightPosX, BotRightPosY + 1) == false)
+		Position.x += Velocity.x;
+		CanMove = levelinfo->IsWall(TopRightPosX, TopRightPosY, BotRightPosX, BotRightPosY-2) == true ? false : true;
+		if (!CanMove)
 		{
-			IsGrounded = false;
+			Velocity.x = 0;
 		}
+	}
+
+	TouchingLeft = levelinfo->IsWall(TopLeftPosX, TopLeftPosY, BotLeftPosX, BotLeftPosY-2) == true ? true : false;
+	if (Velocity.x < 0 && !TouchingLeft) //Creature moving left
+	{
+		Position.x += Velocity.x;
+		CanMove = levelinfo->IsWall(TopLeftPosX, TopLeftPosY, BotLeftPosX, BotLeftPosY-2) == true ? false : true;
+		if (!CanMove)
+		{
+			Velocity.x = 0;
+		}
+	}
+
+	TouchingUp = levelinfo->IsWall(TopLeftPosX, TopLeftPosY-1, TopRightPosX, TopRightPosY-1) == true ? true : false;
+	if (Velocity.y < 0 && !TouchingUp) //Creature moving up
+	{
+		Position.y += Velocity.y;
+		CanMove = levelinfo->IsWall(TopLeftPosX, TopLeftPosY-1, TopRightPosX, TopRightPosY-1) == true ? false : true;
+		if (!CanMove)
+		{
+			Velocity.y = 0;
+		}
+	}
+
+	TouchingDown = levelinfo->IsWall(BotLeftPosX, BotLeftPosY+1, BotRightPosX, BotRightPosY+1) == true ? true : false;
+	if (Velocity.y > 0 && !TouchingDown) //Creature moving down;
+	{
+		Position.y += Velocity.y;
+		CanMove = levelinfo->IsWall(BotLeftPosX, BotLeftPosY+1, BotRightPosX, BotRightPosY+1) == true ? false : true;
+		if (!CanMove)
+		{
+			Velocity.y = 0;
+		}
+	}
+	
+	//Apply air resistance to velocity
+	if (Velocity.x > 0) 
+	{
+		Velocity.x -= m_AirResistance;
+	}
+	else if (Velocity.x < 0)
+	{
+		Velocity.x += m_AirResistance;
+	}
+
+	/*if (Velocity.y < 0)
+	{
+		Velocity.y += m_AirResistance;
 	}*/
 
 	
-
 	
-
-
-
-
+	
+	
+	
 
 }
 
@@ -261,31 +220,31 @@ void Creature::GetCollisionPosition(int SpeedModifyer, bool XPosChange)
 	//SpeedModifyer is used for creatures that have a speed above 1. It allows them to get as close to an object as they can
 	if (XPosChange) //X position is being changed
 	{
-		TopLeftPosX = Position.x + SpeedModifyer;
+		TopLeftPosX = Position.x + Velocity.x;
 		TopLeftPosY = Position.y;
 
-		TopRightPosX = (Position.x + (m_Width - 1)) + SpeedModifyer;
+		TopRightPosX = (Position.x + (m_Width - 1)) + Velocity.x;
 		TopRightPosY = Position.y;
 
-		BotLeftPosX = Position.x + SpeedModifyer;
+		BotLeftPosX = Position.x + Velocity.x;
 		BotLeftPosY = Position.y + (m_Height - 1);
 
-		BotRightPosX = (Position.x + (m_Width - 1)) + SpeedModifyer;
+		BotRightPosX = (Position.x + (m_Width - 1)) + Velocity.x;
 		BotRightPosY = Position.y + (m_Height - 1);
 	}
 	else //Y position is being changed
 	{
 		TopLeftPosX = Position.x;
-		TopLeftPosY = Position.y + SpeedModifyer;
+		TopLeftPosY = Position.y + Velocity.y;
 
 		TopRightPosX = (Position.x + (m_Width - 1));
-		TopRightPosY = Position.y + SpeedModifyer;
+		TopRightPosY = Position.y + Velocity.y;
 
 		BotLeftPosX = Position.x;
-		BotLeftPosY = Position.y + (m_Height - 1) + SpeedModifyer;
+		BotLeftPosY = Position.y + (m_Height - 1) + Velocity.y;
 
 		BotRightPosX = (Position.x + (m_Width - 1));
-		BotRightPosY = Position.y + (m_Height - 1) + SpeedModifyer;
+		BotRightPosY = Position.y + (m_Height - 1) + Velocity.y;
 	}
 }
 

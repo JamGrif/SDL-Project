@@ -7,8 +7,10 @@ Player::Player(SDL_Renderer* renderer, int xpos, int ypos, Level* pLevel, bool u
 	IdleAnimation = DefaultPicture;
 
 	m_Acceleration = 7;
-	m_JumpSpeed = 15;
-	m_MaxJumpHeight = 10;
+
+	m_JumpSpeed = 7;
+	m_CurrentJumpSpeed = m_JumpSpeed;
+	m_MaxJumpTick = 7;
 
 	m_Width = 53;
 	m_Height = 51;
