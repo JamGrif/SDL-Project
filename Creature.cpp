@@ -1,49 +1,20 @@
 #include "Creature.h"
 
-Creature::Creature(SDL_Renderer* renderer, int xpos, int ypos, Level* pLevel, bool useTransparency, std::string DefaultPicture)
+Creature::Creature(SDL_Renderer* renderer, int xpos, int ypos, Level* pLevel, bool useTransparency)
 	:Entity(renderer, xpos, ypos, pLevel, useTransparency)
 
 {
-	IdleAnimation = DefaultPicture;
 
-	if (IdleAnimation == "") 
-	{
-		IdleAnimation = "Assets/MissingTexture.bmp";
-	}
-	UpdateBitmap(IdleAnimation, true);
+	//UpdateBitmap(CurrentPicture, true);
 
 	levelinfo = pLevel;
 
 }
 
 //Moves the creature and checks for collision in the level vector
-void Creature::Move(char Direction)
+void Creature::Move()
 {
-	if (Direction == 'u') 
-	{
-		//if (!TouchingUp) { Velocity.y -= m_Acceleration; }
-	}
-	else if (Direction == 'd') 
-	{
-		//if (!TouchingDown) { Velocity.y += m_Acceleration; }
-	}
-	else if (Direction == 'l')
-	{
-		if (!TouchingLeft) { Velocity.x -= m_Acceleration; }
-	}
-	else if (Direction == 'r')
-	{
-		if (!TouchingRight) { Velocity.x += m_Acceleration; }
-	}
-	else if (Direction == 'j') 
-	{
-		//If player is currently not jumping and is grounded then set it so they are currently jumping
-		if (!IsJumping && IsGrounded) 
-		{
-			IsJumping = true;
-			m_CurrentJumpTick = 0;
-		}
-	}
+	
 	
 }
 
@@ -142,7 +113,11 @@ void Creature::Physics()
 		if (levelinfo->IsWall(TopLeftPosX, TopLeftPosY-1, TopRightPosX, TopRightPosY-1) == true)
 		{
 			//std::cout << "Player hit something above them" << std::endl;
+			AppliedGravity = false;
 			IsJumping = false;
+			m_CurrentJumpTick = 0;
+			Velocity.y = 0;
+			m_CurrentJumpSpeed = m_JumpSpeed;
 		}
 	}
 
@@ -191,6 +166,8 @@ void Creature::Physics()
 			Velocity.y = 0;
 		}
 	}
+
+	if (Velocity.x > 0){}
 	
 	//Apply air resistance to velocity
 	if (Velocity.x > 0) 
@@ -200,18 +177,7 @@ void Creature::Physics()
 	else if (Velocity.x < 0)
 	{
 		Velocity.x += m_AirResistance;
-	}
-
-	/*if (Velocity.y < 0)
-	{
-		Velocity.y += m_AirResistance;
-	}*/
-
-	
-	
-	
-	
-	
+	}	
 
 }
 

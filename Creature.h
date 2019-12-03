@@ -5,13 +5,13 @@ class Creature :
 	public Entity
 {
 public:
-	Creature(SDL_Renderer* renderer, int xpos, int ypos, Level* plevel, bool useTransparency,  std::string animation = "");
+	Creature(SDL_Renderer* renderer, int xpos, int ypos, Level* plevel, bool useTransparency);
 
-	void Move(char Direction);
+	virtual void Move();
 
 	void CloserToWall(float& position, float& FirstX, float& FirstY, float& SecondX, float& SecondY, bool PositivePositionChange, bool XPosChange, float &VelocityDirection);
 
-	void Physics();
+	virtual void Physics();
 
 	void GetCollisionPosition(int speed, bool XPosChange);
 	void DisplayPosition();
@@ -39,6 +39,7 @@ protected:
 	bool IsJumping = false;
 	bool JustJumped = false;
 	bool AppliedGravity = false;
+	bool Moving = false;
 
 	bool TouchingRight = false;
 	bool TouchingLeft = false;
@@ -62,7 +63,10 @@ protected:
 	float BotRightPosY;
 
 	//Drawing sprites
-	std::string IdleAnimation;
+	bool FacingRight = true;
+
+
+
 
 	//Size of creature
 	int m_Width;

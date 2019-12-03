@@ -38,9 +38,9 @@ Game::Game()
 
 	level = new Level(m_Renderer, m_ScreenHeight, m_ScreenWidth);
 
-	m_Player = new Player(m_Renderer, m_ScreenWidth/2, m_ScreenHeight/2-128, level, true,  "Assets/Player.bmp");
+	m_Player = new Player(m_Renderer, m_ScreenWidth/2, m_ScreenHeight/2-128, level, true);
 
-	m_Sky = new Sky(m_Renderer, 0, 0, level, true, "Assets/Sky.bmp");
+	m_Sky = new Sky(m_Renderer, 0, 0, level, true);
 
 	
 }

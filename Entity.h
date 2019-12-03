@@ -38,7 +38,7 @@ protected:
 
 	std::string Filename = "";
 
-	std::string CurrentAnimation = "";
+	std::string CurrentPicture = "";
 
 	Level* levelinfo;
 

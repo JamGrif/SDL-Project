@@ -27,7 +27,7 @@ void Entity::UpdateBitmap(std::string filename, bool useTransparency)
 	//Create the bitmap surface
 	m_pbitmapSurface = SDL_LoadBMP(filename.c_str()); //loads bitmap from file into a member variable
 
-	CurrentAnimation = filename;
+	CurrentPicture = filename;
 
 	if (!m_pbitmapSurface)
 	{
