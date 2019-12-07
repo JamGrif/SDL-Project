@@ -219,8 +219,15 @@ void Player::Update()
 	//Change animation if needed
 	SpriteUpdate();
 
+}
 
-
+bool Player::HasPlayerWon() 
+{
+	if (Position.x >= 4870 && Coins == 5) 
+	{
+		return true;
+	}
+	return false;
 }
 
 

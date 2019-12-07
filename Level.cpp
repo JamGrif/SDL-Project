@@ -181,7 +181,7 @@ void Level::RenderLevel(int PlayerX, int PlayerY)
 		}
 
 		//NEED TO FIX BELOW SO NUMBER IS WORKED OUT AUTOMATICALLY <------------------------------------------------------------
-		//41 goes to the next block that needs to be renderered on the next line. will break if the rows are made bigger in level text file 
+		//70 goes to the next block that needs to be renderered on the next line. will break if the rows are made bigger in level text file 
 		m_DrawingPosition += 70;
 		
 		m_XDrawTo = SavedXDrawTo;

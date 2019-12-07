@@ -57,8 +57,7 @@ void Entity::UpdateBitmap(std::string filename, bool useTransparency)
 		}
 	}
 
-	//SDL_DestroyTexture(m_pbitmapTexture);
-	//SDL_FreeSurface(m_pbitmapSurface);
+	
 
 }
 
@@ -70,6 +69,7 @@ void Entity::draw()
 		SDL_Rect destRect = {m_DrawX, Position.y, m_pbitmapSurface->w, m_pbitmapSurface->h }; //Where on screen bitmap is drawn to and how big it will appear
 		SDL_RenderCopy(m_pRenderer, m_pbitmapTexture, NULL, &destRect);
 	}
+
 	
 }
 

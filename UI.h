@@ -31,11 +31,10 @@ private:
 	SDL_Color color = { R, G, B };
 
 	//UI
-	std::string FirstLine = "        COINS        TIME";
+	std::string FirstLine = "        COINS            ";
+	std::string SecondLine = "Win by collecting 5 coins and reaching end flag";
 
-	int TimeLeft = 0;
 	int CoinsCollected = 0;
-	std::string STimeLeft = "";
 	std::string SCoinsCollected = "";
 	
 };

@@ -16,7 +16,7 @@ private:
 	bool CoinCollected = false;
 	bool AppliedCoinAddition = false;
 
-
+	Player* playerinfo;
 
 };
 

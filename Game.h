@@ -12,6 +12,7 @@
 #include "Level.h"
 #include "conio.h"
 #include "Coin.h"
+#include <list>
 
 //class Bitmap; //04-01
 
@@ -52,7 +53,13 @@ private:
 	Player* m_Player; 
 	Monster* m_Monster;
 	Level* level;
-	Coin* m_Coin;
+
+
+	Coin* m_Coin1;
+	Coin* m_Coin2;
+	Coin* m_Coin3;
+	Coin* m_Coin4;
+	Coin* m_Coin5;
 
 	Sky* m_Sky;
 
@@ -62,5 +69,9 @@ private:
 	UI* m_ui;
 	
 	Input* input = new Input();
+
+	
+
+
 };
 

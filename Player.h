@@ -12,13 +12,15 @@ public:
 
 	void Update();
 
-	
+	bool HasPlayerWon();
 
 	void SpriteUpdate(); 
 
 	int GetCoinsCollected();
 	void IncreaseCoinsCollected();
 
+	//Coins
+	int Coins = 0;
 private:
 	std::string SavedCurrentPicture = "";
 
@@ -36,8 +38,7 @@ private:
 	std::string PlayerJumpR = "Assets/PlayerJumpR.bmp";
 	std::string PlayerJumpL = "Assets/PlayerJumpL.bmp";
 
-	//Coins
-	int Coins = 0;
+	
 
 
 };

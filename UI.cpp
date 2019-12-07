@@ -6,14 +6,12 @@ UI::UI(SDL_Renderer* renderer)
 	m_pRenderer = renderer;
 
 
-	TimeLeft = 300;
 
 }
 
 UI::~UI()
 {
-	//Destroy font
-	TTF_CloseFont(m_pFont);
+	
 }
 
 // Text we want to display, screen X and Y positions, font we want to use, colour of text
@@ -32,7 +30,7 @@ void UI::PresentUi(int PCoins)
 
 	SDL_QueryTexture(texture, NULL, NULL, &texW, &texH);
 
-	textRect = { 320, 0, texW, texH };
+	textRect = { 0, 600, texW, texH };
 
 	SDL_RenderCopy(m_pRenderer, texture, NULL, &textRect);
 
@@ -41,15 +39,13 @@ void UI::PresentUi(int PCoins)
 	SDL_FreeSurface(surface);
 	
 	//Second line of Ui
-	//Time left
-	STimeLeft = std::to_string(TimeLeft);
-	surface = TTF_RenderText_Solid(m_pFont, STimeLeft.c_str(), color);
+	surface = TTF_RenderText_Solid(m_pFont, SecondLine.c_str(), color);
 
 	texture = SDL_CreateTextureFromSurface(m_pRenderer, surface);
 
 	SDL_QueryTexture(texture, NULL, NULL, &texW, &texH);
 
-	textRect = { 668, 40, texW, texH };
+	textRect = { 170, 0, texW, texH };
 
 	SDL_RenderCopy(m_pRenderer, texture, NULL, &textRect);
 
@@ -65,7 +61,7 @@ void UI::PresentUi(int PCoins)
 
 	SDL_QueryTexture(texture, NULL, NULL, &texW, &texH);
 
-	textRect = { 475, 40, texW, texH };
+	textRect = { 150, 650, texW, texH };
 
 	SDL_RenderCopy(m_pRenderer, texture, NULL, &textRect);
 	

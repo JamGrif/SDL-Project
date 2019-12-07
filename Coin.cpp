@@ -27,13 +27,6 @@ void Coin::Update(int PlayerX, int PlayerY)
 		CoinCollected = true;
 		Position.y = -50;
 	}
-	
-
-
-
-
-	//Update sprite
-
 
 
 
