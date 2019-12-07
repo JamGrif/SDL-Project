@@ -7,12 +7,10 @@ Level::Level(SDL_Renderer* renderer, int ScreenWidth, int ScreenHeight)
 	m_ScreenWidth = ScreenWidth;
 	m_ScreenHeight = ScreenHeight;
 
-	MaxViewPortX = ScreenWidth;
-	MaxViewPortY = ScreenHeight;
-
 	//By default, the program loads level 1 first
 	LoadLevel(1);
-
+	CreateTextures();
+	
 }
 
 Level::~Level()
@@ -102,24 +100,48 @@ void Level::LoadLevel(int LevelToLoad)
 	
 }
 
+void Level::CreateTextures() //Creates all the textures before the level starts getting drawn
+{
+	//Grass block
+	m_psurface = SDL_LoadBMP(GrassBlock.c_str());
+	Uint32 colourKey = SDL_MapRGB(m_psurface->format, 255, 0, 255);
+	SDL_SetColorKey(m_psurface, SDL_TRUE, colourKey);
+	m_GrassTexture = SDL_CreateTextureFromSurface(m_pRenderer, m_psurface);
+	
+	//Dirt block
+	m_psurface = SDL_LoadBMP(DirtBlock.c_str());
+	SDL_SetColorKey(m_psurface, SDL_TRUE, colourKey);
+	m_DirtTexture = SDL_CreateTextureFromSurface(m_pRenderer, m_psurface);
+	
+	//Stone block
+	m_psurface = SDL_LoadBMP(StoneBlock.c_str());
+	SDL_SetColorKey(m_psurface, SDL_TRUE, colourKey);
+	m_StoneTexture = SDL_CreateTextureFromSurface(m_pRenderer, m_psurface);
+	
+	//Player spawn flag
+	m_psurface = SDL_LoadBMP(PlayerSpawn.c_str());
+	SDL_SetColorKey(m_psurface, SDL_TRUE, colourKey);
+	m_PlayerSpawnTexture = SDL_CreateTextureFromSurface(m_pRenderer, m_psurface);
+	
+	//Coal block
+	m_psurface = SDL_LoadBMP(CoalBlock.c_str());
+	SDL_SetColorKey(m_psurface, SDL_TRUE, colourKey);
+	m_CoalTexture = SDL_CreateTextureFromSurface(m_pRenderer, m_psurface);
+	
+	//Cleanup
+	SDL_FreeSurface(m_psurface);
+}
+
+
+
 void Level::RenderLevel(int PlayerX, int PlayerY)
 {
-	
 	//Find the top left position of the screen with regards to the players world position. The level isn't changed on the Y-axis so only the X is needed
 
 	ViewPortX = PlayerX - (m_ScreenWidth/2);
 	
-	//Find if player moved right or left by comparing m_PlayerPrevX with PlayerX
-
-	if (ViewPortX < m_ViewPortPrevX) //Player moved left 
-	{
-		m_Offset += (m_ViewPortPrevX - ViewPortX);
-
-	}
-	else if (ViewPortX > m_ViewPortPrevX) //Player moved right 
-	{
-		m_Offset -= (ViewPortX - m_ViewPortPrevX);
-	}
+	//Update offset based on how much the player moved (if they moved)
+	m_Offset += (m_ViewPortPrevX - ViewPortX);
 
 	//Makes it so m_Offset is always -64 and 64. Raises / reduces number if exceeds
 
@@ -153,23 +175,23 @@ void Level::RenderLevel(int PlayerX, int PlayerY)
 		{
 			if (m_GridLayout.at(m_DrawingPosition) == "G") //Grass block
 			{
-				DrawBlockOnPosition(m_XDrawTo, m_YDrawTo, GrassBlock);
+				DrawBlockOnPosition(m_XDrawTo, m_YDrawTo, m_GrassTexture);
 			}
 			else if (m_GridLayout.at(m_DrawingPosition) == "D") //Dirt block
 			{
-				DrawBlockOnPosition(m_XDrawTo, m_YDrawTo, DirtBlock);
+				DrawBlockOnPosition(m_XDrawTo, m_YDrawTo, m_DirtTexture);
 			}
 			else if (m_GridLayout.at(m_DrawingPosition) == "S") //Stone block
 			{
-				DrawBlockOnPosition(m_XDrawTo, m_YDrawTo, StoneBlock);
+				DrawBlockOnPosition(m_XDrawTo, m_YDrawTo, m_StoneTexture);
 			}
 			else if (m_GridLayout.at(m_DrawingPosition) == "P") //Player spawn 
 			{
-				DrawBlockOnPosition(m_XDrawTo, m_YDrawTo, PlayerSpawn, true);
+				DrawBlockOnPosition(m_XDrawTo, m_YDrawTo, m_PlayerSpawnTexture);
 			}
 			else if (m_GridLayout.at(m_DrawingPosition) == "C") //Coal Block
 			{
-				DrawBlockOnPosition(m_XDrawTo, m_YDrawTo, CoalBlock);
+				DrawBlockOnPosition(m_XDrawTo, m_YDrawTo, m_CoalTexture);
 			}
 			else //Empty space
 			{
@@ -196,29 +218,12 @@ void Level::RenderLevel(int PlayerX, int PlayerY)
 	
 }
 
-void Level::DrawBlockOnPosition(int X, int Y, std::string Asset, bool UseTransparency)
+void Level::DrawBlockOnPosition(int X, int Y, SDL_Texture* texture)
 {
 	
-	//Create the surface
-	m_psurface = SDL_LoadBMP(Asset.c_str());
-
-	if (UseTransparency)
-	{
-		Uint32 colourKey = SDL_MapRGB(m_psurface->format, 255, 0, 255);
-		SDL_SetColorKey(m_psurface, SDL_TRUE, colourKey);
-	}
-
-	//Create the bitmap texture
-	m_pbitmap = SDL_CreateTextureFromSurface(m_pRenderer, m_psurface);
-
 	//Draw the block
 	SDL_Rect destRect = { X,Y,m_BlockWidth,m_BlockHeight };
-	SDL_RenderCopy(m_pRenderer, m_pbitmap, NULL, &destRect);
-
-	//Cleanup
-	SDL_DestroyTexture(m_pbitmap);
-	SDL_FreeSurface(m_psurface);
-	
+	SDL_RenderCopy(m_pRenderer, texture, NULL, &destRect);
 }
 
 

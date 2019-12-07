@@ -44,11 +44,12 @@ Game::Game()
 
 	m_ui = new UI(m_Renderer);
 
-	m_Coin1 = new Coin(m_Renderer, 1800, 525, level);
-	m_Coin2 = new Coin(m_Renderer, 625, 525, level);
-	m_Coin3 = new Coin(m_Renderer, 2410, 450, level);
-	m_Coin4 = new Coin(m_Renderer, 3190, 330, level);
-	m_Coin5 = new Coin(m_Renderer, 4275, 330, level);
+	ListOfCoins.push_back(m_Coin1 = new Coin(m_Renderer, 1800, 525, level));
+	ListOfCoins.push_back(m_Coin2 = new Coin(m_Renderer, 625, 525, level));
+	ListOfCoins.push_back(m_Coin3 = new Coin(m_Renderer, 2410, 450, level));
+	ListOfCoins.push_back(m_Coin4 = new Coin(m_Renderer, 3190, 330, level));
+	ListOfCoins.push_back(m_Coin5 = new Coin(m_Renderer, 4275, 330, level));
+
 }
 
 Game::~Game()
@@ -85,17 +86,6 @@ void Game::GameLoop()
 
 		//Calculations and updating stuff
 		m_Player->Update();
-		m_Coin1->Update(m_Player->GetX(),m_Player->GetY());
-		m_Coin2->Update(m_Player->GetX(), m_Player->GetY());
-		m_Coin3->Update(m_Player->GetX(), m_Player->GetY());
-		m_Coin4->Update(m_Player->GetX(), m_Player->GetY());
-		m_Coin5->Update(m_Player->GetX(), m_Player->GetY());
-
-		//Check if a coin has been collected
-		if (m_Coin1->IsCoinCollected() == true || m_Coin2->IsCoinCollected() == true || m_Coin3->IsCoinCollected() == true || m_Coin4->IsCoinCollected() == true || m_Coin5->IsCoinCollected() == true)
-		{
-			m_Player->IncreaseCoinsCollected();
-		}
 
 		//Drawing stuff
 		m_Sky->draw();
@@ -103,11 +93,17 @@ void Game::GameLoop()
 		
 		level->RenderLevel(m_Player->GetX(),m_Player->GetY());
 		m_Player->draw();
-		m_Coin1->draw();
-		m_Coin2->draw();
-		m_Coin3->draw();
-		m_Coin4->draw();
-		m_Coin5->draw();
+
+		for (auto coin : ListOfCoins)
+		{
+			coin->Update(m_Player->GetX(), m_Player->GetY());
+			coin->draw();
+			if (coin->IsCoinCollected() == true)
+			{
+				m_Player->IncreaseCoinsCollected();
+			}
+		}
+
 		m_ui->PresentUi(m_Player->GetCoinsCollected());
 		
 

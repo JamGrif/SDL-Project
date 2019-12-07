@@ -14,8 +14,9 @@ public:
 	~Level();
 
 	void LoadLevel(int LevelToLoad);
+	void CreateTextures();
 	void RenderLevel(int PlayerX, int PlayerY);
-	void DrawBlockOnPosition(int X, int Y, std::string Asset, bool UseTransparency = false);
+	void DrawBlockOnPosition(int X, int Y, SDL_Texture* texture);
 
 
 	bool IsWall(int TopX, int TopY, int BotX, int BotY);
@@ -52,16 +53,11 @@ private:
 	//Used to find what part of the vector needs to be drawn
 	int VectorPos = 0;
 
-	bool CanLevelMove;
-
 	//Used to convert from world space to screen space
 	int ViewPortX = 0;
 	int ViewPortY = 0;
 
 	int m_ViewPortPrevX;
-
-	int MaxViewPortX = 0;
-	int MaxViewPortY = 0;
 
 	//Currently loaded level in the vector
 	int m_LoadedLevel = 0;
@@ -87,6 +83,12 @@ private:
 	std::string StoneBlock = "Assets/StoneBlock.bmp";
 	std::string PlayerSpawn = "Assets/PlayerSpawn.bmp";
 	std::string CoalBlock = "Assets/CoalBlock.bmp";
+
+	SDL_Texture* m_GrassTexture;
+	SDL_Texture* m_DirtTexture;
+	SDL_Texture* m_StoneTexture;
+	SDL_Texture* m_PlayerSpawnTexture;
+	SDL_Texture* m_CoalTexture;
 
 	//The level vector
 	std::vector<std::string> m_GridLayout;

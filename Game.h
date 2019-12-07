@@ -70,7 +70,7 @@ private:
 	
 	Input* input = new Input();
 
-	
+	std::list<Coin*> ListOfCoins;
 
 
 };
