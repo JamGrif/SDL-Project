@@ -102,7 +102,7 @@ void Level::LoadLevel(int LevelToLoad)
 	
 }
 
-void Level::RenderLevel(float PlayerX, float PlayerY)
+void Level::RenderLevel(int PlayerX, int PlayerY)
 {
 	
 	//Find the top left position of the screen with regards to the players world position. The level isn't changed on the Y-axis so only the X is needed
@@ -121,7 +121,7 @@ void Level::RenderLevel(float PlayerX, float PlayerY)
 		m_Offset -= (ViewPortX - m_ViewPortPrevX);
 	}
 
-	//Makes it so m_Offset is between -64 and 64. 
+	//Makes it so m_Offset is always -64 and 64. Raises / reduces number if exceeds
 
 	if (m_Offset > m_BlockWidth)
 	{
@@ -139,14 +139,13 @@ void Level::RenderLevel(float PlayerX, float PlayerY)
 	}
 	
 	//Set all the variables used for drawing level
+
 	m_XDrawTo += m_Offset;
 	SavedXDrawTo = m_XDrawTo;
 	m_DrawingPosition = VectorPos;
-
 	coltemp = m_XDrawTo;
 
 	//Loop to draw the level
-	//std::cout << "VectorPos is " << VectorPos << std::endl;
 
 	for (int i = VectorPos; i < VectorPos + MaxBlockHeight; i++)
 	{
@@ -184,11 +183,6 @@ void Level::RenderLevel(float PlayerX, float PlayerY)
 		//NEED TO FIX BELOW SO NUMBER IS WORKED OUT AUTOMATICALLY <------------------------------------------------------------
 		//41 goes to the next block that needs to be renderered on the next line. will break if the rows are made bigger in level text file 
 		m_DrawingPosition += 70;
-		//m_DrawingPosition += VectorPos;
-		//m_DrawingPosition += (i * m_LevelWidth);
-		//m_DrawingPosition -= MaxBlockWidth+1;
-		//m_DrawingPosition += ((m_LevelWidth - m_DrawingPosition) + VectorPos);
-		
 		
 		m_XDrawTo = SavedXDrawTo;
 		m_YDrawTo = m_YDrawTo + m_BlockHeight;
@@ -196,13 +190,9 @@ void Level::RenderLevel(float PlayerX, float PlayerY)
 
 	//Reset everything ready for next render of level
 
-	//std::cout << "Offset is " << m_Offset << std::endl;
-	//std::cout << "m_XDrawTo is " << m_XDrawTo << std::endl;
 	m_ViewPortPrevX = ViewPortX;
 	m_XDrawTo = -m_BlockWidth;
 	m_YDrawTo = 0;
-
-	
 	
 }
 
@@ -236,8 +226,6 @@ void Level::DrawBlockOnPosition(int X, int Y, std::string Asset, bool UseTranspa
 bool Level::IsWall(int TopX, int TopY, int BotX, int BotY) 
 {
 	//Find where the player is within the level by using the cords in the functions parameter
-
-
 	//The X cords are adjusted for the offset used to draw the level and the players viewport
 	TopX -= ((ViewPortX + m_Offset) - m_BlockWidth);
 	BotX -= ((ViewPortX + m_Offset) - m_BlockWidth);

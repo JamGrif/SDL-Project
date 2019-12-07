@@ -14,7 +14,7 @@ public:
 	~Level();
 
 	void LoadLevel(int LevelToLoad);
-	void RenderLevel(float PlayerX, float PlayerY);
+	void RenderLevel(int PlayerX, int PlayerY);
 	void DrawBlockOnPosition(int X, int Y, std::string Asset, bool UseTransparency = false);
 
 

@@ -1,74 +1,79 @@
 #include "UI.h"
 
-UI::UI()
+UI::UI(SDL_Renderer* renderer)
 {
 	std::cout << "UI created!" << std::endl;
+	m_pRenderer = renderer;
 
-	//read in the font
-	m_pSmallFont = TTF_OpenFont("Assets/DejaVuSans.ttf", 15);
-	//m_pBigFont = TTF_OpenFont("Assets/DejaVuSans.ttf", 50);
+
+	TimeLeft = 300;
 
 }
 
 UI::~UI()
 {
 	//Destroy font
-	TTF_CloseFont(m_pBigFont);
-	TTF_CloseFont(m_pSmallFont);
+	TTF_CloseFont(m_pFont);
 }
 
 // Text we want to display, screen X and Y positions, font we want to use, colour of text
-void UI::UpdateText(std::string msg, int x, int y, SDL_Color colour, SDL_Renderer* renderer)
+void UI::PresentUi(int PCoins)
 {
+	CoinsCollected = PCoins;
+	surface = nullptr;
+	texture = nullptr;
 
-	SDL_Surface* surface = nullptr;
-	SDL_Texture* texture = nullptr;
+	m_pFont = TTF_OpenFont("Assets/DejaVuSans.ttf", 40);
+
+	//First line of Ui
+	surface = TTF_RenderText_Solid(m_pFont, FirstLine.c_str(), color);
+
+	texture = SDL_CreateTextureFromSurface(m_pRenderer, surface);
+
+	SDL_QueryTexture(texture, NULL, NULL, &texW, &texH);
+
+	textRect = { 320, 0, texW, texH };
+
+	SDL_RenderCopy(m_pRenderer, texture, NULL, &textRect);
+
+	SDL_DestroyTexture(texture);
+
+	SDL_FreeSurface(surface);
 	
-	int texW = 0;
-	int texH = 0;
+	//Second line of Ui
+	//Time left
+	STimeLeft = std::to_string(TimeLeft);
+	surface = TTF_RenderText_Solid(m_pFont, STimeLeft.c_str(), color);
 
-	SDL_Color color = {R, G, B };
+	texture = SDL_CreateTextureFromSurface(m_pRenderer, surface);
 
-	//char msg[100]
-	//sprintf_s(msg, "Checks: %d", m_checkTally);
+	SDL_QueryTexture(texture, NULL, NULL, &texW, &texH);
 
-	m_pBigFont = TTF_OpenFont("Assets/DejaVuSans.ttf", 75);
-	surface = TTF_RenderText_Solid(m_pBigFont, msg.c_str(), color);
+	textRect = { 668, 40, texW, texH };
 
-	if (!surface)
-	{
-		//surface not loaded
-		printf("SURFACE for font not loaded! \n");
-		printf("%s\n", SDL_GetError());
-	}
-	else
-	{
-		texture = SDL_CreateTextureFromSurface(renderer, surface);
-		if (!texture)
-		{
-			//surface not loaded
-			printf("SURFACE for font not loaded! \n");
-			printf("%s\n", SDL_GetError());
-		}
-		else
-		{
-			SDL_QueryTexture(texture, NULL, NULL, &texW, &texH);
-			SDL_Rect textRect = { x, y, texW, texH };
+	SDL_RenderCopy(m_pRenderer, texture, NULL, &textRect);
 
-			SDL_RenderCopy(renderer, texture, NULL, &textRect);
-		}
+	SDL_DestroyTexture(texture);
 
-	}
+	SDL_FreeSurface(surface);
+
+	//Coins collected
+	SCoinsCollected = std::to_string(CoinsCollected);
+	surface = TTF_RenderText_Solid(m_pFont, SCoinsCollected.c_str(), color);
+
+	texture = SDL_CreateTextureFromSurface(m_pRenderer, surface);
+
+	SDL_QueryTexture(texture, NULL, NULL, &texW, &texH);
+
+	textRect = { 475, 40, texW, texH };
+
+	SDL_RenderCopy(m_pRenderer, texture, NULL, &textRect);
 	
-	if (texture)
-	{
-		SDL_DestroyTexture(texture);
-	}
 
-	if (surface)
-	{
-		SDL_FreeSurface(surface);
-	}
-
-	TTF_CloseFont(m_pBigFont);
+	//Cleanup
+	SDL_DestroyTexture(texture);
+	
+	SDL_FreeSurface(surface);
+	
+	TTF_CloseFont(m_pFont);
 }

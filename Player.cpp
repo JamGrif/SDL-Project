@@ -11,23 +11,38 @@ Player::Player(SDL_Renderer* renderer, int xpos, int ypos, Level* pLevel, bool u
 
 	m_JumpSpeed = 7;
 	m_CurrentJumpSpeed = m_JumpSpeed;
-	m_MaxJumpTick = 7;
+	m_MaxJumpTick = 9;
 
 	m_Width = 53;
 	m_Height = 51;
 
-	//Saving the running sprites into the approiate arrays
-	/*
-	PlayerRunL[0] = "Assets/PlayerRun1L.bmp";
-	PlayerRunL[1] = "Assets/PlayerRun2L.bmp";
-	PlayerRunL[2] = "Assets/PlayerRun1L.bmp";
-	PlayerRunL[3] = "Assets/PlayerRun3L.bmp";
+	//Saving the running sprites into the approiate vectors
 
-	PlayerRunR[0] = "Assets/PlayerRun1R.bmp";
-	PlayerRunR[1] = "Assets/PlayerRun2R.bmp";
-	PlayerRunR[2] = "Assets/PlayerRun1R.bmp";
-	PlayerRunR[3] = "Assets/PlayerRun3R.bmp";
-	*/
+	PlayerRunL.push_back("Assets/PlayerRun1L.bmp");
+	PlayerRunL.push_back("Assets/PlayerRun1L.bmp");
+	PlayerRunL.push_back("Assets/PlayerRun1L.bmp");
+	PlayerRunL.push_back("Assets/PlayerRun2L.bmp");
+	PlayerRunL.push_back("Assets/PlayerRun2L.bmp");
+	PlayerRunL.push_back("Assets/PlayerRun2L.bmp");
+	PlayerRunL.push_back("Assets/PlayerRun1L.bmp");
+	PlayerRunL.push_back("Assets/PlayerRun1L.bmp");
+	PlayerRunL.push_back("Assets/PlayerRun1L.bmp");
+	PlayerRunL.push_back("Assets/PlayerRun3L.bmp");
+	PlayerRunL.push_back("Assets/PlayerRun3L.bmp");
+	PlayerRunL.push_back("Assets/PlayerRun3L.bmp");
+
+	PlayerRunR.push_back("Assets/PlayerRun1R.bmp");
+	PlayerRunR.push_back("Assets/PlayerRun1R.bmp");
+	PlayerRunR.push_back("Assets/PlayerRun1R.bmp");
+	PlayerRunR.push_back("Assets/PlayerRun2R.bmp");
+	PlayerRunR.push_back("Assets/PlayerRun2R.bmp");
+	PlayerRunR.push_back("Assets/PlayerRun2R.bmp");
+	PlayerRunR.push_back("Assets/PlayerRun1R.bmp");
+	PlayerRunR.push_back("Assets/PlayerRun1R.bmp");
+	PlayerRunR.push_back("Assets/PlayerRun1R.bmp");
+	PlayerRunR.push_back("Assets/PlayerRun3R.bmp");
+	PlayerRunR.push_back("Assets/PlayerRun3R.bmp");
+	PlayerRunR.push_back("Assets/PlayerRun3R.bmp");
 }
 
 
@@ -38,23 +53,23 @@ Player::~Player()
 
 void Player::Move(char Direction)
 {
-	if (Direction == 'u')
+	if (Direction == 'u') //Up
 	{
 		//if (!TouchingUp) { Velocity.y -= m_Acceleration; }
 	}
-	else if (Direction == 'd')
+	else if (Direction == 'd') //Down
 	{
 		//if (!TouchingDown) { Velocity.y += m_Acceleration; }
 	}
-	else if (Direction == 'l')
+	else if (Direction == 'l') //Left
 	{
 		if (!TouchingLeft) { Velocity.x -= m_Acceleration; }
 	}
-	else if (Direction == 'r')
+	else if (Direction == 'r') //Right
 	{
 		if (!TouchingRight) { Velocity.x += m_Acceleration; }
 	}
-	else if (Direction == 'j')
+	else if (Direction == 'j') //Jump
 	{
 		//If player is currently not jumping and is grounded then set it so they are currently jumping
 		if (!IsJumping && IsGrounded)
@@ -68,7 +83,7 @@ void Player::Move(char Direction)
 
 }
 
-void Player::Physics()
+void Player::Update()
 {
 	//Save creatures previous position so they can move back if they cant move
 	m_PrevX = Position.x;
@@ -82,7 +97,7 @@ void Player::Physics()
 	if (Velocity.y < -m_MaxVelocity) { Velocity.y = -m_MaxVelocity; }
 
 	//Get the collision position of creature
-	GetCollisionPosition(0, false);
+	GetCollisionPosition();
 
 	//Check if the player is grounded or not
 	IsGrounded = levelinfo->IsWall(BotLeftPosX, BotLeftPosY + 1, BotRightPosX, BotRightPosY + 1) == true ? true : false;
@@ -209,6 +224,8 @@ void Player::Physics()
 }
 
 
+
+
 //Ran at the end of physics check and is used to decide what sprite the player should be
 void Player::SpriteUpdate()
 {
@@ -225,20 +242,26 @@ void Player::SpriteUpdate()
 	}
 
 	//If player is running then change animation to running animation
-	if (Moving && IsGrounded) 
+	if (Moving && IsGrounded && (Velocity.x > 1 || Velocity.x < -1))
 	{
 		if (FacingRight) 
 		{
-			//std::cout << "Character running right" << std::endl;
+			m_CurrentFrame++;
+			if (m_CurrentFrame > 11) { m_CurrentFrame = 0; }
+			CurrentPicture = PlayerRunR.at(m_CurrentFrame);
 		}
 		else 
 		{
-			//std::cout << "Character running left" << std::endl;
+			m_CurrentFrame++;
+			if (m_CurrentFrame > 11) { m_CurrentFrame = 0; }
+			CurrentPicture = PlayerRunL.at(m_CurrentFrame);
 		}
 		
 	}
-
-
+	else 
+	{
+		m_CurrentFrame = 0;
+	}
 
 	//If player is jumping then change animation to jumping animation
 	if (IsJumping || !IsGrounded && AppliedGravity)
@@ -253,23 +276,24 @@ void Player::SpriteUpdate()
 		}
 	}
 
-
+	//If the current picture has not been changed then dont run UpdateBitmap function
 	if (SavedCurrentPicture != CurrentPicture) 
 	{
-		//std::cout << "Animation change to " << CurrentPicture << std::endl;
 		UpdateBitmap(CurrentPicture, true);
 	}
 
 }
 
-
-
-void Player::FindSpawnPoint()
+int Player::GetCoinsCollected()
 {
-	
-
-
+	return Coins;
 }
+
+void Player::IncreaseCoinsCollected()
+{
+	Coins++;
+}
+
 
 
 

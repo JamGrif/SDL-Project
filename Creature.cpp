@@ -7,7 +7,7 @@ Creature::Creature(SDL_Renderer* renderer, int xpos, int ypos, Level* pLevel, bo
 
 	//UpdateBitmap(CurrentPicture, true);
 
-	levelinfo = pLevel;
+	
 
 }
 
@@ -19,9 +19,9 @@ void Creature::Move()
 }
 
 //Function allows a creature with a speed above 1 to get as close to the wall as they can. This avoids a gap between a creature and a wall if they meet the wall
-void Creature::CloserToWall(float& position, float& FirstX, float& FirstY, float& SecondX, float& SecondY, bool PositivePositionChange, bool XPosChange, float& VelocityDirection)
+void Creature::CloserToWall(int& position, int& FirstX, int& FirstY, int& SecondX, int& SecondY, bool PositivePositionChange, bool XPosChange, int& VelocityDirection)
 {
-	while ((CanMove == false && VelocityDirection != 0) || CanMove != true)
+	/*while ((CanMove == false && VelocityDirection != 0) || CanMove != true)
 	{
 		//std::cout << "test" << std::endl;
 		//if (VelocityDirection > 0){ VelocityDirection--; }
@@ -46,7 +46,7 @@ void Creature::CloserToWall(float& position, float& FirstX, float& FirstY, float
 			PositivePositionChange == true ? position += VelocityDirection : position -= VelocityDirection;
 			CanMove = true;
 		}
-	}
+	}*/
 
 
 }
@@ -66,7 +66,7 @@ void Creature::Physics()
 	if (Velocity.y < -m_MaxVelocity) { Velocity.y = -m_MaxVelocity; }
 
 	//Get the collision position of creature
-	GetCollisionPosition(0, false);
+	GetCollisionPosition();
 
 	//Check if the player is grounded or not
 	IsGrounded = levelinfo->IsWall(BotLeftPosX, BotLeftPosY+1, BotRightPosX, BotRightPosY+1) == true ? true : false;
@@ -181,38 +181,7 @@ void Creature::Physics()
 
 }
 
-void Creature::GetCollisionPosition(int SpeedModifyer, bool XPosChange)
-{
-	//SpeedModifyer is used for creatures that have a speed above 1. It allows them to get as close to an object as they can
-	if (XPosChange) //X position is being changed
-	{
-		TopLeftPosX = Position.x + Velocity.x;
-		TopLeftPosY = Position.y;
 
-		TopRightPosX = (Position.x + (m_Width - 1)) + Velocity.x;
-		TopRightPosY = Position.y;
-
-		BotLeftPosX = Position.x + Velocity.x;
-		BotLeftPosY = Position.y + (m_Height - 1);
-
-		BotRightPosX = (Position.x + (m_Width - 1)) + Velocity.x;
-		BotRightPosY = Position.y + (m_Height - 1);
-	}
-	else //Y position is being changed
-	{
-		TopLeftPosX = Position.x;
-		TopLeftPosY = Position.y + Velocity.y;
-
-		TopRightPosX = (Position.x + (m_Width - 1));
-		TopRightPosY = Position.y + Velocity.y;
-
-		BotLeftPosX = Position.x;
-		BotLeftPosY = Position.y + (m_Height - 1) + Velocity.y;
-
-		BotRightPosX = (Position.x + (m_Width - 1));
-		BotRightPosY = Position.y + (m_Height - 1) + Velocity.y;
-	}
-}
 
 void Creature::DisplayPosition()
 {

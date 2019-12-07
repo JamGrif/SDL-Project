@@ -1,12 +1,14 @@
 #include "Entity.h"
 
-Entity::Entity(SDL_Renderer* renderer, int xpos, int ypos, Level* pLevel, bool useTransparency = true)
+Entity::Entity(SDL_Renderer* renderer, int xpos, int ypos, Level* pLevel, bool useTransparency)
 {
 	//Store the renderer for future configuring and drawing
 	m_pRenderer = renderer;
 
 	Position.x = xpos;
 	Position.y = ypos;
+
+	levelinfo = pLevel;
 }
 
 Entity::~Entity()
@@ -55,7 +57,8 @@ void Entity::UpdateBitmap(std::string filename, bool useTransparency)
 		}
 	}
 
-
+	//SDL_DestroyTexture(m_pbitmapTexture);
+	//SDL_FreeSurface(m_pbitmapSurface);
 
 }
 
@@ -68,6 +71,23 @@ void Entity::draw()
 		SDL_RenderCopy(m_pRenderer, m_pbitmapTexture, NULL, &destRect);
 	}
 	
+}
+
+void Entity::GetCollisionPosition()
+{
+	//SpeedModifyer is used for creatures that have a speed above 1. It allows them to get as close to an object as they can
+	
+	TopLeftPosX = Position.x;
+	TopLeftPosY = Position.y;
+
+	TopRightPosX = (Position.x + (m_Width - 1));
+	TopRightPosY = Position.y;
+
+	BotLeftPosX = Position.x;
+	BotLeftPosY = Position.y + (m_Height - 1);
+
+	BotRightPosX = (Position.x + (m_Width - 1));
+	BotRightPosY = Position.y + (m_Height - 1);
 }
 
 

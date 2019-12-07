@@ -6,21 +6,37 @@
 class UI
 {
 public:
-	UI();
+	UI(SDL_Renderer* renderer);
 	~UI();
 
-	void UpdateText(std::string msg, int x, int y, SDL_Color colour, SDL_Renderer* renderer);
+	void PresentUi(int PCoins);
 
 	//TTF_Font* font
 
 private:
 
-	TTF_Font* m_pSmallFont;
-	TTF_Font* m_pBigFont = TTF_OpenFont("Assets/DejaVuSans.ttf", 50);
+	TTF_Font* m_pFont = TTF_OpenFont("Assets/DejaVuSans.ttf", 45);
 
-	int R = 255;
-	int G = 255;
-	int B = 0;
+	SDL_Renderer* m_pRenderer;
+	SDL_Surface* surface;
+	SDL_Texture* texture;
 
+	int texW = 0;
+	int texH = 0;
+
+	SDL_Rect textRect;
+	Uint8 R = 255;
+	Uint8 G = 255;
+	Uint8 B = 255;
+	SDL_Color color = { R, G, B };
+
+	//UI
+	std::string FirstLine = "        COINS        TIME";
+
+	int TimeLeft = 0;
+	int CoinsCollected = 0;
+	std::string STimeLeft = "";
+	std::string SCoinsCollected = "";
+	
 };
 

@@ -4,7 +4,9 @@ class Sky :
 	public Entity
 {
 public:
-	Sky(SDL_Renderer* renderer, int xpos, int ypos, Level* pLevel, bool useTransparency);
+	Sky(SDL_Renderer* renderer, int xpos, int ypos, Level* pLevel, bool useTransparency = true);
+
+	void Update();
 
 	void draw();
 

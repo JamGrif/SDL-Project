@@ -5,16 +5,19 @@ class Player :
 	public Creature
 {
 public:
-	Player(SDL_Renderer* renderer, int xpos, int ypos, Level* pLevel, bool useTransparency);
+	Player(SDL_Renderer* renderer, int xpos, int ypos, Level* pLevel, bool useTransparency = true);
 	~Player();
 
 	void Move(char direction);
 
-	void Physics();
+	void Update();
+
+	
 
 	void SpriteUpdate(); 
 
-	void FindSpawnPoint();
+	int GetCoinsCollected();
+	void IncreaseCoinsCollected();
 
 private:
 	std::string SavedCurrentPicture = "";
@@ -25,12 +28,16 @@ private:
 
 	//Running sprites
 	int m_CurrentFrame = 0;
-	std::string PlayerRunL[3];
-	std::string PlayerRunR[3];
+
+	std::vector<std::string> PlayerRunL;
+	std::vector<std::string> PlayerRunR;
 
 	//Jumping sprite
 	std::string PlayerJumpR = "Assets/PlayerJumpR.bmp";
 	std::string PlayerJumpL = "Assets/PlayerJumpL.bmp";
+
+	//Coins
+	int Coins = 0;
 
 
 };

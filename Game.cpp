@@ -38,11 +38,13 @@ Game::Game()
 
 	level = new Level(m_Renderer, m_ScreenHeight, m_ScreenWidth);
 
-	m_Player = new Player(m_Renderer, m_ScreenWidth/2, m_ScreenHeight/2-128, level, true);
+	m_Player = new Player(m_Renderer, m_ScreenWidth/2, m_ScreenHeight/2-128, level);
 
-	m_Sky = new Sky(m_Renderer, 0, 0, level, true);
+	m_Sky = new Sky(m_Renderer, 0, 0, level);
 
-	
+	m_ui = new UI(m_Renderer);
+
+	m_Coin = new Coin(m_Renderer, 1800, 525, level);
 }
 
 Game::~Game()
@@ -55,7 +57,7 @@ Game::~Game()
 
 	delete level;
 	delete input;
-	delete ui;
+	delete m_ui;
 
 	//Destroy in reverse order they were created
 	if (m_Renderer) 
@@ -76,8 +78,15 @@ void Game::GameLoop()
 		
 		CheckKeyPressed();
 
-		//Calculations stuff
-		m_Player->Physics();
+		//Calculations and updating stuff
+		m_Player->Update();
+		m_Coin->Update(m_Player->GetX(),m_Player->GetY());
+
+		//Check if a coin has been collected
+		if (m_Coin->IsCoinCollected() == true) 
+		{
+			m_Player->IncreaseCoinsCollected();
+		}
 
 		//Drawing stuff
 		m_Sky->draw();
@@ -85,8 +94,9 @@ void Game::GameLoop()
 		
 		level->RenderLevel(m_Player->GetX(),m_Player->GetY());
 		m_Player->draw();
-		ui->UpdateText("This is some text!", 250, 600, { 0,0,0 }, m_Renderer);
-
+		m_Coin->draw();
+		m_ui->PresentUi(m_Player->GetCoinsCollected());
+		
 
 		//Render stuff
 		Render();
@@ -96,9 +106,9 @@ void Game::GameLoop()
 
 	std::cout << "Game ended." << std::endl;
 	delete input;
-	delete ui;
+	delete m_ui;
 	input = nullptr;
-	ui = nullptr;
+	m_ui = nullptr;
 }
 
 
