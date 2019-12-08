@@ -7,7 +7,7 @@ Player::Player(SDL_Renderer* renderer, int xpos, int ypos, Level* pLevel, bool u
 	CurrentPicture = PlayerR;
 	UpdateBitmap(CurrentPicture, true);
 
-	m_Acceleration = 7;
+	m_Acceleration = 4;
 
 	m_JumpSpeed = 7;
 	m_CurrentJumpSpeed = m_JumpSpeed;

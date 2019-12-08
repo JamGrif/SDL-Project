@@ -13,19 +13,14 @@ public:
 	Level(SDL_Renderer* renderer, int ScreenWidth, int ScreenHeight);
 	~Level();
 
-	void LoadLevel(int LevelToLoad);
+	void LoadLevel();
 	void CreateTextures();
 	void RenderLevel(int PlayerX, int PlayerY);
 	void DrawBlockOnPosition(int X, int Y, SDL_Texture* texture);
 
-
 	bool IsWall(int TopX, int TopY, int BotX, int BotY);
 
-
 	int GetViewPortX();
-
-	//int GetMaxPlayerPositionLeft();
-	//int GetMaxPlayerPositionRight();
 
 private:
 	int coltemp = 0;
@@ -83,15 +78,25 @@ private:
 	std::string StoneBlock = "Assets/StoneBlock.bmp";
 	std::string PlayerSpawn = "Assets/PlayerSpawn.bmp";
 	std::string CoalBlock = "Assets/CoalBlock.bmp";
+	std::string BackStoneBlock = "Assets/StoneBlockBack.bmp";
+	std::string BackDirtBlock = "Assets/DirtBlockBack.bmp";
 
 	SDL_Texture* m_GrassTexture;
 	SDL_Texture* m_DirtTexture;
 	SDL_Texture* m_StoneTexture;
 	SDL_Texture* m_PlayerSpawnTexture;
 	SDL_Texture* m_CoalTexture;
+	SDL_Texture* m_BackStoneTexture;
+	SDL_Texture* m_BackDirtTexture;
 
 	//The level vector
-	std::vector<std::string> m_GridLayout;
+	std::vector<std::string> FrontLevelVector;
+	std::vector<std::string> BackLevelVector;
+
+	//Loading level into vector
+	std::string ThingToAdd;
+	std::string temp;
+	int ReadingPosition = 0;
 	
 
 };

@@ -48,7 +48,7 @@ Game::Game()
 	ListOfCoins.push_back(m_Coin2 = new Coin(m_Renderer, 625, 525, level));
 	ListOfCoins.push_back(m_Coin3 = new Coin(m_Renderer, 2410, 450, level));
 	ListOfCoins.push_back(m_Coin4 = new Coin(m_Renderer, 3190, 330, level));
-	ListOfCoins.push_back(m_Coin5 = new Coin(m_Renderer, 4275, 330, level));
+	ListOfCoins.push_back(m_Coin5 = new Coin(m_Renderer, 4275, 390, level));
 
 }
 
@@ -163,11 +163,9 @@ void Game::CheckKeyPressed()
 	}
 	if (input->KeyIsPressed(KEY_1))
 	{
-		level->LoadLevel(1);
 	}
 	if (input->KeyIsPressed(KEY_2))
 	{
-		level->LoadLevel(2);
 	}
 	//Mouse
 	if (input->MouseIsPressed(MOUSE_LEFT)) 

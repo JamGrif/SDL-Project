@@ -8,96 +8,137 @@ Level::Level(SDL_Renderer* renderer, int ScreenWidth, int ScreenHeight)
 	m_ScreenHeight = ScreenHeight;
 
 	//By default, the program loads level 1 first
-	LoadLevel(1);
+	LoadLevel();
 	CreateTextures();
 	
 }
 
 Level::~Level()
 {
-	m_GridLayout.clear();
+	FrontLevelVector.clear();
+	BackLevelVector.clear();
 }
 
 
-void Level::LoadLevel(int LevelToLoad)
+void Level::LoadLevel()
 {
-	
-	if (LevelToLoad != m_LoadedLevel) 
+
+	//Load front level into vector
+#pragma region LoadFrontLevel
+
+	std::ifstream SaveLevelFromText;
+	SaveLevelFromText.open("Assets/Level1.txt");
+
+	if (SaveLevelFromText.fail())
 	{
-		std::cout << "loading level " << LevelToLoad << std::endl;
-		m_LoadedLevel = LevelToLoad;
-
-		if (m_GridLayout.empty() == false) //If level is already in vector then clear the vector for next level
-		{
-			m_GridLayout.clear();
-		}
-
-		std::string Level = "Assets/Level" + std::to_string(LevelToLoad) + ".txt";
-
-		std::string ThingToAdd;
-		std::string temp;
-		int ReadingPosition = 0;
-
-		//Open selected levels text file
-		std::ifstream SaveLevelFromText;
-		SaveLevelFromText.open(Level);
-
-		if (SaveLevelFromText.fail())
-		{
-			std::cout << "Failed to open text file, reset program." << std::endl;
-			exit(0);
-		}
-
-		//Get level width. Get first line of level and count characters
-		SaveLevelFromText.seekg(0) >> temp;
-		m_LevelWidth = temp.length();
-
-		//Get level height. Get how many lines in textfile
-		/*while (getline(SaveLevelFromText, temp))
-		{
-			m_LevelHeight++;
-		}*/
-		m_LevelHeight = 12;
-
-		//Goes through the level text file and adds that character into a vector which is used for drawing
-		for (int j = 0; j < m_LevelHeight; j++)
-		{
-			for (int i = 0; i < m_LevelWidth; i++)
-			{
-				SaveLevelFromText.seekg(ReadingPosition) >> ThingToAdd;
-				if (ThingToAdd.at(0) == 'G')
-				{
-					m_GridLayout.push_back("G");
-				}
-				else if (ThingToAdd.at(0) == 'D')
-				{
-					m_GridLayout.push_back("D");
-				}
-				else if (ThingToAdd.at(0) == 'S')
-				{
-					m_GridLayout.push_back("S");
-				}
-				else if (ThingToAdd.at(0) == 'P') 
-				{
-					m_GridLayout.push_back("P");
-				}
-				else if (ThingToAdd.at(0) == 'C')
-				{
-					m_GridLayout.push_back("C");
-				}
-				else //If program isnt sure whats in text position or there is a "." in position then adds empty space
-				{
-					m_GridLayout.push_back(".");
-				}
-				ReadingPosition++;
-			}
-			ReadingPosition = ReadingPosition + 2;
-		}
-		SaveLevelFromText.close();
-
+		std::cout << "Failed to open text file, reset program." << std::endl;
+		exit(0);
 	}
 
-	
+	//Get level width. Get first line of level and count characters
+	SaveLevelFromText.seekg(0) >> temp;
+	m_LevelWidth = temp.length();
+
+	m_LevelHeight = 12;
+
+	//Goes through the level text file and adds that character into a vector which is used for drawing
+	for (int j = 0; j < m_LevelHeight; j++)
+	{
+		for (int i = 0; i < m_LevelWidth; i++)
+		{
+			SaveLevelFromText.seekg(ReadingPosition) >> ThingToAdd;
+			if (ThingToAdd.at(0) == 'G')
+			{
+				FrontLevelVector.push_back("G");
+			}
+			else if (ThingToAdd.at(0) == 'D')
+			{
+				FrontLevelVector.push_back("D");
+			}
+			else if (ThingToAdd.at(0) == 'S')
+			{
+				FrontLevelVector.push_back("S");
+			}
+			else if (ThingToAdd.at(0) == 'P')
+			{
+				FrontLevelVector.push_back("P");
+			}
+			else if (ThingToAdd.at(0) == 'C')
+			{
+				FrontLevelVector.push_back("C");
+			}
+			else //If program isnt sure whats in text position or there is a "." in position then adds empty space
+			{
+				FrontLevelVector.push_back(".");
+			}
+			ReadingPosition++;
+		}
+		ReadingPosition = ReadingPosition + 2;
+	}
+
+	SaveLevelFromText.close();
+
+#pragma endregion
+
+	//Load back level into vector
+#pragma region LoadBackLevel
+
+	SaveLevelFromText.open("Assets/Level1Back.txt");
+
+	ThingToAdd = "";
+	temp = "";
+	ReadingPosition = 0;
+
+	if (SaveLevelFromText.fail())
+	{
+		std::cout << "Failed to open text file, reset program." << std::endl;
+		exit(0);
+	}
+
+	//Get level width. Get first line of level and count characters
+	SaveLevelFromText.seekg(0) >> temp;
+
+	m_LevelHeight = 12;
+
+	//Goes through the level text file and adds that character into a vector which is used for drawing
+	for (int j = 0; j < m_LevelHeight; j++)
+	{
+		for (int i = 0; i < m_LevelWidth; i++)
+		{
+			SaveLevelFromText.seekg(ReadingPosition) >> ThingToAdd;
+			if (ThingToAdd.at(0) == 'G')
+			{
+				BackLevelVector.push_back("G");
+			}
+			else if (ThingToAdd.at(0) == 'D')
+			{
+				BackLevelVector.push_back("D");
+			}
+			else if (ThingToAdd.at(0) == 'S')
+			{
+				BackLevelVector.push_back("S");
+			}
+			else if (ThingToAdd.at(0) == 'P')
+			{
+				BackLevelVector.push_back("P");
+			}
+			else if (ThingToAdd.at(0) == 'C')
+			{
+				BackLevelVector.push_back("C");
+			}
+			else //If program isnt sure whats in text position or there is a "." in position then adds empty space
+			{
+				BackLevelVector.push_back(".");
+			}
+			ReadingPosition++;
+		}
+		ReadingPosition = ReadingPosition + 2;
+	}
+	SaveLevelFromText.close();
+
+#pragma endregion
+
+		
 }
 
 void Level::CreateTextures() //Creates all the textures before the level starts getting drawn
@@ -127,6 +168,16 @@ void Level::CreateTextures() //Creates all the textures before the level starts 
 	m_psurface = SDL_LoadBMP(CoalBlock.c_str());
 	SDL_SetColorKey(m_psurface, SDL_TRUE, colourKey);
 	m_CoalTexture = SDL_CreateTextureFromSurface(m_pRenderer, m_psurface);
+
+	//Back dirt block
+	m_psurface = SDL_LoadBMP(BackDirtBlock.c_str());
+	SDL_SetColorKey(m_psurface, SDL_TRUE, colourKey);
+	m_BackDirtTexture = SDL_CreateTextureFromSurface(m_pRenderer, m_psurface);
+
+	//Back stone block
+	m_psurface = SDL_LoadBMP(BackStoneBlock.c_str());
+	SDL_SetColorKey(m_psurface, SDL_TRUE, colourKey);
+	m_BackStoneTexture = SDL_CreateTextureFromSurface(m_pRenderer, m_psurface);
 	
 	//Cleanup
 	SDL_FreeSurface(m_psurface);
@@ -160,6 +211,9 @@ void Level::RenderLevel(int PlayerX, int PlayerY)
 		VectorPos++;
 	}
 	
+	//Draw back level onto screen
+#pragma region DrawBackLevel
+
 	//Set all the variables used for drawing level
 
 	m_XDrawTo += m_Offset;
@@ -167,29 +221,90 @@ void Level::RenderLevel(int PlayerX, int PlayerY)
 	m_DrawingPosition = VectorPos;
 	coltemp = m_XDrawTo;
 
-	//Loop to draw the level
+	//Loop to draw the front level
 
 	for (int i = VectorPos; i < VectorPos + MaxBlockHeight; i++)
 	{
 		for (int j = VectorPos; j < VectorPos + MaxBlockWidth; j++)
 		{
-			if (m_GridLayout.at(m_DrawingPosition) == "G") //Grass block
+			if (BackLevelVector.at(m_DrawingPosition) == "G") //Grass block
 			{
 				DrawBlockOnPosition(m_XDrawTo, m_YDrawTo, m_GrassTexture);
 			}
-			else if (m_GridLayout.at(m_DrawingPosition) == "D") //Dirt block
+			else if (BackLevelVector.at(m_DrawingPosition) == "D") //Dirt block
 			{
-				DrawBlockOnPosition(m_XDrawTo, m_YDrawTo, m_DirtTexture);
+				DrawBlockOnPosition(m_XDrawTo, m_YDrawTo, m_BackDirtTexture);
 			}
-			else if (m_GridLayout.at(m_DrawingPosition) == "S") //Stone block
+			else if (BackLevelVector.at(m_DrawingPosition) == "S") //Stone block
 			{
-				DrawBlockOnPosition(m_XDrawTo, m_YDrawTo, m_StoneTexture);
+				DrawBlockOnPosition(m_XDrawTo, m_YDrawTo, m_BackStoneTexture);
 			}
-			else if (m_GridLayout.at(m_DrawingPosition) == "P") //Player spawn 
+			else if (BackLevelVector.at(m_DrawingPosition) == "P") //Player spawn 
 			{
 				DrawBlockOnPosition(m_XDrawTo, m_YDrawTo, m_PlayerSpawnTexture);
 			}
-			else if (m_GridLayout.at(m_DrawingPosition) == "C") //Coal Block
+			else if (BackLevelVector.at(m_DrawingPosition) == "C") //Coal Block
+			{
+				DrawBlockOnPosition(m_XDrawTo, m_YDrawTo, m_CoalTexture);
+			}
+			else //Empty space
+			{
+
+			}
+
+			m_XDrawTo += m_BlockWidth;
+			m_DrawingPosition++;
+		}
+
+		//NEED TO FIX BELOW SO NUMBER IS WORKED OUT AUTOMATICALLY <------------------------------------------------------------
+		//70 goes to the next block that needs to be renderered on the next line. will break if the rows are made bigger in level text file 
+		m_DrawingPosition += 70;
+
+		m_XDrawTo = SavedXDrawTo;
+		m_YDrawTo = m_YDrawTo + m_BlockHeight;
+	}
+
+	//Reset everything ready for next render of level
+
+	m_ViewPortPrevX = ViewPortX;
+	m_XDrawTo = -m_BlockWidth;
+	m_YDrawTo = 0;
+
+#pragma endregion
+
+	//Draw front level onto screen
+#pragma region DrawFrontLevel
+
+	//Set all the variables used for drawing level
+
+	m_XDrawTo += m_Offset;
+	SavedXDrawTo = m_XDrawTo;
+	m_DrawingPosition = VectorPos;
+	coltemp = m_XDrawTo;
+
+	//Loop to draw the front level
+
+	for (int i = VectorPos; i < VectorPos + MaxBlockHeight; i++)
+	{
+		for (int j = VectorPos; j < VectorPos + MaxBlockWidth; j++)
+		{
+			if (FrontLevelVector.at(m_DrawingPosition) == "G") //Grass block
+			{
+				DrawBlockOnPosition(m_XDrawTo, m_YDrawTo, m_GrassTexture);
+			}
+			else if (FrontLevelVector.at(m_DrawingPosition) == "D") //Dirt block
+			{
+				DrawBlockOnPosition(m_XDrawTo, m_YDrawTo, m_DirtTexture);
+			}
+			else if (FrontLevelVector.at(m_DrawingPosition) == "S") //Stone block
+			{
+				DrawBlockOnPosition(m_XDrawTo, m_YDrawTo, m_StoneTexture);
+			}
+			else if (FrontLevelVector.at(m_DrawingPosition) == "P") //Player spawn 
+			{
+				DrawBlockOnPosition(m_XDrawTo, m_YDrawTo, m_PlayerSpawnTexture);
+			}
+			else if (FrontLevelVector.at(m_DrawingPosition) == "C") //Coal Block
 			{
 				DrawBlockOnPosition(m_XDrawTo, m_YDrawTo, m_CoalTexture);
 			}
@@ -215,7 +330,10 @@ void Level::RenderLevel(int PlayerX, int PlayerY)
 	m_ViewPortPrevX = ViewPortX;
 	m_XDrawTo = -m_BlockWidth;
 	m_YDrawTo = 0;
-	
+
+#pragma endregion
+
+
 }
 
 void Level::DrawBlockOnPosition(int X, int Y, SDL_Texture* texture)
@@ -259,7 +377,7 @@ bool Level::IsWall(int TopX, int TopY, int BotX, int BotY)
 	ColVectorPos += ColXVectorPos + ColYVectorPos;
 	
 	//if position doesnt equal "." then there is something there so return true (meaning there's a wall there)
-	if (m_GridLayout.at(ColVectorPos) != "." && m_GridLayout.at(ColVectorPos) != "P")
+	if (FrontLevelVector.at(ColVectorPos) != "." && FrontLevelVector.at(ColVectorPos) != "P")
 	{
 		return true;
 	}
@@ -285,27 +403,17 @@ bool Level::IsWall(int TopX, int TopY, int BotX, int BotY)
 
 	ColVectorPos += ColXVectorPos + ColYVectorPos;
 
-	if (m_GridLayout.at(ColVectorPos) != "." && m_GridLayout.at(ColVectorPos) != "P")
+	if (FrontLevelVector.at(ColVectorPos) != "." && FrontLevelVector.at(ColVectorPos) != "P")
 	{
 		return true;
 	}
 	return false;
 }
 
-
-
 int Level::GetViewPortX()
 {
 	return ViewPortX;
 }
 
-/*int Level::GetMaxPlayerPositionLeft()
-{
-	return MaxPlayerPositionLeft;
-}
 
-int Level::GetMaxPlayerPositionRight()
-{
-	return MaxPlayerPositionRight;
-}*/
 
