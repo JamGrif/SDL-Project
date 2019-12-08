@@ -157,7 +157,7 @@ copy "$(SolutionDir)..\SDL-Project\SDL\lib\x86\zlib1.dll" "$(TargetDir)"
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="Goomba.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Sky.cpp" />
     <ClCompile Include="UI.cpp" />
@@ -169,7 +169,7 @@ copy "$(SolutionDir)..\SDL-Project\SDL\lib\x86\zlib1.dll" "$(TargetDir)"
     <ClInclude Include="Game.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Level.h" />
-    <ClInclude Include="Monster.h" />
+    <ClInclude Include="Goomba.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Sky.h" />
     <ClInclude Include="UI.h" />

@@ -5,11 +5,11 @@ Game::Game()
 	m_Window = nullptr;
 	m_Renderer = nullptr;
 
-	//start up
+	//Start up
 	SDL_Init(SDL_INIT_VIDEO);
 	TTF_Init();
 
-	//create the window
+	//Create the window
 	//Title, initial x position, initial y position, width in pixels, height in pixels, window behaviour flags
 	m_Window = SDL_CreateWindow("Super Minecraft Bros", 200, 200, m_ScreenWidth, m_ScreenHeight, 0);
 
@@ -21,7 +21,7 @@ Game::Game()
 		return;
 	}
 
-	//now create the renderer
+	//Create the renderer
 	//link renderer to newly created window,index rendering driver, renderer behaviour flags
 	m_Renderer = SDL_CreateRenderer(m_Window, -1, 0);
 
@@ -33,9 +33,11 @@ Game::Game()
 		return;
 	}
 
+	//Application icon
 	m_IconSurface = SDL_LoadBMP(Icon.c_str());
 	SDL_SetWindowIcon(m_Window, m_IconSurface);
 
+	//Creates the game objects
 	level = new Level(m_Renderer, m_ScreenHeight, m_ScreenWidth);
 
 	m_Player = new Player(m_Renderer, m_ScreenWidth/2, m_ScreenHeight/2-128, level);
@@ -44,11 +46,15 @@ Game::Game()
 
 	m_ui = new UI(m_Renderer);
 
-	ListOfCoins.push_back(m_Coin1 = new Coin(m_Renderer, 1800, 525, level));
-	ListOfCoins.push_back(m_Coin2 = new Coin(m_Renderer, 625, 525, level));
-	ListOfCoins.push_back(m_Coin3 = new Coin(m_Renderer, 2410, 450, level));
-	ListOfCoins.push_back(m_Coin4 = new Coin(m_Renderer, 3190, 330, level));
-	ListOfCoins.push_back(m_Coin5 = new Coin(m_Renderer, 4275, 390, level));
+	m_Goomba1 = new Goomba(m_Renderer, 2691, 528, level, m_Player);
+	m_Goomba2 = new Goomba(m_Renderer, 2020, 592, level, m_Player);
+	m_Goomba3 = new Goomba(m_Renderer, 3300, 528, level, m_Player);
+
+	ListOfCoins.push_back(m_Coin1 = new Coin(m_Renderer, 1800, 525, level, m_Player));
+	ListOfCoins.push_back(m_Coin2 = new Coin(m_Renderer, 625, 525, level, m_Player));
+	ListOfCoins.push_back(m_Coin3 = new Coin(m_Renderer, 2410, 450, level, m_Player));
+	ListOfCoins.push_back(m_Coin4 = new Coin(m_Renderer, 3190, 330, level, m_Player));
+	ListOfCoins.push_back(m_Coin5 = new Coin(m_Renderer, 4275, 390, level, m_Player));
 
 }
 
@@ -79,24 +85,30 @@ Game::~Game()
 void Game::GameLoop()
 {
 
-	while (m_Player->HasPlayerWon() == false) //Game ends if escape is pressed 
+	while (m_Player->HasPlayerWon() == false) //Game ends if 
 	{
-		
+		//Check for input
 		CheckKeyPressed();
 
 		//Calculations and updating stuff
 		m_Player->Update();
-
+		m_Goomba1->Update();
+		m_Goomba2->Update();
+		m_Goomba3->Update();
 		//Drawing stuff
 		m_Sky->draw();
 		
-		
 		level->RenderLevel(m_Player->GetX(),m_Player->GetY());
 		m_Player->draw();
+		m_Goomba1->draw();
+		m_Goomba2->draw();
+		m_Goomba3->draw();
 
-		for (auto coin : ListOfCoins)
+
+		//Loop through coins updating and drawing them
+		for (Coin* coin : ListOfCoins)
 		{
-			coin->Update(m_Player->GetX(), m_Player->GetY());
+			coin->Update();
 			coin->draw();
 			if (coin->IsCoinCollected() == true)
 			{
@@ -106,10 +118,9 @@ void Game::GameLoop()
 
 		m_ui->PresentUi(m_Player->GetCoinsCollected());
 		
-
 		//Render stuff
 		Render();
-		SDL_Delay(16);
+		SDL_Delay(20);
 
 	}
 

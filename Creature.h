@@ -7,17 +7,7 @@ class Creature :
 public:
 	Creature(SDL_Renderer* renderer, int xpos, int ypos, Level* plevel, bool useTransparency);
 
-	virtual void Move();
-
-	void CloserToWall(int& position, int& FirstX, int& FirstY, int& SecondX, int& SecondY, bool PositivePositionChange, bool XPosChange, int&VelocityDirection);
-
-	virtual void Physics();
-
-	
 	void DisplayPosition();
-
-	
-	
 
 
 protected:
@@ -57,15 +47,6 @@ protected:
 
 	//Drawing sprites
 	bool FacingRight = true;
-
-
-
-
-	
-
-	
-
-	
 
 };
 

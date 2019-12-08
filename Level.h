@@ -23,7 +23,6 @@ public:
 	int GetViewPortX();
 
 private:
-	int coltemp = 0;
 	//Size of each block
 	const int m_BlockWidth = 64;
 	const int m_BlockHeight = 64;

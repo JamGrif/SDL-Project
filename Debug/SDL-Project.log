@@ -3,14 +3,16 @@
   Creature.cpp
   Entity.cpp
   Game.cpp
+  Input.cpp
   Level.cpp
-  Monster.cpp
+  main.cpp
+  Goomba.cpp
   Player.cpp
   Sky.cpp
-  main.cpp
+  UI.cpp
   Generating Code...
-C:\Users\jamie\Desktop\Stuff\Uni\Year2\ComputerGamesProgramming\SDL-Project\Game.cpp(101,39): warning C4805: '==': unsafe mix of type 'int' and type 'bool' in operation
-C:\Users\jamie\Desktop\Stuff\Uni\Year2\ComputerGamesProgramming\SDL-Project\Coin.cpp(43): warning C4715: 'Coin::IsCoinCollected': not all control paths return a value
+C:\Users\jamie\Desktop\Stuff\Uni\Year2\ComputerGamesProgramming\SDL-Project\Game.cpp(113,39): warning C4805: '==': unsafe mix of type 'int' and type 'bool' in operation
+C:\Users\jamie\Desktop\Stuff\Uni\Year2\ComputerGamesProgramming\SDL-Project\Coin.cpp(44): warning C4715: 'Coin::IsCoinCollected': not all control paths return a value
   SDL-Project.vcxproj -> C:\Users\jamie\Desktop\Stuff\Uni\Year2\ComputerGamesProgramming\SDL-Project\Debug\SDL-Project.exe
           1 file(s) copied.
           1 file(s) copied.

@@ -1,59 +1,48 @@
 #pragma once
 #include <SDL.h>
-#include "Input.h"
-#include <stdio.h>
-#include <iostream>
-#include "Player.h"
-#include "Monster.h"
-#include <string>
 #include "SDL_ttf.h"
+
+#include <iostream>
+#include <list>
+#include <string>
+
+#include "Input.h"
 #include "UI.h"
+#include "Player.h"
+#include "Goomba.h"
 #include "Sky.h"
 #include "Level.h"
-#include "conio.h"
 #include "Coin.h"
-#include <list>
 
-//class Bitmap; //04-01
 
 class Game
 {
 public:
 	Game();
 	~Game();
-	void GameLoop();
 
-	void Render();
+	void GameLoop(); //Main game loop
 
-	void CheckKeyPressed();
+	void Render(); //Clears and displays the window
 
-	/*struct Clock 
-	{
-		uint32_t last_tick_time = 0;
-		uint32_t delta = 0;
+	void CheckKeyPressed(); //Checks for keyboard / mouse input
 
-		void tick()
-		{
-			uint32_t tick_time = SDL_GetTicks();
-			delta = tick_time - last_tick_time;
-			last_tick_time = tick_time;
-		}
-	};*/
-
-	
 
 private:
+
+	//Size of the window
 	int m_ScreenWidth = 1280;
 	int m_ScreenHeight = 720;
-
 
 	SDL_Window* m_Window;
 	SDL_Renderer* m_Renderer;
 
+	//Game objects in the scene
 	Player* m_Player; 
-	Monster* m_Monster;
+	Goomba* m_Goomba1;
+	Goomba* m_Goomba2;
+	Goomba* m_Goomba3;
 	Level* level;
-
 
 	Coin* m_Coin1;
 	Coin* m_Coin2;

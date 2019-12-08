@@ -12,15 +12,15 @@ public:
 	Entity(SDL_Renderer* renderer, int xpos, int ypos, Level* pLevel, bool useTransparency = true);
 	~Entity();
 
-	void UpdateBitmap(std::string filename, bool useTransparency);
-	virtual void draw();
+	void UpdateBitmap(std::string filename, bool useTransparency); //Changes the loaded texture to something else
+	virtual void draw(); //Draws the bitmap on screen
 
-	void GetCollisionPosition();
+	void GetCollisionPosition(); //Gets the world position of all 4 corners of the object
 
-	int GetX();
-	int GetY();
+	int GetX(); //Returns X position
+	int GetY(); //Returns Y position
 
-	//virtual void Update() = 0;
+	virtual void Update() = 0;
 	
 
 protected:

@@ -1,25 +1,26 @@
 #include "Coin.h"
 
-Coin::Coin(SDL_Renderer* renderer, int xpos, int ypos, Level* pLevel, bool useTransparency)
+Coin::Coin(SDL_Renderer* renderer, int xpos, int ypos, Level* pLevel, Player* pPlayer, bool useTransparency)
 	:Entity(renderer, xpos, ypos, pLevel, useTransparency)
 {
 	CurrentPicture = "Assets/Coin.bmp";
 	UpdateBitmap(CurrentPicture, useTransparency);
 
-	//Position.x = xpos;
-	//Position.y = ypos;
-
 	m_Width = 32;
 	m_Height = 32;
 
+	playerinfo = pPlayer;
+
 }
 
-void Coin::Update(int PlayerX, int PlayerY)
+void Coin::Update()
 {
-	//std::cout << "Coin updated!" << std::endl;
 
 	//Check for collision with player
 	GetCollisionPosition();
+
+	PlayerX = playerinfo->GetX();
+	PlayerY = playerinfo->GetY();
 	
 	if (PlayerX > TopLeftPosX && PlayerX < TopRightPosX && PlayerY > TopLeftPosY && PlayerY < BotRightPosY)
 	{

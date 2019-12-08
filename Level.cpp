@@ -219,7 +219,6 @@ void Level::RenderLevel(int PlayerX, int PlayerY)
 	m_XDrawTo += m_Offset;
 	SavedXDrawTo = m_XDrawTo;
 	m_DrawingPosition = VectorPos;
-	coltemp = m_XDrawTo;
 
 	//Loop to draw the front level
 
@@ -256,7 +255,6 @@ void Level::RenderLevel(int PlayerX, int PlayerY)
 			m_DrawingPosition++;
 		}
 
-		//NEED TO FIX BELOW SO NUMBER IS WORKED OUT AUTOMATICALLY <------------------------------------------------------------
 		//70 goes to the next block that needs to be renderered on the next line. will break if the rows are made bigger in level text file 
 		m_DrawingPosition += 70;
 
@@ -280,7 +278,6 @@ void Level::RenderLevel(int PlayerX, int PlayerY)
 	m_XDrawTo += m_Offset;
 	SavedXDrawTo = m_XDrawTo;
 	m_DrawingPosition = VectorPos;
-	coltemp = m_XDrawTo;
 
 	//Loop to draw the front level
 
@@ -317,7 +314,6 @@ void Level::RenderLevel(int PlayerX, int PlayerY)
 			m_DrawingPosition++;
 		}
 
-		//NEED TO FIX BELOW SO NUMBER IS WORKED OUT AUTOMATICALLY <------------------------------------------------------------
 		//70 goes to the next block that needs to be renderered on the next line. will break if the rows are made bigger in level text file 
 		m_DrawingPosition += 70;
 		
@@ -333,12 +329,10 @@ void Level::RenderLevel(int PlayerX, int PlayerY)
 
 #pragma endregion
 
-
 }
 
 void Level::DrawBlockOnPosition(int X, int Y, SDL_Texture* texture)
 {
-	
 	//Draw the block
 	SDL_Rect destRect = { X,Y,m_BlockWidth,m_BlockHeight };
 	SDL_RenderCopy(m_pRenderer, texture, NULL, &destRect);

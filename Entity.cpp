@@ -26,6 +26,9 @@ Entity::~Entity()
 
 void Entity::UpdateBitmap(std::string filename, bool useTransparency)
 {
+	SDL_FreeSurface(m_pbitmapSurface);
+	SDL_DestroyTexture(m_pbitmapTexture);
+
 	//Create the bitmap surface
 	m_pbitmapSurface = SDL_LoadBMP(filename.c_str()); //loads bitmap from file into a member variable
 
