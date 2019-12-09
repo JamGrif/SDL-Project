@@ -85,10 +85,7 @@ void Player::Move(char Direction)
 
 void Player::Update()
 {
-	//std::cout << DeltaTime << std::endl;
 	//Save creatures previous position so they can move back if they cant move
-	m_PrevX = Position.x;
-	m_PrevY = Position.y;
 
 	//If Velocity exceeds MaxVelocity then lower Velocity down to MaxVelocity  
 	if (Velocity.x > m_MaxVelocity) { Velocity.x = m_MaxVelocity; }
