@@ -22,7 +22,7 @@ void Coin::Update()
 	PlayerX = playerinfo->GetX();
 	PlayerY = playerinfo->GetY();
 	
-	if (PlayerX > TopLeftPosX && PlayerX < TopRightPosX && PlayerY > TopLeftPosY && PlayerY < BotRightPosY)
+	if (PlayerX > TopLeftPosX-m_Width && PlayerX < TopRightPosX+m_Width && PlayerY > TopLeftPosY && PlayerY < BotRightPosY)
 	{
 		//std::cout << "Player collided with coin" << std::endl;
 		CoinCollected = true;

@@ -19,6 +19,8 @@ public:
 	int GetCoinsCollected();
 	void IncreaseCoinsCollected();
 
+	void Respawn();
+
 	//Coins
 	int Coins = 0;
 private:
@@ -29,7 +31,7 @@ private:
 	std::string PlayerL = "Assets/PlayerL.bmp";
 
 	//Running sprites
-	int m_CurrentFrame = 0;
+	
 
 	std::vector<std::string> PlayerRunL;
 	std::vector<std::string> PlayerRunR;
@@ -38,7 +40,8 @@ private:
 	std::string PlayerJumpR = "Assets/PlayerJumpR.bmp";
 	std::string PlayerJumpL = "Assets/PlayerJumpL.bmp";
 
-	
+	int SpawnPositionX = 640;
+	int SpawnPositionY = -64;
 
 
 };

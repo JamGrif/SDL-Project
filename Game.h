@@ -27,6 +27,7 @@ public:
 
 	void CheckKeyPressed(); //Checks for keyboard / mouse input
 
+	
 
 private:
 
@@ -39,9 +40,7 @@ private:
 
 	//Game objects in the scene
 	Player* m_Player; 
-	Goomba* m_Goomba1;
-	Goomba* m_Goomba2;
-	Goomba* m_Goomba3;
+
 	Level* level;
 
 	Coin* m_Coin1;
@@ -49,6 +48,10 @@ private:
 	Coin* m_Coin3;
 	Coin* m_Coin4;
 	Coin* m_Coin5;
+
+	Goomba* m_Goomba1;
+	Goomba* m_Goomba2;
+	Goomba* m_Goomba3;
 
 	Sky* m_Sky;
 
@@ -60,6 +63,8 @@ private:
 	Input* input = new Input();
 
 	std::list<Coin*> ListOfCoins;
+	std::list<Goomba*> ListOfGoombas;
+
 
 
 };

@@ -1,18 +1,5 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(452,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (3.UsingSDL.vcxproj, SDLTemplate.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  Coin.cpp
-  Creature.cpp
-  Entity.cpp
-  Game.cpp
-  Input.cpp
-  Level.cpp
-  main.cpp
-  Goomba.cpp
   Player.cpp
-  Sky.cpp
-  UI.cpp
-  Generating Code...
-C:\Users\jamie\Desktop\Stuff\Uni\Year2\ComputerGamesProgramming\SDL-Project\Game.cpp(113,39): warning C4805: '==': unsafe mix of type 'int' and type 'bool' in operation
-C:\Users\jamie\Desktop\Stuff\Uni\Year2\ComputerGamesProgramming\SDL-Project\Coin.cpp(44): warning C4715: 'Coin::IsCoinCollected': not all control paths return a value
   SDL-Project.vcxproj -> C:\Users\jamie\Desktop\Stuff\Uni\Year2\ComputerGamesProgramming\SDL-Project\Debug\SDL-Project.exe
           1 file(s) copied.
           1 file(s) copied.

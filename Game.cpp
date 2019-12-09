@@ -46,15 +46,20 @@ Game::Game()
 
 	m_ui = new UI(m_Renderer);
 
-	m_Goomba1 = new Goomba(m_Renderer, 2691, 528, level, m_Player);
-	m_Goomba2 = new Goomba(m_Renderer, 2020, 592, level, m_Player);
-	m_Goomba3 = new Goomba(m_Renderer, 3300, 528, level, m_Player);
+	//m_Goomba1 = new Goomba(m_Renderer, 2691, 528, level, m_Player);
+	//m_Goomba2 = new Goomba(m_Renderer, 2020, 592, level, m_Player);
+	//m_Goomba3 = new Goomba(m_Renderer, 3300, 528, level, m_Player);
+
 
 	ListOfCoins.push_back(m_Coin1 = new Coin(m_Renderer, 1800, 525, level, m_Player));
 	ListOfCoins.push_back(m_Coin2 = new Coin(m_Renderer, 625, 525, level, m_Player));
 	ListOfCoins.push_back(m_Coin3 = new Coin(m_Renderer, 2410, 450, level, m_Player));
 	ListOfCoins.push_back(m_Coin4 = new Coin(m_Renderer, 3190, 330, level, m_Player));
 	ListOfCoins.push_back(m_Coin5 = new Coin(m_Renderer, 4275, 390, level, m_Player));
+
+	ListOfGoombas.push_back(m_Goomba1 = new Goomba(m_Renderer, 2691, 528, level, m_Player));
+	ListOfGoombas.push_back(m_Goomba2 = new Goomba(m_Renderer, 2020, 592, level, m_Player));
+	ListOfGoombas.push_back(m_Goomba3 = new Goomba(m_Renderer, 3300, 528, level, m_Player));
 
 }
 
@@ -90,20 +95,14 @@ void Game::GameLoop()
 		//Check for input
 		CheckKeyPressed();
 
-		//Calculations and updating stuff
 		m_Player->Update();
-		m_Goomba1->Update();
-		m_Goomba2->Update();
-		m_Goomba3->Update();
+
 		//Drawing stuff
 		m_Sky->draw();
 		
 		level->RenderLevel(m_Player->GetX(),m_Player->GetY());
-		m_Player->draw();
-		m_Goomba1->draw();
-		m_Goomba2->draw();
-		m_Goomba3->draw();
 
+		m_Player->draw();
 
 		//Loop through coins updating and drawing them
 		for (Coin* coin : ListOfCoins)
@@ -114,6 +113,18 @@ void Game::GameLoop()
 			{
 				m_Player->IncreaseCoinsCollected();
 			}
+		}
+
+		//Loop through goombas updating and drawing them
+		for (Goomba* goomba : ListOfGoombas)
+		{
+			goomba->Update();
+			goomba->draw();
+			if (goomba->GoombaHitPlayer() == true) 
+			{
+				m_Player->Respawn();
+			}
+
 		}
 
 		m_ui->PresentUi(m_Player->GetCoinsCollected());
@@ -194,6 +205,8 @@ void Game::CheckKeyPressed()
 
 
 }
+
+
 
 
 

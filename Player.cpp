@@ -85,6 +85,7 @@ void Player::Move(char Direction)
 
 void Player::Update()
 {
+	//std::cout << DeltaTime << std::endl;
 	//Save creatures previous position so they can move back if they cant move
 	m_PrevX = Position.x;
 	m_PrevY = Position.y;
@@ -299,6 +300,12 @@ int Player::GetCoinsCollected()
 void Player::IncreaseCoinsCollected()
 {
 	Coins++;
+}
+
+void Player::Respawn()
+{
+	Position.x = SpawnPositionX;
+	Position.y = SpawnPositionY;
 }
 
 

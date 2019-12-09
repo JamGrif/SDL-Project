@@ -15,7 +15,6 @@ protected:
 	int m_Acceleration = 0;
 
 	const int m_MaxVelocity = 10;
-	//const float m_Friction = 1;
 	const int m_AirResistance = 1;
 	const int m_Gravity = 3;
 
@@ -36,6 +35,7 @@ protected:
 	bool TouchingUp = false;
 	bool TouchingDown = false;
 
+	int m_CurrentFrame = 0;
 	
 	
 	int TempSpeed = 0;

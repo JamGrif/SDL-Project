@@ -9,6 +9,8 @@ public:
 
 	void Update();
 
+	bool GoombaHitPlayer();
+
 
 private:
 
@@ -17,7 +19,13 @@ private:
 
 	bool MovingRight = true;
 
-	std::string GoombaSprite = "Assets/Goomba.bmp";
+	bool HitPlayer = false;
+
+	
+
+	std::vector<std::string> GoombaMove;
+	std::string GoombaSprite1 = "Assets/Goomba1.bmp";
+	std::string GoombaSprite2 = "Assets/Goomba2.bmp";
 
 	Player* playerinfo;
 };

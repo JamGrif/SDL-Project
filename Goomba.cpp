@@ -6,16 +6,39 @@ Goomba::Goomba(SDL_Renderer* renderer, int xpos, int ypos, Level* pLevel, Player
 	m_Width = 48;
 	m_Height = 48;
 
-	UpdateBitmap(GoombaSprite, true);
+	UpdateBitmap(GoombaSprite1, true);
 	
 	playerinfo = pPlayer;
 
 	m_Acceleration = 1;
+
+	GoombaMove.push_back(GoombaSprite1);
+	GoombaMove.push_back(GoombaSprite1);
+	GoombaMove.push_back(GoombaSprite1);
+	GoombaMove.push_back(GoombaSprite1);
+	GoombaMove.push_back(GoombaSprite1);
+	GoombaMove.push_back(GoombaSprite1);
+	GoombaMove.push_back(GoombaSprite1);
+	GoombaMove.push_back(GoombaSprite1);
+	GoombaMove.push_back(GoombaSprite2);
+	GoombaMove.push_back(GoombaSprite2);
+	GoombaMove.push_back(GoombaSprite2);
+	GoombaMove.push_back(GoombaSprite2);
+	GoombaMove.push_back(GoombaSprite2);
+	GoombaMove.push_back(GoombaSprite2);
+	GoombaMove.push_back(GoombaSprite2);
+	GoombaMove.push_back(GoombaSprite2);
+
+
+
 }
 
 void Goomba::Update()
 {
 	PlayerX = playerinfo->GetX();
+	PlayerY = playerinfo->GetY();
+
+	if (HitPlayer) { HitPlayer = false; }
 
 	//Only updates Goomba if within range of player
 	if (PlayerX < Position.x + 1000 && PlayerX > Position.x - 1000) 
@@ -41,9 +64,28 @@ void Goomba::Update()
 		{
 			Position.x -= 1;
 		}
+
+		//Check if the goomba has collided with player
+		if (PlayerX < Position.x + m_Width && PlayerX > Position.x - m_Width && PlayerY < Position.y + m_Height && PlayerY > Position.y - m_Height) 
+		{
+			HitPlayer = true;
+		}
+
+
+		m_CurrentFrame++;
+		if (m_CurrentFrame > 15) { m_CurrentFrame = 0; }
+		CurrentPicture = GoombaMove.at(m_CurrentFrame);
+		UpdateBitmap(CurrentPicture, true);
+
+
 	}
 	
 
 
+}
+
+bool Goomba::GoombaHitPlayer()
+{
+	return HitPlayer;
 }
 

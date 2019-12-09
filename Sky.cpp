@@ -12,6 +12,7 @@ Sky::Sky(SDL_Renderer* renderer, int xpos, int ypos, Level* pLevel, bool useTran
 
 void Sky::Update()
 {
+
 }
 
 void Sky::draw()
